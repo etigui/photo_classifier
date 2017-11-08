@@ -12,8 +12,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+//Face Detect + Identifier
+//https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/howtoidentifyfacesinimage
 
 
+// Visio computer
+//https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/vision-api-how-to-topics/howtocallvisionapi
 
 namespace PhotoIdentifier {
     public partial class Form1:Form {
@@ -31,9 +35,7 @@ namespace PhotoIdentifier {
 
        async private void button1_Click(object sender, EventArgs e) {
 
-            Debug.WriteLine(obama_image);
-            Debug.WriteLine(obama_family_image);
-            int test = 5;
+            //TODO maybe add PersistedFaceIds to 
 
             // Create an empty person group
             //await faceServiceClient.GetPersonGroupAsync()
@@ -67,12 +69,18 @@ namespace PhotoIdentifier {
         }
 
         async private void button2_Click(object sender, EventArgs e) {
-            string img = Path.Combine(obama_family_image, "3.jpg");
-            using(Stream s = File.OpenRead(img)) {
-                var faces = await faceServiceClient.DetectAsync(s);
-                var faceIds = faces.Select(face => face.FaceId).ToArray();
 
+            // The list of Face attributes to return.
+            IEnumerable<FaceAttributeType> faceAttributes = new FaceAttributeType[] { FaceAttributeType.Gender, FaceAttributeType.Age, FaceAttributeType.Smile, FaceAttributeType.Emotion, FaceAttributeType.Glasses, FaceAttributeType.Hair };
+
+            string img = Path.Combine(obama_family_image, "0.jpg");
+            using(Stream s = File.OpenRead(img)) {
+                var faces = await faceServiceClient.DetectAsync(s, returnFaceId: true, returnFaceLandmarks: false, returnFaceAttributes: faceAttributes);
+                
+                var faceIds = faces.Select(face => face.FaceId).ToArray();
+           
                 var results = await faceServiceClient.IdentifyAsync(person_group_id, faceIds);
+
                 foreach(var identifyResult in results) {
                     Debug.WriteLine("Result of face: {0}", identifyResult.FaceId);
                     if(identifyResult.Candidates.Length == 0) {
