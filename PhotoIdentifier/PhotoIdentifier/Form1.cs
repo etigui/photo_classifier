@@ -15,7 +15,6 @@ using System.IO;
 //Face Detect + Identifier
 //https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/howtoidentifyfacesinimage
 
-
 // Visio computer
 //https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/vision-api-how-to-topics/howtocallvisionapi
 
