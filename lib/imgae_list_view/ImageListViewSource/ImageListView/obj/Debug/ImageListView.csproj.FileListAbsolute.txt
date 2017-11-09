@@ -1,0 +1,13 @@
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\bin\Debug\ImageListView.dll.config
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\bin\Debug\ImageListView.XML
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\bin\Debug\ImageListView.dll
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\bin\Debug\ImageListView.pdb
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\bin\Debug\tr\ImageListView.resources.dll
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\obj\Debug\ImageListView.csprojResolveAssemblyReference.cache
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\obj\Debug\Manina.Windows.Forms.ImageListViewResources.resources
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\obj\Debug\Manina.Windows.Forms.ImageListViewResources.tr.resources
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\obj\Debug\ImageListView.csproj.GenerateResource.Cache
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\obj\Debug\ImageListView.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\obj\Debug\tr\ImageListView.resources.dll
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\obj\Debug\ImageListView.dll
+C:\Users\Admin\Downloads\ImageListViewSource\ImageListView\obj\Debug\ImageListView.pdb
