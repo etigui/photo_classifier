@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 using Manina.Windows.Forms;
+using System.Security.AccessControl;
 
 //Face Detect + Identifier
 //https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/howtoidentifyfacesinimage
@@ -98,6 +99,8 @@ namespace PhotoIdentifier {
 
         private void Form1_Load(object sender, EventArgs e) {
 
+            fillTree();
+
 
             foreach(string imagePath in Directory.GetFiles(obama_family_image, "*.jpg")) {
                 ILV_photos.Items.Add(imagePath);
@@ -131,6 +134,74 @@ namespace PhotoIdentifier {
         ILV_photos.ThumbnailSize = new Size(200, 200);
         */
 
+        private void fillTree() {
+            string[] drives = Environment.GetLogicalDrives();
+            foreach(string dr in drives) {
+                TreeNode node = new TreeNode(dr);
+                node.Tag = dr;
+                node.ImageIndex = 0; // drive icon
+                node.Tag = dr;
+                TV_computer.Nodes.Add(node);
+                node.Nodes.Add(new TreeNode("?"));
+            }
+            TV_computer.BeforeExpand += new TreeViewCancelEventHandler(treeView1_BeforeExpand);
+        }
 
+        void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e) {
+            if((e.Node.Nodes.Count == 1) && (e.Node.Nodes[0].Text == "?")) {
+                RecursiveDirWalk(e.Node);
+            }
+        }
+
+        private TreeNode RecursiveDirWalk(TreeNode node) {
+            string path = (string)node.Tag;
+            try {
+                node.Nodes.Clear();
+
+
+                string[] dirs = System.IO.Directory.GetDirectories(path);
+                for(int t = 0; t < dirs.Length; t++) {
+                    TreeNode n = new TreeNode(dirs[t].Substring(dirs[t].LastIndexOf('\\') + 1));
+                    n.ImageIndex = 1; // dir icon
+                    n.Tag = dirs[t];
+                    node.Nodes.Add(n);
+                    n.Nodes.Add(new TreeNode("?"));
+                }
+
+                // Optional if you want files as well:
+                string[] files = System.IO.Directory.GetFiles(path);
+                for(int t = 0; t < files.Length; t++) {
+                    TreeNode tn = new TreeNode(System.IO.Path.GetFileName(files[t]));
+                    tn.Tag = files[t];
+                    tn.ImageIndex = 2; // file icon
+                    node.Nodes.Add(tn);
+                } // end of optional file part
+                return node;
+            } catch(UnauthorizedAccessException ex) {
+
+            }
+            return node;
+        }
+        public static bool CanRead(string path) {
+            var readAllow = false;
+            var readDeny = false;
+            var accessControlList = Directory.GetAccessControl(path);
+            if(accessControlList == null)
+                return false;
+            var accessRules = accessControlList.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
+            if(accessRules == null)
+                return false;
+
+            foreach(FileSystemAccessRule rule in accessRules) {
+                if((FileSystemRights.Read & rule.FileSystemRights) != FileSystemRights.Read) continue;
+
+                if(rule.AccessControlType == AccessControlType.Allow)
+                    readAllow = true;
+                else if(rule.AccessControlType == AccessControlType.Deny)
+                    readDeny = true;
+            }
+
+            return readAllow && !readDeny;
+        }
     }
 }

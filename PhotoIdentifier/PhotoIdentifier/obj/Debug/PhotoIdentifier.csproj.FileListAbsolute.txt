@@ -13,7 +13,6 @@ C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.exe.config
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.exe
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.pdb
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\ImageListView.dll
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\Microsoft.ProjectOxford.Common.dll
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\Microsoft.ProjectOxford.Face.dll
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\Microsoft.ProjectOxford.Vision.dll

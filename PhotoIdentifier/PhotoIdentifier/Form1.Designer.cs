@@ -31,7 +31,7 @@
             this.filesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeView1 = new System.Windows.Forms.TreeView();
+            this.TV_computer = new System.Windows.Forms.TreeView();
             this.ILV_photos = new Manina.Windows.Forms.ImageListView();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
@@ -94,12 +94,12 @@
             this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
             this.toolStripMenuItem1.Text = "&?";
             // 
-            // treeView1
+            // TV_computer
             // 
-            this.treeView1.Location = new System.Drawing.Point(12, 27);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(121, 272);
-            this.treeView1.TabIndex = 4;
+            this.TV_computer.Location = new System.Drawing.Point(12, 27);
+            this.TV_computer.Name = "TV_computer";
+            this.TV_computer.Size = new System.Drawing.Size(121, 272);
+            this.TV_computer.TabIndex = 4;
             // 
             // ILV_photos
             // 
@@ -134,7 +134,7 @@
             this.ClientSize = new System.Drawing.Size(592, 324);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.ILV_photos);
-            this.Controls.Add(this.treeView1);
+            this.Controls.Add(this.TV_computer);
             this.Controls.Add(this.SS);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button2);
@@ -143,6 +143,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "PhotosIdentifier";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -160,7 +161,7 @@
         private System.Windows.Forms.ToolStripMenuItem filesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TreeView TV_computer;
         private Manina.Windows.Forms.ImageListView ILV_photos;
         private System.Windows.Forms.ComboBox comboBox1;
     }
