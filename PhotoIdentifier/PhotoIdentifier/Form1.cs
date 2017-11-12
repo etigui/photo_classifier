@@ -14,6 +14,7 @@ using System.IO;
 using System.Reflection;
 using Manina.Windows.Forms;
 using System.Security.AccessControl;
+using System.Net.NetworkInformation;
 
 //Face Detect + Identifier
 //https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/howtoidentifyfacesinimage
@@ -30,10 +31,244 @@ namespace PhotoIdentifier {
         private string person_group_id = "president";
         //private string trump_image = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"\person\trump\him\");
 
+        #region vars
+        bool internet_connection = false;
+        #endregion
+
+        #region Init
 
         public Form1() {
             InitializeComponent();
+            init();
         }
+
+        private void init() {
+            
+            // Set from size
+            this.Width = 750;
+            this.Height = 555;
+
+            //Init thumbnails size tick
+            x96ToolStripMenuItem.Checked = true;
+
+            // Check internet
+            check_internet();
+        }
+
+        private void Form1_Load(object sender, EventArgs e) {
+        }
+
+        private void Form1_Shown(object sender, EventArgs e) {
+        }
+
+        #endregion
+
+        #region Menu controls
+
+        private void TSB_info_Click(object sender, EventArgs e) {
+
+            // Lunch columns form
+            ColumnsInfos form = new ColumnsInfos();
+            form.ILV_photos = ILV_photos;
+            form.ShowDialog();
+        }
+
+        private void TSB_person_Click(object sender, EventArgs e) {
+
+        }
+
+        private void TSB_group_Click(object sender, EventArgs e) {
+
+        }
+
+        private void TSB_search_Click(object sender, EventArgs e) {
+            string photos_finder_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"PhotosFinder.exe");
+            if(File.Exists(photos_finder_path)) {
+
+                //Lunch or not the PhotoFinder program
+                if(MessageBox.Show("Do you want to lunch PhotoFinder ?", "Lunch", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                    Process.Start(photos_finder_path);
+                }
+            }
+        }
+        #endregion
+
+        #region Add/remove/clear images
+
+        private void TSB_add_Click(object sender, EventArgs e) {
+
+            // Add photos to the list
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = true;
+            if(ofd.ShowDialog() == DialogResult.OK) {
+                ILV_photos.Items.AddRange(ofd.FileNames);
+                TSB_clear.Enabled = true;
+                TSB_remove.Enabled = true;
+                update_status();
+            }
+        }
+        private void TSB_remove_Click(object sender, EventArgs e) {
+
+            // Suspend the layout logic while we are removing items. Otherwise the control will be refreshed after each item is removed.
+            ILV_photos.SuspendLayout();
+
+            // Remove selected items
+            foreach(var item in ILV_photos.SelectedItems) {
+                ILV_photos.Items.Remove(item);
+            }
+
+            // Resume layout logic.
+            ILV_photos.ResumeLayout(true);
+            update_status();
+        }
+
+        private void TSB_clear_Click(object sender, EventArgs e) {
+            ILV_photos.Items.Clear();
+            update_status();
+        }
+        #endregion
+
+        #region Update status bar
+
+        /// <summary>
+        /// Get how many photo selected
+        /// </summary>
+        private void update_status() {
+
+            // 
+            if(ILV_photos.Items.Count == 0) {
+                update_status("No Photos");
+            } else if(ILV_photos.SelectedItems.Count == 0) {
+                update_status(string.Format("{0} Photos", ILV_photos.Items.Count));
+            } else {
+                update_status(string.Format("{0} Photos ({1} selected)", ILV_photos.Items.Count, ILV_photos.SelectedItems.Count));
+            }
+        }
+
+        /// <summary>
+        /// Add how many photo selected to label
+        /// </summary>
+        /// <param name="status"></param>
+        private void update_status(string status) {
+            TSSL_infos.Text = status;
+        }
+
+        private void ILV_photos_SelectionChanged(object sender, EventArgs e) {
+            update_status();
+        }
+        #endregion
+
+        #region Change thumbnails size
+        /// <summary>
+        /// Uncheck all the element in the drowp down menu size
+        /// </summary>
+        private void uncheck() {
+            x48ToolStripMenuItem.Checked = false;
+            x96ToolStripMenuItem.Checked = false;
+            x120ToolStripMenuItem.Checked = false;
+            x150ToolStripMenuItem.Checked = false;
+            x200ToolStripMenuItem.Checked = false;
+        }
+
+        private void x48ToolStripMenuItem_Click(object sender, EventArgs e) {
+            ILV_photos.ThumbnailSize = new Size(48, 48);
+            uncheck();
+            x48ToolStripMenuItem.Checked = true;
+        }
+
+        private void x96ToolStripMenuItem_Click(object sender, EventArgs e) {
+            ILV_photos.ThumbnailSize = new Size(96, 96);
+            uncheck();
+            x96ToolStripMenuItem.Checked = true;
+        }
+
+        private void x120ToolStripMenuItem_Click(object sender, EventArgs e) {
+            ILV_photos.ThumbnailSize = new Size(120, 120);
+            uncheck();
+            x120ToolStripMenuItem.Checked = true;
+        }
+
+        private void x150ToolStripMenuItem_Click(object sender, EventArgs e) {
+            ILV_photos.ThumbnailSize = new Size(150, 150);
+            uncheck();
+            x150ToolStripMenuItem.Checked = true;
+        }
+
+        private void x200ToolStripMenuItem_Click(object sender, EventArgs e) {
+            ILV_photos.ThumbnailSize = new Size(200, 200);
+            uncheck();
+            x200ToolStripMenuItem.Checked = true;
+        }
+        #endregion
+
+        #region Change thumbnails style
+
+        private void TSB_thumbnails_Click(object sender, EventArgs e) {
+            ILV_photos.View = Manina.Windows.Forms.View.Thumbnails;
+        }
+
+        private void TSB_gallery_Click(object sender, EventArgs e) {
+            ILV_photos.View = Manina.Windows.Forms.View.Gallery;
+        }
+
+        private void TSB_pane_Click(object sender, EventArgs e) {
+            ILV_photos.View = Manina.Windows.Forms.View.Pane;
+        }
+
+        private void TSB_list_Click(object sender, EventArgs e) {
+            ILV_photos.View = Manina.Windows.Forms.View.Details;
+        }
+        #endregion
+
+        #region Photos identify
+
+        private void TSB_identify_Click(object sender, EventArgs e) {
+
+            // Check if the list is not empty
+            if(ILV_photos.Items.Count != 0) {
+
+                //Lunch the identification ?
+                if(MessageBox.Show("Do you want to identify the current photos ?", "Identify", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+
+                }
+            } else {
+                MessageBox.Show("No photos to identify", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
+
+        #region Check internet
+
+        /// <summary>
+        /// Callback for check_internet function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ping_completed_callback(object sender, PingCompletedEventArgs e) {
+            if(e.Reply.Status == IPStatus.Success) {
+                internet_connection = true;
+            }
+            else if(e.Cancelled) {
+                MessageBox.Show("No internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if(e.Error != null) {
+                MessageBox.Show("No internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Check connection (ping google for 3 sec)
+        /// </summary>
+        private void check_internet() {
+            Ping myPing = new Ping();
+            myPing.PingCompleted += new PingCompletedEventHandler(ping_completed_callback);
+            try {
+                //Ping google for 3 sec
+                myPing.SendAsync("google.com", 3000, new byte[32], new PingOptions(64, true));
+            } catch {
+            }
+        }
+        #endregion
 
         async private void button1_Click(object sender, EventArgs e) {
 
@@ -96,113 +331,12 @@ namespace PhotoIdentifier {
                 }
             }
         }
-
-        private void Form1_Load(object sender, EventArgs e) {
-
-            fillTree();
-
-
-            foreach(string imagePath in Directory.GetFiles(obama_family_image, "*.jpg")) {
-                ILV_photos.Items.Add(imagePath);
-            }
-
-            // Change the renderer
-            Assembly assembly = Assembly.GetAssembly(typeof(ImageListView));
-            //RendererItem item = (RendererItem)comboBox1.SelectedItem;
-            ImageListView.ImageListViewRenderer renderer = assembly.CreateInstance("Manina.Windows.Forms.ImageListViewRenderers+XPRenderer") as ImageListView.ImageListViewRenderer;
-            ILV_photos.SetRenderer(renderer);
-            ILV_photos.Focus();
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-            
-
-            // Change the renderer
-            Assembly assembly = Assembly.GetAssembly(typeof(ImageListView));
-            //RendererItem item = (RendererItem)comboBox1.SelectedItem;
-            ImageListView.ImageListViewRenderer renderer = assembly.CreateInstance("Manina.Windows.Forms.ImageListViewRenderers+XPRenderer") as ImageListView.ImageListViewRenderer;
-            ILV_photos.SetRenderer(renderer);
-            ILV_photos.Focus();
-        }
-        /*ILV_photos.View = Manina.Windows.Forms.View.Gallery;
-        ILV_photos.View = Manina.Windows.Forms.View.Thumbnails;
-        ILV_photos.View = Manina.Windows.Forms.View.Details;
-        ILV_photos.View = Manina.Windows.Forms.View.Pane;
-        ILV_photos.ThumbnailSize = new Size(120, 120);
-        ILV_photos.ThumbnailSize = new Size(96, 96);
-        ILV_photos.ThumbnailSize = new Size(150, 150);
-        ILV_photos.ThumbnailSize = new Size(200, 200);
-        */
-
-        private void fillTree() {
-            
-            string[] drives = Environment.GetLogicalDrives();
-            foreach(string dr in drives) {
-                TreeNode node = new TreeNode(dr);
-                node.Tag = dr;
-                node.ImageIndex = 0; // drive icon
-                node.Tag = dr;
-                TV_computer.Nodes.Add(node);
-                node.Nodes.Add(new TreeNode("?"));
-            }
-            TV_computer.BeforeExpand += new TreeViewCancelEventHandler(treeView1_BeforeExpand);
-        }
-
-        void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e) {
-            if((e.Node.Nodes.Count == 1) && (e.Node.Nodes[0].Text == "?")) {
-                RecursiveDirWalk(e.Node);               
-            }
-        }
-
-        private TreeNode RecursiveDirWalk(TreeNode node) {
-            string path = (string)node.Tag;
-            try {
-                node.Nodes.Clear();
-
-
-                string[] dirs = System.IO.Directory.GetDirectories(path);
-                for(int t = 0; t < dirs.Length; t++) {
-                    TreeNode n = new TreeNode(dirs[t].Substring(dirs[t].LastIndexOf('\\') + 1));
-                    n.ImageIndex = 1; // dir icon
-                    n.Tag = dirs[t];
-                    node.Nodes.Add(n);
-                    n.Nodes.Add(new TreeNode("?"));
-                }
-
-                // Optional if you want files as well:
-                string[] files = System.IO.Directory.GetFiles(path);
-                for(int t = 0; t < files.Length; t++) {
-                    TreeNode tn = new TreeNode(System.IO.Path.GetFileName(files[t]));
-                    tn.Tag = files[t];
-                    tn.ImageIndex = 2; // file icon
-                    node.Nodes.Add(tn);
-                } // end of optional file part
-                return node;
-            } catch(UnauthorizedAccessException ex) {
-
-            }
-            return node;
-        }
-        public static bool CanRead(string path) {
-            var readAllow = false;
-            var readDeny = false;
-            var accessControlList = Directory.GetAccessControl(path);
-            if(accessControlList == null)
-                return false;
-            var accessRules = accessControlList.GetAccessRules(true, true, typeof(System.Security.Principal.SecurityIdentifier));
-            if(accessRules == null)
-                return false;
-
-            foreach(FileSystemAccessRule rule in accessRules) {
-                if((FileSystemRights.Read & rule.FileSystemRights) != FileSystemRights.Read) continue;
-
-                if(rule.AccessControlType == AccessControlType.Allow)
-                    readAllow = true;
-                else if(rule.AccessControlType == AccessControlType.Deny)
-                    readDeny = true;
-            }
-
-            return readAllow && !readDeny;
-        }
+        /*
+        // Change the renderer
+        Assembly assembly = Assembly.GetAssembly(typeof(ImageListView));
+        //RendererItem item = (RendererItem)comboBox1.SelectedItem;
+        ImageListView.ImageListViewRenderer renderer = assembly.CreateInstance("Manina.Windows.Forms.ImageListViewRenderers+XPRenderer") as ImageListView.ImageListViewRenderer;
+        ILV_photos.SetRenderer(renderer);
+        ILV_photos.Focus();*/
     }
 }

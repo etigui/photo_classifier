@@ -23,27 +23,43 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.SS = new System.Windows.Forms.StatusStrip();
-            this.TV_computer = new System.Windows.Forms.TreeView();
+            this.TSSL_infos = new System.Windows.Forms.ToolStripStatusLabel();
             this.ILV_photos = new Manina.Windows.Forms.ImageListView();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.IL_tree = new System.Windows.Forms.ImageList(this.components);
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.filesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.MS = new System.Windows.Forms.MenuStrip();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.MS.SuspendLayout();
+            this.TS_action = new System.Windows.Forms.ToolStrip();
+            this.TSB_add = new System.Windows.Forms.ToolStripButton();
+            this.TSB_remove = new System.Windows.Forms.ToolStripButton();
+            this.TSB_clear = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.TSB_thumbnails = new System.Windows.Forms.ToolStripButton();
+            this.TSB_gallery = new System.Windows.Forms.ToolStripButton();
+            this.TSB_pane = new System.Windows.Forms.ToolStripButton();
+            this.TSB_list = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.TSB_info = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.TSDDB_size = new System.Windows.Forms.ToolStripDropDownButton();
+            this.x48ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.x96ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.x120ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.x150ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.x200ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.TSB_person = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.TSB_identify = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.TSB_search = new System.Windows.Forms.ToolStripButton();
+            this.SS.SuspendLayout();
+            this.TS_action.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(414, 27);
+            this.button1.Location = new System.Drawing.Point(176, 231);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 0;
@@ -53,7 +69,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(495, 27);
+            this.button2.Location = new System.Drawing.Point(257, 231);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(85, 23);
             this.button2.TabIndex = 1;
@@ -63,116 +79,287 @@
             // 
             // SS
             // 
-            this.SS.Location = new System.Drawing.Point(0, 414);
+            this.SS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSSL_infos});
+            this.SS.Location = new System.Drawing.Point(0, 267);
             this.SS.Name = "SS";
-            this.SS.Size = new System.Drawing.Size(864, 22);
+            this.SS.Size = new System.Drawing.Size(703, 22);
             this.SS.TabIndex = 2;
             // 
-            // TV_computer
+            // TSSL_infos
             // 
-            this.TV_computer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.TV_computer.ImageIndex = 0;
-            this.TV_computer.ImageList = this.IL_tree;
-            this.TV_computer.Location = new System.Drawing.Point(12, 29);
-            this.TV_computer.Name = "TV_computer";
-            this.TV_computer.SelectedImageIndex = 0;
-            this.TV_computer.Size = new System.Drawing.Size(203, 382);
-            this.TV_computer.TabIndex = 4;
+            this.TSSL_infos.Name = "TSSL_infos";
+            this.TSSL_infos.Size = new System.Drawing.Size(63, 17);
+            this.TSSL_infos.Text = "No photos";
             // 
             // ILV_photos
             // 
             this.ILV_photos.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.ILV_photos.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ILV_photos.DefaultImage = ((System.Drawing.Image)(resources.GetObject("ILV_photos.DefaultImage")));
             this.ILV_photos.ErrorImage = ((System.Drawing.Image)(resources.GetObject("ILV_photos.ErrorImage")));
             this.ILV_photos.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ILV_photos.Location = new System.Drawing.Point(242, 147);
+            this.ILV_photos.Location = new System.Drawing.Point(-1, 28);
             this.ILV_photos.Name = "ILV_photos";
-            this.ILV_photos.Size = new System.Drawing.Size(610, 264);
+            this.ILV_photos.Size = new System.Drawing.Size(705, 239);
             this.ILV_photos.TabIndex = 5;
             this.ILV_photos.Text = "";
+            this.ILV_photos.SelectionChanged += new System.EventHandler(this.ILV_photos_SelectionChanged);
             // 
-            // comboBox1
+            // TS_action
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "dd",
-            "o"});
-            this.comboBox1.Location = new System.Drawing.Point(719, 29);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 6;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.TS_action.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.TS_action.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSB_add,
+            this.TSB_remove,
+            this.TSB_clear,
+            this.toolStripSeparator1,
+            this.TSB_thumbnails,
+            this.TSB_gallery,
+            this.TSB_pane,
+            this.TSB_list,
+            this.toolStripSeparator4,
+            this.TSB_info,
+            this.toolStripSeparator2,
+            this.TSDDB_size,
+            this.toolStripSeparator3,
+            this.TSB_person,
+            this.toolStripSeparator6,
+            this.TSB_identify,
+            this.toolStripSeparator5,
+            this.TSB_search});
+            this.TS_action.Location = new System.Drawing.Point(0, 0);
+            this.TS_action.Name = "TS_action";
+            this.TS_action.Size = new System.Drawing.Size(703, 31);
+            this.TS_action.TabIndex = 7;
+            this.TS_action.Text = "toolStrip1";
             // 
-            // IL_tree
+            // TSB_add
             // 
-            this.IL_tree.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("IL_tree.ImageStream")));
-            this.IL_tree.TransparentColor = System.Drawing.Color.Transparent;
-            this.IL_tree.Images.SetKeyName(0, "imageres_3.ico");
-            this.IL_tree.Images.SetKeyName(1, "imageres_2.ico");
+            this.TSB_add.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_add.Image = ((System.Drawing.Image)(resources.GetObject("TSB_add.Image")));
+            this.TSB_add.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_add.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_add.Name = "TSB_add";
+            this.TSB_add.Size = new System.Drawing.Size(28, 28);
+            this.TSB_add.Text = "Add photos";
+            this.TSB_add.Click += new System.EventHandler(this.TSB_add_Click);
             // 
-            // pictureBox1
+            // TSB_remove
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(255, 78);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 7;
-            this.pictureBox1.TabStop = false;
+            this.TSB_remove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_remove.Enabled = false;
+            this.TSB_remove.Image = ((System.Drawing.Image)(resources.GetObject("TSB_remove.Image")));
+            this.TSB_remove.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_remove.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_remove.Name = "TSB_remove";
+            this.TSB_remove.Size = new System.Drawing.Size(28, 28);
+            this.TSB_remove.Text = "Remove selected photos";
+            this.TSB_remove.Click += new System.EventHandler(this.TSB_remove_Click);
             // 
-            // filesToolStripMenuItem
+            // TSB_clear
             // 
-            this.filesToolStripMenuItem.Name = "filesToolStripMenuItem";
-            this.filesToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.filesToolStripMenuItem.Text = "&File";
+            this.TSB_clear.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_clear.Enabled = false;
+            this.TSB_clear.Image = ((System.Drawing.Image)(resources.GetObject("TSB_clear.Image")));
+            this.TSB_clear.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_clear.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_clear.Name = "TSB_clear";
+            this.TSB_clear.Size = new System.Drawing.Size(28, 28);
+            this.TSB_clear.Text = "Remove all photos";
+            this.TSB_clear.Click += new System.EventHandler(this.TSB_clear_Click);
             // 
-            // editToolStripMenuItem
+            // toolStripSeparator1
             // 
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "&Edit";
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
-            // toolStripMenuItem1
+            // TSB_thumbnails
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(24, 20);
-            this.toolStripMenuItem1.Text = "&?";
+            this.TSB_thumbnails.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_thumbnails.Image = ((System.Drawing.Image)(resources.GetObject("TSB_thumbnails.Image")));
+            this.TSB_thumbnails.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_thumbnails.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_thumbnails.Name = "TSB_thumbnails";
+            this.TSB_thumbnails.Size = new System.Drawing.Size(28, 28);
+            this.TSB_thumbnails.Text = "Thumbnails";
+            this.TSB_thumbnails.Click += new System.EventHandler(this.TSB_thumbnails_Click);
             // 
-            // MS
+            // TSB_gallery
             // 
-            this.MS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.filesToolStripMenuItem,
-            this.editToolStripMenuItem,
-            this.toolStripMenuItem1});
-            this.MS.Location = new System.Drawing.Point(0, 0);
-            this.MS.Name = "MS";
-            this.MS.Size = new System.Drawing.Size(864, 24);
-            this.MS.TabIndex = 3;
-            this.MS.Text = "menuStrip1";
+            this.TSB_gallery.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_gallery.Image = ((System.Drawing.Image)(resources.GetObject("TSB_gallery.Image")));
+            this.TSB_gallery.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_gallery.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_gallery.Name = "TSB_gallery";
+            this.TSB_gallery.Size = new System.Drawing.Size(28, 28);
+            this.TSB_gallery.Text = "Gallery";
+            this.TSB_gallery.Click += new System.EventHandler(this.TSB_gallery_Click);
+            // 
+            // TSB_pane
+            // 
+            this.TSB_pane.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_pane.Image = ((System.Drawing.Image)(resources.GetObject("TSB_pane.Image")));
+            this.TSB_pane.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_pane.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_pane.Name = "TSB_pane";
+            this.TSB_pane.Size = new System.Drawing.Size(28, 28);
+            this.TSB_pane.Text = "Pane";
+            this.TSB_pane.Click += new System.EventHandler(this.TSB_pane_Click);
+            // 
+            // TSB_list
+            // 
+            this.TSB_list.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_list.Image = ((System.Drawing.Image)(resources.GetObject("TSB_list.Image")));
+            this.TSB_list.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_list.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_list.Name = "TSB_list";
+            this.TSB_list.Size = new System.Drawing.Size(28, 28);
+            this.TSB_list.Text = "List";
+            this.TSB_list.Click += new System.EventHandler(this.TSB_list_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 31);
+            // 
+            // TSB_info
+            // 
+            this.TSB_info.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_info.Image = ((System.Drawing.Image)(resources.GetObject("TSB_info.Image")));
+            this.TSB_info.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_info.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_info.Name = "TSB_info";
+            this.TSB_info.Size = new System.Drawing.Size(28, 28);
+            this.TSB_info.Text = "Columns info";
+            this.TSB_info.Click += new System.EventHandler(this.TSB_info_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
+            // 
+            // TSDDB_size
+            // 
+            this.TSDDB_size.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSDDB_size.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.x48ToolStripMenuItem,
+            this.x96ToolStripMenuItem,
+            this.x120ToolStripMenuItem,
+            this.x150ToolStripMenuItem,
+            this.x200ToolStripMenuItem});
+            this.TSDDB_size.Image = ((System.Drawing.Image)(resources.GetObject("TSDDB_size.Image")));
+            this.TSDDB_size.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSDDB_size.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSDDB_size.Name = "TSDDB_size";
+            this.TSDDB_size.Size = new System.Drawing.Size(37, 28);
+            this.TSDDB_size.Text = "Photos size";
+            // 
+            // x48ToolStripMenuItem
+            // 
+            this.x48ToolStripMenuItem.Name = "x48ToolStripMenuItem";
+            this.x48ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x48ToolStripMenuItem.Text = "48 x 48";
+            this.x48ToolStripMenuItem.Click += new System.EventHandler(this.x48ToolStripMenuItem_Click);
+            // 
+            // x96ToolStripMenuItem
+            // 
+            this.x96ToolStripMenuItem.Name = "x96ToolStripMenuItem";
+            this.x96ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x96ToolStripMenuItem.Text = "96 x 96";
+            this.x96ToolStripMenuItem.Click += new System.EventHandler(this.x96ToolStripMenuItem_Click);
+            // 
+            // x120ToolStripMenuItem
+            // 
+            this.x120ToolStripMenuItem.Name = "x120ToolStripMenuItem";
+            this.x120ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x120ToolStripMenuItem.Text = "120 x 120";
+            this.x120ToolStripMenuItem.Click += new System.EventHandler(this.x120ToolStripMenuItem_Click);
+            // 
+            // x150ToolStripMenuItem
+            // 
+            this.x150ToolStripMenuItem.Name = "x150ToolStripMenuItem";
+            this.x150ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x150ToolStripMenuItem.Text = "150 x 150";
+            this.x150ToolStripMenuItem.Click += new System.EventHandler(this.x150ToolStripMenuItem_Click);
+            // 
+            // x200ToolStripMenuItem
+            // 
+            this.x200ToolStripMenuItem.Name = "x200ToolStripMenuItem";
+            this.x200ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x200ToolStripMenuItem.Text = "200 x 200";
+            this.x200ToolStripMenuItem.Click += new System.EventHandler(this.x200ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 31);
+            // 
+            // TSB_person
+            // 
+            this.TSB_person.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_person.Image = ((System.Drawing.Image)(resources.GetObject("TSB_person.Image")));
+            this.TSB_person.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_person.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_person.Name = "TSB_person";
+            this.TSB_person.Size = new System.Drawing.Size(28, 28);
+            this.TSB_person.Text = "Add person";
+            this.TSB_person.Click += new System.EventHandler(this.TSB_person_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 31);
+            // 
+            // TSB_identify
+            // 
+            this.TSB_identify.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_identify.Image = ((System.Drawing.Image)(resources.GetObject("TSB_identify.Image")));
+            this.TSB_identify.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_identify.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_identify.Name = "TSB_identify";
+            this.TSB_identify.Size = new System.Drawing.Size(28, 28);
+            this.TSB_identify.Text = "Identify photos";
+            this.TSB_identify.Click += new System.EventHandler(this.TSB_identify_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(6, 31);
+            // 
+            // TSB_search
+            // 
+            this.TSB_search.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_search.Image = ((System.Drawing.Image)(resources.GetObject("TSB_search.Image")));
+            this.TSB_search.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_search.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_search.Name = "TSB_search";
+            this.TSB_search.Size = new System.Drawing.Size(28, 28);
+            this.TSB_search.Text = "Lunch PhotosFinder";
+            this.TSB_search.Click += new System.EventHandler(this.TSB_search_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(864, 436);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.comboBox1);
+            this.ClientSize = new System.Drawing.Size(703, 289);
+            this.Controls.Add(this.TS_action);
             this.Controls.Add(this.ILV_photos);
-            this.Controls.Add(this.TV_computer);
             this.Controls.Add(this.SS);
-            this.Controls.Add(this.MS);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.MS;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PhotosIdentifier";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.MS.ResumeLayout(false);
-            this.MS.PerformLayout();
+            this.Shown += new System.EventHandler(this.Form1_Shown);
+            this.SS.ResumeLayout(false);
+            this.SS.PerformLayout();
+            this.TS_action.ResumeLayout(false);
+            this.TS_action.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,15 +370,32 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.StatusStrip SS;
-        private System.Windows.Forms.TreeView TV_computer;
         private Manina.Windows.Forms.ImageListView ILV_photos;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ImageList IL_tree;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ToolStripMenuItem filesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.MenuStrip MS;
+        private System.Windows.Forms.ToolStrip TS_action;
+        private System.Windows.Forms.ToolStripButton TSB_remove;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton TSB_clear;
+        private System.Windows.Forms.ToolStripButton TSB_thumbnails;
+        private System.Windows.Forms.ToolStripButton TSB_gallery;
+        private System.Windows.Forms.ToolStripButton TSB_pane;
+        private System.Windows.Forms.ToolStripButton TSB_info;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton TSB_person;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton TSB_search;
+        private System.Windows.Forms.ToolStripButton TSB_list;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripDropDownButton TSDDB_size;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem x48ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton TSB_add;
+        private System.Windows.Forms.ToolStripMenuItem x96ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem x120ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem x150ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem x200ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripStatusLabel TSSL_infos;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripButton TSB_identify;
     }
 }
 

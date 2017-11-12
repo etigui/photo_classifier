@@ -1,0 +1,10 @@
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotosFinder.exe.config
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotosFinder.exe
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotosFinder.pdb
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csprojResolveAssemblyReference.cache
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.Form1.resources
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.Properties.Resources.resources
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csproj.GenerateResource.Cache
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csproj.CoreCompileInputs.cache
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.exe
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.pdb
