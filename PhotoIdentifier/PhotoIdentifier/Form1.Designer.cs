@@ -81,7 +81,7 @@
             // 
             this.SS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSSL_infos});
-            this.SS.Location = new System.Drawing.Point(0, 267);
+            this.SS.Location = new System.Drawing.Point(0, 281);
             this.SS.Name = "SS";
             this.SS.Size = new System.Drawing.Size(703, 22);
             this.SS.TabIndex = 2;
@@ -103,7 +103,7 @@
             this.ILV_photos.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ILV_photos.Location = new System.Drawing.Point(-1, 28);
             this.ILV_photos.Name = "ILV_photos";
-            this.ILV_photos.Size = new System.Drawing.Size(705, 239);
+            this.ILV_photos.Size = new System.Drawing.Size(705, 253);
             this.ILV_photos.TabIndex = 5;
             this.ILV_photos.Text = "";
             this.ILV_photos.SelectionChanged += new System.EventHandler(this.ILV_photos_SelectionChanged);
@@ -316,6 +316,7 @@
             // TSB_identify
             // 
             this.TSB_identify.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_identify.Enabled = false;
             this.TSB_identify.Image = ((System.Drawing.Image)(resources.GetObject("TSB_identify.Image")));
             this.TSB_identify.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.TSB_identify.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -344,7 +345,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(703, 289);
+            this.ClientSize = new System.Drawing.Size(703, 303);
             this.Controls.Add(this.TS_action);
             this.Controls.Add(this.ILV_photos);
             this.Controls.Add(this.SS);

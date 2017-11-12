@@ -43,7 +43,7 @@ namespace PhotoIdentifier {
         }
 
         private void init() {
-            
+
             // Set from size
             this.Width = 750;
             this.Height = 555;
@@ -224,15 +224,21 @@ namespace PhotoIdentifier {
 
         private void TSB_identify_Click(object sender, EventArgs e) {
 
-            // Check if the list is not empty
-            if(ILV_photos.Items.Count != 0) {
+            //Lunch the identification ?
+            if(MessageBox.Show("Do you want to identify the current photos ?", "Identify", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
 
-                //Lunch the identification ?
-                if(MessageBox.Show("Do you want to identify the current photos ?", "Identify", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                // Check if the list is not empty
+                if(ILV_photos.Items.Count != 0) {
 
+                    // Check internet connection
+                    if(internet_connection) {
+
+                    } else {
+                        MessageBox.Show("No Internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                } else {
+                    MessageBox.Show("No photos to identify", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            } else {
-                MessageBox.Show("No photos to identify", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -245,14 +251,17 @@ namespace PhotoIdentifier {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ping_completed_callback(object sender, PingCompletedEventArgs e) {
+            if(e.Cancelled) {
+                MessageBox.Show("No internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
+            if(e.Error != null) {
+                MessageBox.Show("No internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
+            }
             if(e.Reply.Status == IPStatus.Success) {
                 internet_connection = true;
-            }
-            else if(e.Cancelled) {
-                MessageBox.Show("No internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else if(e.Error != null) {
-                MessageBox.Show("No internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                TSB_identify.Enabled = true;
             }
         }
 
