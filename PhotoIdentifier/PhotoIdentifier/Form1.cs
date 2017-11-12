@@ -115,7 +115,7 @@ namespace PhotoIdentifier {
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
-
+            
 
             // Change the renderer
             Assembly assembly = Assembly.GetAssembly(typeof(ImageListView));
@@ -135,6 +135,7 @@ namespace PhotoIdentifier {
         */
 
         private void fillTree() {
+            
             string[] drives = Environment.GetLogicalDrives();
             foreach(string dr in drives) {
                 TreeNode node = new TreeNode(dr);
@@ -149,7 +150,7 @@ namespace PhotoIdentifier {
 
         void treeView1_BeforeExpand(object sender, TreeViewCancelEventArgs e) {
             if((e.Node.Nodes.Count == 1) && (e.Node.Nodes[0].Text == "?")) {
-                RecursiveDirWalk(e.Node);
+                RecursiveDirWalk(e.Node);               
             }
         }
 
