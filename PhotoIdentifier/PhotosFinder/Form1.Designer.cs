@@ -33,7 +33,7 @@
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
-            this.Text = "PhotosFinder";
+            this.Text = "Photos Finder";
             this.ResumeLayout(false);
 
         }

@@ -376,8 +376,7 @@ namespace ImageListViewDemo
         #region Rotate Selected Images
         private void rotateCCWToolStripButton_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Rotating will overwrite original images. Are you sure you want to continue?",
-                "ImageListViewDemo", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
+            if (MessageBox.Show("Rotating will overwrite original images. Are you sure you want to continue?", "Rotate ", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes)
             {
                 foreach (ImageListViewItem item in imageListView1.SelectedItems)
                 {

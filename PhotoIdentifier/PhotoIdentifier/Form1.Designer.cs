@@ -53,8 +53,14 @@
             this.TSB_identify = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.TSB_search = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.TSB_left = new System.Windows.Forms.ToolStripButton();
+            this.TSB_right = new System.Windows.Forms.ToolStripButton();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SS.SuspendLayout();
             this.TS_action.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -116,6 +122,9 @@
             this.TSB_remove,
             this.TSB_clear,
             this.toolStripSeparator1,
+            this.TSB_left,
+            this.TSB_right,
+            this.toolStripSeparator7,
             this.TSB_thumbnails,
             this.TSB_gallery,
             this.TSB_pane,
@@ -130,7 +139,7 @@
             this.TSB_identify,
             this.toolStripSeparator5,
             this.TSB_search});
-            this.TS_action.Location = new System.Drawing.Point(0, 0);
+            this.TS_action.Location = new System.Drawing.Point(0, 24);
             this.TS_action.Name = "TS_action";
             this.TS_action.Size = new System.Drawing.Size(703, 31);
             this.TS_action.TabIndex = 7;
@@ -341,6 +350,49 @@
             this.TSB_search.Text = "Lunch PhotosFinder";
             this.TSB_search.Click += new System.EventHandler(this.TSB_search_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 31);
+            // 
+            // TSB_left
+            // 
+            this.TSB_left.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_left.Image = ((System.Drawing.Image)(resources.GetObject("TSB_left.Image")));
+            this.TSB_left.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_left.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_left.Name = "TSB_left";
+            this.TSB_left.Size = new System.Drawing.Size(28, 28);
+            this.TSB_left.Text = "Rotate left";
+            this.TSB_left.Click += new System.EventHandler(this.TSB_left_Click);
+            // 
+            // TSB_right
+            // 
+            this.TSB_right.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_right.Image = ((System.Drawing.Image)(resources.GetObject("TSB_right.Image")));
+            this.TSB_right.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_right.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_right.Name = "TSB_right";
+            this.TSB_right.Size = new System.Drawing.Size(28, 28);
+            this.TSB_right.Text = "Rotate right";
+            this.TSB_right.Click += new System.EventHandler(this.TSB_right_Click);
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(703, 24);
+            this.menuStrip1.TabIndex = 8;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "&File";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -349,18 +401,22 @@
             this.Controls.Add(this.TS_action);
             this.Controls.Add(this.ILV_photos);
             this.Controls.Add(this.SS);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PhotosIdentifier";
+            this.Text = "Photos Identifier";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.SS.ResumeLayout(false);
             this.SS.PerformLayout();
             this.TS_action.ResumeLayout(false);
             this.TS_action.PerformLayout();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -397,6 +453,11 @@
         private System.Windows.Forms.ToolStripStatusLabel TSSL_infos;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripButton TSB_identify;
+        private System.Windows.Forms.ToolStripButton TSB_left;
+        private System.Windows.Forms.ToolStripButton TSB_right;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
     }
 }
 

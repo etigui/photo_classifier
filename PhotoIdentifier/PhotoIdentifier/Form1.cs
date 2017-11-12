@@ -13,8 +13,8 @@ using System.Windows.Forms;
 using System.IO;
 using System.Reflection;
 using Manina.Windows.Forms;
-using System.Security.AccessControl;
 using System.Net.NetworkInformation;
+using PhotoIdentifier.Properties;
 
 //Face Detect + Identifier
 //https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/howtoidentifyfacesinimage
@@ -22,17 +22,27 @@ using System.Net.NetworkInformation;
 // Visio computer
 //https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/vision-api-how-to-topics/howtocallvisionapi
 
+/*
+// Change the renderer
+Assembly assembly = Assembly.GetAssembly(typeof(ImageListView));
+//RendererItem item = (RendererItem)comboBox1.SelectedItem;
+ImageListView.ImageListViewRenderer renderer = assembly.CreateInstance("Manina.Windows.Forms.ImageListViewRenderers+XPRenderer") as ImageListView.ImageListViewRenderer;
+ILV_photos.SetRenderer(renderer);
+ILV_photos.Focus();
+*/
+
 namespace PhotoIdentifier {
     public partial class Form1:Form {
-
-        private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient("aeb4502d493444c0bf75969ad78f9e99", "https://westeurope.api.cognitive.microsoft.com/face/v1.0");
+                
         private string obama_image = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"person\obama\him\");
         private string obama_family_image = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"person\obama\family\");
         private string person_group_id = "president";
         //private string trump_image = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"\person\trump\him\");
 
         #region vars
+        private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient(Resources.api_key.ToString(), "https://westeurope.api.cognitive.microsoft.com/face/v1.0");
         bool internet_connection = false;
+
         #endregion
 
         #region Init
@@ -63,7 +73,7 @@ namespace PhotoIdentifier {
 
         #endregion
 
-        #region Menu controls
+        #region Controls
 
         private void TSB_info_Click(object sender, EventArgs e) {
 
@@ -74,10 +84,6 @@ namespace PhotoIdentifier {
         }
 
         private void TSB_person_Click(object sender, EventArgs e) {
-
-        }
-
-        private void TSB_group_Click(object sender, EventArgs e) {
 
         }
 
@@ -220,6 +226,42 @@ namespace PhotoIdentifier {
         }
         #endregion
 
+        #region Rotate image right/left
+
+        private void TSB_left_Click(object sender, EventArgs e) {
+            if(ILV_photos.SelectedItems.Count != 0) {
+                if(MessageBox.Show("Rotating will overwrite original images. Are you sure you want to continue?", "Rotate left", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes) {
+                    foreach(ImageListViewItem item in ILV_photos.SelectedItems) {
+                        item.BeginEdit();
+                        using(Image img = Image.FromFile(item.FileName)) {
+                            img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            img.Save(item.FileName);
+                        }
+                        item.Update();
+                        item.EndEdit();
+                    }
+                }
+            }
+        }
+
+        private void TSB_right_Click(object sender, EventArgs e) {
+            if(ILV_photos.SelectedItems.Count != 0) {
+                if(MessageBox.Show("Rotating will overwrite original images. Are you sure you want to continue?", "Rotate right", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes) {
+                    foreach(ImageListViewItem item in ILV_photos.SelectedItems) {
+                        item.BeginEdit();
+                        using(Image img = Image.FromFile(item.FileName)) {
+                            img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            img.Save(item.FileName);
+                        }
+                        item.Update();
+                        item.EndEdit();
+                    }
+                }
+            }
+        }
+
+        #endregion
+
         #region Photos identify
 
         private void TSB_identify_Click(object sender, EventArgs e) {
@@ -340,12 +382,5 @@ namespace PhotoIdentifier {
                 }
             }
         }
-        /*
-        // Change the renderer
-        Assembly assembly = Assembly.GetAssembly(typeof(ImageListView));
-        //RendererItem item = (RendererItem)comboBox1.SelectedItem;
-        ImageListView.ImageListViewRenderer renderer = assembly.CreateInstance("Manina.Windows.Forms.ImageListViewRenderers+XPRenderer") as ImageListView.ImageListViewRenderer;
-        ILV_photos.SetRenderer(renderer);
-        ILV_photos.Focus();*/
     }
 }
