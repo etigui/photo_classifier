@@ -60,6 +60,7 @@
             this.Controls.Add(this.CLB_infos);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ColumnsInfos";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Columns Infos";
             this.Load += new System.EventHandler(this.ColumnsInfos_Load);
             this.ResumeLayout(false);

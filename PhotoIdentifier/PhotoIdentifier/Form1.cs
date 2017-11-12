@@ -78,13 +78,14 @@ namespace PhotoIdentifier {
         private void TSB_info_Click(object sender, EventArgs e) {
 
             // Lunch columns form
-            ColumnsInfos form = new ColumnsInfos();
-            form.ILV_photos = ILV_photos;
-            form.ShowDialog();
+            ColumnsInfos ci = new ColumnsInfos();
+            ci.ILV_photos = ILV_photos;
+            ci.ShowDialog();
         }
 
         private void TSB_person_Click(object sender, EventArgs e) {
-
+            AddPerson ap = new AddPerson();
+            ap.ShowDialog();
         }
 
         private void TSB_search_Click(object sender, EventArgs e) {

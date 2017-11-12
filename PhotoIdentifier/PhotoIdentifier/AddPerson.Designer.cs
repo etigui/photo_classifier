@@ -33,7 +33,8 @@
             this.ClientSize = new System.Drawing.Size(480, 262);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AddPerson";
-            this.Text = "AddPerson";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Add Person";
             this.Load += new System.EventHandler(this.AddPerson_Load);
             this.ResumeLayout(false);
 
