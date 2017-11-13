@@ -56,6 +56,7 @@
             this.TSB_identify = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.TSB_search = new System.Windows.Forms.ToolStripButton();
+            this.TSB_manage_person = new System.Windows.Forms.ToolStripButton();
             this.SS.SuspendLayout();
             this.TS_action.SuspendLayout();
             this.SuspendLayout();
@@ -132,6 +133,7 @@
             this.TSDDB_size,
             this.toolStripSeparator3,
             this.TSB_person,
+            this.TSB_manage_person,
             this.toolStripSeparator6,
             this.TSB_identify,
             this.toolStripSeparator5,
@@ -375,6 +377,17 @@
             this.TSB_search.Text = "Lunch PhotosFinder";
             this.TSB_search.Click += new System.EventHandler(this.TSB_search_Click);
             // 
+            // TSB_manage_person
+            // 
+            this.TSB_manage_person.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_manage_person.Image = ((System.Drawing.Image)(resources.GetObject("TSB_manage_person.Image")));
+            this.TSB_manage_person.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_manage_person.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_manage_person.Name = "TSB_manage_person";
+            this.TSB_manage_person.Size = new System.Drawing.Size(28, 28);
+            this.TSB_manage_person.Text = "Manage person";
+            this.TSB_manage_person.Click += new System.EventHandler(this.TSB_manage_person_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -434,6 +447,7 @@
         private System.Windows.Forms.ToolStripButton TSB_left;
         private System.Windows.Forms.ToolStripButton TSB_right;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripButton TSB_manage_person;
     }
 }
 

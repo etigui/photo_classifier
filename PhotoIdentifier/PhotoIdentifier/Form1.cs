@@ -88,6 +88,11 @@ namespace PhotoIdentifier {
             ap.ShowDialog();
         }
 
+        private void TSB_manage_person_Click(object sender, EventArgs e) {
+            ManagePerson mp = new ManagePerson();
+            mp.ShowDialog();
+        }
+
         private void TSB_search_Click(object sender, EventArgs e) {
             string photos_finder_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"PhotosFinder.exe");
             if(File.Exists(photos_finder_path)) {
