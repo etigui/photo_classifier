@@ -33,7 +33,7 @@ ILV_photos.Focus();
 
 namespace PhotoIdentifier {
     public partial class Form1:Form {
-                
+
         private string obama_image = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"person\obama\him\");
         private string obama_family_image = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"person\obama\family\");
         private string person_group_id = "president";
@@ -63,6 +63,12 @@ namespace PhotoIdentifier {
 
             // Check internet
             check_internet();
+
+            // Creat person dir of not exist
+            string person_dir_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
+            if(!Directory.Exists(person_dir_path)){
+                Directory.CreateDirectory(person_dir_path);
+            }
         }
 
         private void Form1_Load(object sender, EventArgs e) {
@@ -125,9 +131,8 @@ namespace PhotoIdentifier {
             ILV_photos.SuspendLayout();
 
             // Remove selected items
-            foreach(var item in ILV_photos.SelectedItems) {
+            foreach(var item in ILV_photos.SelectedItems)
                 ILV_photos.Items.Remove(item);
-            }
 
             // Resume layout logic.
             ILV_photos.ResumeLayout(true);
@@ -146,15 +151,12 @@ namespace PhotoIdentifier {
         /// Get how many photo selected
         /// </summary>
         private void update_status() {
-
-            // 
-            if(ILV_photos.Items.Count == 0) {
+            if(ILV_photos.Items.Count == 0)
                 update_status("No Photos");
-            } else if(ILV_photos.SelectedItems.Count == 0) {
+            else if(ILV_photos.SelectedItems.Count == 0)
                 update_status(string.Format("{0} Photos", ILV_photos.Items.Count));
-            } else {
+            else
                 update_status(string.Format("{0} Photos ({1} selected)", ILV_photos.Items.Count, ILV_photos.SelectedItems.Count));
-            }
         }
 
         /// <summary>
@@ -320,6 +322,7 @@ namespace PhotoIdentifier {
             Ping myPing = new Ping();
             myPing.PingCompleted += new PingCompletedEventHandler(ping_completed_callback);
             try {
+
                 //Ping google for 3 sec
                 myPing.SendAsync("google.com", 3000, new byte[32], new PingOptions(64, true));
             } catch {
