@@ -31,7 +31,6 @@ namespace PhotoIdentifier {
             
             if(!add_image_db()) 
                 return false;
-            
             return true;
         }
 
@@ -59,8 +58,7 @@ namespace PhotoIdentifier {
                     }
                 }
 
-                //Add photo to database
-                // Get all photos from imagelistview
+                // Add photo to database. Get all photos from imagelistview
                 foreach(ImageListViewItem item in ILV_photos.Items) {
                     using(SqlConnection conn = new SqlConnection(connection_string)) {
                         string query = "INSERT INTO dbo.personPhotos (name, path, id_person) VALUES (@name, @path, @id)";

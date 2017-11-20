@@ -58,7 +58,7 @@
             this.ILV_photos.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ILV_photos.Location = new System.Drawing.Point(-2, 90);
             this.ILV_photos.Name = "ILV_photos";
-            this.ILV_photos.Size = new System.Drawing.Size(577, 255);
+            this.ILV_photos.Size = new System.Drawing.Size(576, 255);
             this.ILV_photos.TabIndex = 3;
             this.ILV_photos.Text = "";
             this.ILV_photos.SelectionChanged += new System.EventHandler(this.ILV_photos_SelectionChanged);
@@ -75,7 +75,7 @@
             this.TS_action.Location = new System.Drawing.Point(0, 0);
             this.TS_action.Name = "TS_action";
             this.TS_action.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.TS_action.Size = new System.Drawing.Size(575, 31);
+            this.TS_action.Size = new System.Drawing.Size(574, 31);
             this.TS_action.TabIndex = 6;
             // 
             // TSB_add
@@ -172,7 +172,7 @@
             // BT_add
             // 
             this.BT_add.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BT_add.Location = new System.Drawing.Point(313, 17);
+            this.BT_add.Location = new System.Drawing.Point(312, 17);
             this.BT_add.Name = "BT_add";
             this.BT_add.Size = new System.Drawing.Size(75, 23);
             this.BT_add.TabIndex = 7;
@@ -197,7 +197,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_name.Location = new System.Drawing.Point(207, 19);
             this.TB_name.Name = "TB_name";
-            this.TB_name.Size = new System.Drawing.Size(100, 20);
+            this.TB_name.Size = new System.Drawing.Size(99, 20);
             this.TB_name.TabIndex = 9;
             this.TB_name.TextChanged += new System.EventHandler(this.TB_name_TextChanged);
             // 
@@ -210,7 +210,7 @@
             this.groupBox1.Controls.Add(this.TB_name);
             this.groupBox1.Location = new System.Drawing.Point(12, 34);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(551, 53);
+            this.groupBox1.Size = new System.Drawing.Size(550, 53);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Add person";
@@ -221,7 +221,7 @@
             this.TSSL_infos});
             this.SS_infos.Location = new System.Drawing.Point(0, 345);
             this.SS_infos.Name = "SS_infos";
-            this.SS_infos.Size = new System.Drawing.Size(575, 22);
+            this.SS_infos.Size = new System.Drawing.Size(574, 22);
             this.SS_infos.TabIndex = 11;
             // 
             // TSSL_infos
@@ -234,15 +234,16 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(575, 367);
+            this.ClientSize = new System.Drawing.Size(574, 367);
             this.Controls.Add(this.SS_infos);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.TS_action);
             this.Controls.Add(this.ILV_photos);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(590, 405);
             this.Name = "AddPerson";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Add Person";
+            this.Text = "PI - add person";
             this.Load += new System.EventHandler(this.AddPerson_Load);
             this.TS_action.ResumeLayout(false);
             this.TS_action.PerformLayout();
