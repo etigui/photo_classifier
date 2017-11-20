@@ -3,13 +3,6 @@ c:\Users\Admin\source\repos\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdent
 c:\Users\Admin\source\repos\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Properties.Resources.resources
 c:\Users\Admin\source\repos\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.GenerateResource.Cache
 c:\Users\Admin\source\repos\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.AddPerson.resources
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ColumnsInfos.resources
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Form1.resources
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ManagePerson.resources
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Properties.Resources.resources
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.GenerateResource.Cache
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\photos.mdf
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\photos_log.ldf
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.exe.config
@@ -25,5 +18,12 @@ C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Extensions.xml
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Primitives.xml
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csprojResolveAssemblyReference.cache
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.AddPerson.resources
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ColumnsInfos.resources
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Form1.resources
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ManagePerson.resources
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Properties.Resources.resources
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.GenerateResource.Cache
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.exe
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.pdb
