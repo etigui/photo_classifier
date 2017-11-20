@@ -88,7 +88,7 @@
             this.CB_name.Size = new System.Drawing.Size(121, 21);
             this.CB_name.TabIndex = 9;
             this.CB_name.Text = "Select name";
-            this.CB_name.SelectionChangeCommitted += new System.EventHandler(this.CB_name_SelectionChangeCommitted);
+            this.CB_name.SelectedIndexChanged += new System.EventHandler(this.CB_name_SelectedIndexChanged);
             // 
             // label1
             // 

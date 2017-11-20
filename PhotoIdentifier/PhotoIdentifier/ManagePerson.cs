@@ -19,10 +19,32 @@ namespace PhotoIdentifier {
 
         #region Vars
         private const string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
-        private Dictionary<string, string> person_name = new Dictionary<string, string>();
         private List<string> person_image = new List<string>();
-        private string exec_path = Path.GetDirectoryName(Application.ExecutablePath);
+        private string person_app_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
         #endregion
+
+        private void ManagePerson_Load(object sender, EventArgs e) {
+
+            // Get name and path from person directory
+            Dictionary<string, string> person_name = get_all_person();
+
+            // Check if something in the dico
+            if(person_name.Count() != 0) {
+
+                // Add name to combobox
+                CB_name.DataSource = new BindingSource(get_all_person(), null);
+                CB_name.DisplayMember = "Value";
+                CB_name.ValueMember = "Value";
+                CB_name.ValueMember = "Key";
+            } else {
+                TSSL_infos.Text = "No person added";
+                BT_validate.Enabled = false;
+                CB_name.Enabled = false;
+                TSB_add.Enabled = false;
+                TSB_clear.Enabled = false;
+                TSB_remove.Enabled = false;
+            }
+        }
 
         #region Change thumbnails size
 
@@ -68,7 +90,7 @@ namespace PhotoIdentifier {
         }
         #endregion
 
-        #region Add/remove/clear images
+        #region Add/remove/clear photos
 
         private void TSB_add_Click(object sender, EventArgs e) {
 
@@ -132,8 +154,82 @@ namespace PhotoIdentifier {
         }
         #endregion
 
+        #region Add person photos
+
+        /// <summary>
+        /// Add person of the selected photos
+        /// </summary>
+        private void add_person_photos() {
+            ILV_photos.Items.Clear();
+            KeyValuePair<string, string> item = (KeyValuePair<string, string>)CB_name.SelectedItem;
+            string path = Path.Combine(person_app_path, item.Key);
+            if(Directory.Exists(path)) {
+                string[] files = get_person_photos(path);
+                if(files != null) {
+                    foreach(string file in files) {
+                        if(File.Exists(file)) {
+                            ILV_photos.Items.Add(file);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void CB_name_SelectedIndexChanged(object sender, EventArgs e) {
+            add_person_photos();
+        }
+        #endregion
+
+        #region Get files/directory
+
+        /// <summary>
+        /// Get photos path from person name
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string[] get_person_photos(string path) {
+            return Directory.GetFiles(path, "*.*");
+        }
+
+        /// <summary>
+        /// Get name and path from person directory
+        /// </summary>
+        /// <returns></returns>
+        private Dictionary<string, string> get_all_person() {
+            Dictionary<string, string> person_name = new Dictionary<string, string>();
+            string[] names = Directory.GetDirectories(person_app_path);
+            foreach(string name in names) {
+                string tmp_name = Path.GetFileName(name);
+                if(tmp_name.Contains("_")) {
+                    string[] parts = tmp_name.Split('_');
+                    person_name.Add(tmp_name, parts[1]);
+                }
+            }
+            return person_name;
+        }
+        #endregion
+
+        #region Add/delete person photos
+
         private void BT_validate_Click(object sender, EventArgs e) {
         }
+
+        private void process_delete_photos() {
+
+        }
+
+        private void preocess_add_photos() {
+
+        }
+
+        private void add_photo() {
+
+        }
+
+        private void delete_photo() {
+
+        }
+        #endregion
 
         /// <summary>
         /// Get all name and path from the person database
@@ -150,34 +246,10 @@ namespace PhotoIdentifier {
 
                         // Read all the name in the database
                         while(reader.Read()) {
-                            person_name.Add(reader["path"].ToString(), reader["name"].ToString());
+                            //person_name.Add(reader["path"].ToString(), reader["name"].ToString());
                         }
                     }
                 }
-            }
-        }
-        
-        private void ManagePerson_Load(object sender, EventArgs e) {
-
-            //Get name and path from databse
-            get_name_db();
-
-            // Add name to combobox
-            
-            CB_name.DataSource = new BindingSource(person_name, null);
-            CB_name.DisplayMember = "Value";
-            CB_name.ValueMember = "Value";
-            CB_name.ValueMember = "Key";
-            CB_name.Text = "Select name";
-        }
-
-        private void CB_name_SelectionChangeCommitted(object sender, EventArgs e) {
-            ILV_photos.Items.Clear();
-            KeyValuePair<string, string> item = (KeyValuePair<string, string>)CB_name.SelectedItem;
-            string path = Path.Combine(exec_path, "person", item.Key);
-
-            foreach(string file in Directory.GetFiles(path, "*.*")) {
-                ILV_photos.Items.Add(file);
             }
         }
     }

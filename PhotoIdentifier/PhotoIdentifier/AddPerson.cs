@@ -177,5 +177,13 @@ namespace PhotoIdentifier {
             }
         }
         #endregion
+
+        #region test
+        private void add_person_photos() {
+            foreach(ImageListViewItem item in ILV_photos.Items) {
+
+            }
+        }
+        #endregion
     }
 }
