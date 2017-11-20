@@ -1,4 +1,5 @@
-﻿using PhotoIdentifier.Properties;
+﻿using Manina.Windows.Forms;
+using PhotoIdentifier.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,24 +19,31 @@ namespace PhotoIdentifier {
         }
 
         #region Vars
-        private const string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
-        private List<string> person_image = new List<string>();
         private string person_app_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
+        List<string> lst_photos_add = new List<string>();
+        List<string> lst_photos_remove = new List<string>();
+        Person person = null;
         #endregion
+
+        #region Load
 
         private void ManagePerson_Load(object sender, EventArgs e) {
 
+            person = new Person();
+
             // Get name and path from person directory
-            Dictionary<string, string> person_name = get_all_person();
+            Dictionary<string, string> person_name = person.get_all_person();
 
             // Check if something in the dico
             if(person_name.Count() != 0) {
 
                 // Add name to combobox
-                CB_name.DataSource = new BindingSource(get_all_person(), null);
+                CB_name.DataSource = new BindingSource(person_name, null);
                 CB_name.DisplayMember = "Value";
                 CB_name.ValueMember = "Value";
                 CB_name.ValueMember = "Key";
+                TSB_clear.Enabled = true;
+                TSB_remove.Enabled = true;
             } else {
                 TSSL_infos.Text = "No person added";
                 BT_validate.Enabled = false;
@@ -45,6 +53,7 @@ namespace PhotoIdentifier {
                 TSB_remove.Enabled = false;
             }
         }
+        #endregion
 
         #region Change thumbnails size
 
@@ -99,6 +108,9 @@ namespace PhotoIdentifier {
             ofd.Multiselect = true;
             if(ofd.ShowDialog() == DialogResult.OK) {
                 ILV_photos.Items.AddRange(ofd.FileNames);
+
+                // Photos added
+                lst_photos_add.AddRange(ofd.FileNames);
                 TSB_clear.Enabled = true;
                 TSB_remove.Enabled = true;
                 update_status();
@@ -113,6 +125,9 @@ namespace PhotoIdentifier {
             // Remove selected items
             foreach(var item in ILV_photos.SelectedItems) {
                 ILV_photos.Items.Remove(item);
+
+                // Photos remove
+                lst_photos_remove.Add(item.FileName);
             }
 
             // Resume layout logic.
@@ -121,6 +136,13 @@ namespace PhotoIdentifier {
         }
 
         private void TSB_clear_Click(object sender, EventArgs e) {
+
+            // Get all photos from imagelistview
+            foreach(ImageListViewItem item in ILV_photos.Items) {
+
+                // Photos remove all
+                lst_photos_remove.Add(item.FileName);
+            }
             ILV_photos.Items.Clear();
             update_status();
         }
@@ -161,10 +183,12 @@ namespace PhotoIdentifier {
         /// </summary>
         private void add_person_photos() {
             ILV_photos.Items.Clear();
+
+            // Get current person name
             KeyValuePair<string, string> item = (KeyValuePair<string, string>)CB_name.SelectedItem;
             string path = Path.Combine(person_app_path, item.Key);
             if(Directory.Exists(path)) {
-                string[] files = get_person_photos(path);
+                string[] files = person.get_person_photos(path);
                 if(files != null) {
                     foreach(string file in files) {
                         if(File.Exists(file)) {
@@ -180,77 +204,30 @@ namespace PhotoIdentifier {
         }
         #endregion
 
-        #region Get files/directory
-
-        /// <summary>
-        /// Get photos path from person name
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        private string[] get_person_photos(string path) {
-            return Directory.GetFiles(path, "*.*");
-        }
-
-        /// <summary>
-        /// Get name and path from person directory
-        /// </summary>
-        /// <returns></returns>
-        private Dictionary<string, string> get_all_person() {
-            Dictionary<string, string> person_name = new Dictionary<string, string>();
-            string[] names = Directory.GetDirectories(person_app_path);
-            foreach(string name in names) {
-                string tmp_name = Path.GetFileName(name);
-                if(tmp_name.Contains("_")) {
-                    string[] parts = tmp_name.Split('_');
-                    person_name.Add(tmp_name, parts[1]);
-                }
-            }
-            return person_name;
-        }
-        #endregion
-
-        #region Add/delete person photos
+        #region Update photos
 
         private void BT_validate_Click(object sender, EventArgs e) {
-        }
 
-        private void process_delete_photos() {
+            // Check if user modify something
+            if((lst_photos_add.Count() != 0) || (lst_photos_remove.Count() != 0)) {
+                DialogResult dialogResult = MessageBox.Show("Are you sure you to save the modification ?", "Modify ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if(dialogResult == DialogResult.Yes) {
 
-        }
-
-        private void preocess_add_photos() {
-
-        }
-
-        private void add_photo() {
-
-        }
-
-        private void delete_photo() {
-
-        }
-        #endregion
-
-        /// <summary>
-        /// Get all name and path from the person database
-        /// </summary>
-        /// <returns></returns>
-        private void get_name_db() {
-
-            // Get name + path
-            using(SqlConnection conn = new SqlConnection(connection_string)) {
-                conn.Open();
-                string query = "SELECT name, path FROM person";
-                using(SqlCommand cmd = new SqlCommand(query, conn)) {
-                    using(SqlDataReader reader = cmd.ExecuteReader()) {
-
-                        // Read all the name in the database
-                        while(reader.Read()) {
-                            //person_name.Add(reader["path"].ToString(), reader["name"].ToString());
-                        }
+                    // Get current person name
+                    KeyValuePair<string, string> item = (KeyValuePair<string, string>)CB_name.SelectedItem;
+                    
+                    // Check if could update the person
+                    if(!person.process_photos(lst_photos_add, lst_photos_remove, item.Key)) {
+                        MessageBox.Show("The person could not be modified", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    } else {
+                        MessageBox.Show("Modification saved.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        lst_photos_add.Clear();
+                        lst_photos_remove.Clear();
+                        add_person_photos();
                     }
                 }
             }
         }
+        #endregion
     }
 }

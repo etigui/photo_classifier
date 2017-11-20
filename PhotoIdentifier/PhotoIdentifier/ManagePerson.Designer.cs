@@ -70,9 +70,9 @@
             // BT_validate
             // 
             this.BT_validate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.BT_validate.Location = new System.Drawing.Point(305, 17);
+            this.BT_validate.Location = new System.Drawing.Point(312, 17);
             this.BT_validate.Name = "BT_validate";
-            this.BT_validate.Size = new System.Drawing.Size(112, 23);
+            this.BT_validate.Size = new System.Drawing.Size(97, 23);
             this.BT_validate.TabIndex = 10;
             this.BT_validate.Text = "Validate changes";
             this.BT_validate.UseVisualStyleBackColor = true;
@@ -83,7 +83,7 @@
             this.CB_name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.CB_name.FormattingEnabled = true;
-            this.CB_name.Location = new System.Drawing.Point(178, 19);
+            this.CB_name.Location = new System.Drawing.Point(185, 19);
             this.CB_name.Name = "CB_name";
             this.CB_name.Size = new System.Drawing.Size(121, 21);
             this.CB_name.TabIndex = 9;
@@ -95,7 +95,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(134, 22);
+            this.label1.Location = new System.Drawing.Point(141, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 8;

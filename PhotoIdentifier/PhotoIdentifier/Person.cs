@@ -7,147 +7,92 @@ using System.Data.SqlClient;
 using Manina.Windows.Forms;
 using System.IO;
 using System.Windows.Forms;
+using System.Security.Cryptography;
 
 namespace PhotoIdentifier {
     class Person {
 
         #region Vars
-        private const string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
+        private string person_app_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
+        private string name_path = "";
         private static Random rnd = new Random();
-        private string exec_path = Path.GetDirectoryName(Application.ExecutablePath);
-        private string dir_path = "";
         public ImageListView ILV_photos;
         #endregion
 
         #region Add person
 
         /// <summary>
-        /// Add user
+        /// Add person
         /// </summary>
-        /// <param name="name">Name of the person to add</param>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public bool add_person(string name) {
-            if(!add_name_db(name)) 
+            if(!add_dir_name(name))
                 return false;
-            
-            if(!add_image_db()) 
+            if(!copy_photos())
                 return false;
             return true;
         }
 
         /// <summary>
-        /// Add image of person to database
+        /// Create directory to store the person photos
         /// </summary>
+        /// <param name="name"></param>
         /// <returns></returns>
-        private bool add_image_db() {
-            try {
-                if(!copy_files())
-                    return false;
-
-                // Get id from path
-                string id = "";
-                using(SqlConnection conn = new SqlConnection(connection_string)) {
-                    conn.Open();
-                    string query = "SELECT id FROM person WHERE path=@path";
-                    using(SqlCommand cmd = new SqlCommand(query, conn)) {
-                        cmd.Parameters.AddWithValue("@path", dir_path.ToString());
-                        using(SqlDataReader reader = cmd.ExecuteReader()) {
-                            if(reader.Read()) {
-                                id = reader["id"].ToString();
-                            }
-                        }
-                    }
-                }
-
-                // Add photo to database. Get all photos from imagelistview
-                foreach(ImageListViewItem item in ILV_photos.Items) {
-                    using(SqlConnection conn = new SqlConnection(connection_string)) {
-                        string query = "INSERT INTO dbo.personPhotos (name, path, id_person) VALUES (@name, @path, @id)";
-                        using(SqlCommand cmd = new SqlCommand(query, conn)) {
-
-                            // Param to add
-                            cmd.Parameters.AddWithValue("@name", (Path.GetFileName(item.FileName)).ToString());
-                            cmd.Parameters.AddWithValue("@path", (Path.Combine(exec_path, "person", dir_path, Path.GetFileName(item.FileName))).ToString());
-                            cmd.Parameters.AddWithValue("@id", id);
-
-                            // No close cause "using"
-                            conn.Open();
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
-                }
-
-                return true;
-            } catch (Exception ex){ MessageBox.Show(ex.ToString()); return false; }
-            
-        }
-
-        /// <summary>
-        /// Add user to the database
-        /// </summary>
-        /// <param name="name">Name of the person to add</param>
-        /// <returns></returns>
-        private bool add_name_db(string name) {
+        private bool add_dir_name(string name) {
             try {
 
-                // Dir will be created to stock the photos
-                dir_path = $"{name}_{get_random(10)}";
+                // Dir will be created to store the photos
+                name_path = $"{name}_{get_random(10)}";
 
                 // Create specific directory
-                string dir = Path.Combine(exec_path, "person", dir_path);
+                string dir = Path.Combine(person_app_path, name_path);
                 if(!Directory.Exists(dir)) {
                     Directory.CreateDirectory(dir);
                 } else {
 
                     // If fail create new dir
-                    dir_path = $"{name}_{get_random(20)}";
-                    Directory.CreateDirectory(Path.Combine(exec_path, "person", dir_path));
-                }
-
-                using(SqlConnection conn = new SqlConnection(connection_string)) {
-                    string query = "INSERT INTO dbo.person (name, path, date) VALUES (@name, @path, @date)";
-                    using(SqlCommand cmd = new SqlCommand(query, conn)) {
-
-                        // Param to add
-                        cmd.Parameters.AddWithValue("@name", name);
-                        cmd.Parameters.AddWithValue("@path", dir_path);
-                        cmd.Parameters.AddWithValue("@date", (get_date_sql()).ToString());
-
-                        // No close cause "using"
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                    }
+                    name_path = $"{name}_{get_random(20)}";
+                    Directory.CreateDirectory(Path.Combine(person_app_path, name_path));
                 }
                 return true;
-            } catch (Exception ex) { MessageBox.Show(ex.ToString());  return false;}
+            } catch { return false; }
         }
 
-        private bool copy_files() {
+        /// <summary>
+        /// Copy photos
+        /// </summary>
+        /// <returns></returns>
+        private bool copy_photos() {
             try {
-
                 // Get all photos from imagelistview
                 foreach(ImageListViewItem item in ILV_photos.Items) {
 
-                    // Get source/dest file
+                    // Get source file
                     string source = item.FileName;
-                    string dest = Path.Combine(exec_path, "person", dir_path, Path.GetFileName(item.FileName));
 
                     // Copy photo to specific directory
                     if(File.Exists(source)) {
-                        File.Copy(source, dest, true);
+
+                        // Get hash from source file
+                        string hash = get_hsah256_file(source);
+
+                        // Dest file
+                        string dest = Path.Combine(person_app_path, name_path, (hash + Path.GetExtension(item.FileName)));
+
+                        // Check if hash could be calculated
+                        if(hash != "") {
+                            if(!File.Exists(dest))
+                                File.Copy(source, dest, true);
+                        } else {
+                            return false;
+                        }
+                    } else {
+                        return false;
                     }
                 }
                 return true;
-            }catch (Exception ex){ MessageBox.Show(ex.ToString()); return false; }
-        }
-        #endregion
-
-        /// <summary>
-        /// Get formatted date to sql DB
-        /// </summary>
-        /// <returns>date</returns>
-        private string get_date_sql() {
-            DateTime myDateTime = DateTime.Now;
-            return myDateTime.ToString("yyyy-MM-dd HH:mm:ss.fff");
+            } catch { MessageBox.Show("ddd"); return false; }
         }
 
         /// <summary>
@@ -161,18 +106,129 @@ namespace PhotoIdentifier {
         }
 
         /// <summary>
-        /// Hash string to SHA256
+        /// Get 256 hash from file
         /// </summary>
-        /// <param name="input">String to hash</param>
+        /// <param name="path"></param>
         /// <returns></returns>
-        private string get_sha256(string input) {
-            System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
-            System.Text.StringBuilder hash = new System.Text.StringBuilder();
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input), 0, Encoding.UTF8.GetByteCount(input));
-            foreach(byte theByte in crypto) {
-                hash.Append(theByte.ToString("x2"));
-            }
-            return hash.ToString();
+        private string get_hsah256_file(string path) {
+            string hash = "";
+            try {
+
+                // Create a fileStream for the file.
+                using(FileStream fs = new FileStream(path, FileMode.Open)) {
+
+                    // Initialize a SHA256 hash object.
+                    SHA256 hash_256 = SHA256Managed.Create();
+
+                    // Be sure it's positioned to the beginning of the stream.
+                    fs.Position = 0;
+
+                    // Compute the hash of the fileStream.
+                    hash = BitConverter.ToString(hash_256.ComputeHash(fs)).Replace("-", String.Empty);
+                }
+                return hash;
+            } catch { return ""; }
         }
+
+        #endregion
+
+        #region Get files/directory
+
+        /// <summary>
+        /// Get photos path from person name
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public string[] get_person_photos(string path) {
+            return Directory.GetFiles(path, "*.*");
+        }
+
+        /// <summary>
+        /// Get name and path from person directory
+        /// </summary>
+        /// <returns></returns>
+        public Dictionary<string, string> get_all_person() {
+            Dictionary<string, string> person_name = new Dictionary<string, string>();
+            string[] names = Directory.GetDirectories(person_app_path);
+            foreach(string name in names) {
+                string tmp_name = Path.GetFileName(name);
+                if(tmp_name.Contains("_")) {
+                    string[] parts = tmp_name.Split('_');
+                    person_name.Add(tmp_name, parts[1]);
+                }
+            }
+            return person_name;
+        }
+        #endregion
+
+        #region Update person
+
+        /// <summary>
+        /// Update person photos
+        /// </summary>
+        /// <param name="lst_photos_add"></param>
+        /// <param name="lst_photos_remove"></param>
+        /// <returns></returns>
+        public bool process_photos(List<string> lst_photos_add, List<string> lst_photos_remove, string name) {
+
+            // Process addded photos
+            foreach(string photo in lst_photos_add) {
+                if(!add_photos(photo, name)) {
+                    return false;
+                }
+            }
+
+            // Process removed photos
+            foreach(string photo in lst_photos_remove) {
+                if(!remove_photos(photo)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Add person photos
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private bool add_photos(string path, string name) {
+            try {
+                if(File.Exists(path)) {
+
+                    // Get hash from file
+                    string hash = get_hsah256_file(path);
+
+                    // Check if hash could be calculated
+                    if(hash != "") {
+
+                        // Dest file
+                        string dest = Path.Combine(person_app_path, name, (hash + Path.GetExtension(path)));
+                        if(!File.Exists(dest)) {
+                            File.Copy(path, dest, true);
+                        }
+                    } else {
+                        return false;
+                    }
+                }
+                return true;
+            } catch { return false; }
+        }
+
+        /// <summary>
+        /// Remove person photos
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private bool remove_photos(string path) {
+            try {
+                if(File.Exists(path)) {
+                    File.Delete(path);
+                }
+                return true;
+            } catch { return false; }
+        }
+        #endregion
     }
 }
