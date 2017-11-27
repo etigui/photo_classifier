@@ -41,7 +41,6 @@ namespace PhotoIdentifier {
                 CB_name.DataSource = new BindingSource(person_name, null);
                 CB_name.DisplayMember = "Value";
                 CB_name.ValueMember = "Value";
-                CB_name.ValueMember = "Key";
                 TSB_clear.Enabled = true;
                 TSB_remove.Enabled = true;
             } else {
@@ -155,7 +154,7 @@ namespace PhotoIdentifier {
         /// </summary>
         private void update_status() {
             if(ILV_photos.Items.Count == 0) {
-                update_status("No Photos");
+                update_status("No photos");
             } else if(ILV_photos.SelectedItems.Count == 0) {
                 update_status(string.Format("{0} Photos", ILV_photos.Items.Count));
             } else {
