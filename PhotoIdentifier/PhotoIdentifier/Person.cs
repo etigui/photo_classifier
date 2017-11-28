@@ -154,7 +154,7 @@ namespace PhotoIdentifier {
                 string tmp_name = Path.GetFileName(name);
                 if(tmp_name.Contains("_")) {
                     string[] parts = tmp_name.Split('_');
-                    person_name.Add(tmp_name, parts[0]); //parts[1]
+                    person_name.Add(tmp_name, parts[0]);
                 }
             }
             return person_name;
