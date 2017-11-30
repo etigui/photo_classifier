@@ -244,7 +244,7 @@
             this.MinimumSize = new System.Drawing.Size(590, 405);
             this.Name = "ManagePerson";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PI - manage person";
+            this.Text = "PI - Manage person";
             this.Load += new System.EventHandler(this.ManagePerson_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

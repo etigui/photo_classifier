@@ -1,5 +1,5 @@
 ﻿namespace PhotoIdentifier {
-    partial class Form1 {
+    partial class PI {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -23,9 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PI));
             this.SS = new System.Windows.Forms.StatusStrip();
             this.TSSL_infos = new System.Windows.Forms.ToolStripStatusLabel();
             this.ILV_photos = new Manina.Windows.Forms.ImageListView();
@@ -60,26 +58,6 @@
             this.SS.SuspendLayout();
             this.TS_action.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(176, 231);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Add person";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(257, 231);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(85, 23);
-            this.button2.TabIndex = 1;
-            this.button2.Text = "Detect person";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // SS
             // 
@@ -388,7 +366,7 @@
             this.TSB_search.Text = "Lunch PhotosFinder";
             this.TSB_search.Click += new System.EventHandler(this.TSB_search_Click);
             // 
-            // Form1
+            // PI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -396,14 +374,10 @@
             this.Controls.Add(this.TS_action);
             this.Controls.Add(this.ILV_photos);
             this.Controls.Add(this.SS);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "Form1";
+            this.Name = "PI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PI";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            this.Shown += new System.EventHandler(this.Form1_Shown);
             this.SS.ResumeLayout(false);
             this.SS.PerformLayout();
             this.TS_action.ResumeLayout(false);
@@ -414,9 +388,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.StatusStrip SS;
         private Manina.Windows.Forms.ImageListView ILV_photos;
         private System.Windows.Forms.ToolStrip TS_action;

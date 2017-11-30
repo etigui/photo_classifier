@@ -243,7 +243,7 @@
             this.MinimumSize = new System.Drawing.Size(590, 405);
             this.Name = "AddPerson";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PI - add person";
+            this.Text = "PI - Add person";
             this.Load += new System.EventHandler(this.AddPerson_Load);
             this.TS_action.ResumeLayout(false);
             this.TS_action.PerformLayout();

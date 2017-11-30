@@ -134,6 +134,10 @@ namespace PhotoIdentifier {
 
         #region Get files/directory
 
+        public string[] get_all_person_dir() {
+            return Directory.GetDirectories(person_app_path);
+        }
+
         /// <summary>
         /// Get photos path from person name
         /// </summary>

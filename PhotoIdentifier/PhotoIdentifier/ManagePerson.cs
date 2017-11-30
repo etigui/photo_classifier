@@ -103,8 +103,9 @@ namespace PhotoIdentifier {
         private void TSB_add_Click(object sender, EventArgs e) {
 
             // Add photos to the list
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Multiselect = true;
+            OpenFileDialog ofd = new OpenFileDialog {
+                Multiselect = true
+            };
             if(ofd.ShowDialog() == DialogResult.OK) {
                 ILV_photos.Items.AddRange(ofd.FileNames);
 

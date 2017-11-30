@@ -32,24 +32,24 @@ ILV_photos.Focus();
 */
 
 namespace PhotoIdentifier {
-    public partial class Form1:Form {
-
-        private string obama_image = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"person\obama\him\");
-        private string obama_family_image = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"person\obama\family\");
-        private string person_group_id = "president";
-        //private string trump_image = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"\person\trump\him\");
+    public partial class PI:Form {
 
         #region vars
         private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient(Resources.api_key.ToString(), "https://westeurope.api.cognitive.microsoft.com/face/v1.0");
-        bool internet_connection = false;
+        private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
+        private bool internet_connection = false;
+        private Conf conf;
 
         #endregion
 
         #region Init
 
-        public Form1() {
+        public PI() {
             InitializeComponent();
             init();
+            //string pathss = @"C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\person\obama_vjkfesnbkjld";
+            //IEnumerable<string> ss = Directory.GetFiles(pathss, "*.*").Where(file => !string.Equals(file, ".zip", StringComparison.InvariantCultureIgnoreCase));//.Where(name => !name.EndsWith(".id"));
+            //List<string> files = Directory.EnumerateFiles(pathss, "*.*",SearchOption.AllDirectories).Where(n => Path.GetExtension(n) != ".id").ToList();
         }
 
         private void init() {
@@ -69,12 +69,9 @@ namespace PhotoIdentifier {
             if(!Directory.Exists(person_dir_path)){
                 Directory.CreateDirectory(person_dir_path);
             }
-        }
 
-        private void Form1_Load(object sender, EventArgs e) {
-        }
-
-        private void Form1_Shown(object sender, EventArgs e) {
+            // Create config file
+            conf = new Conf(conf_file_path);
         }
 
         #endregion
@@ -84,8 +81,9 @@ namespace PhotoIdentifier {
         private void TSB_info_Click(object sender, EventArgs e) {
 
             // Lunch columns form
-            ColumnsInfos ci = new ColumnsInfos();
-            ci.ILV_photos = ILV_photos;
+            ColumnsInfos ci = new ColumnsInfos {
+                ILV_photos = ILV_photos
+            };
             ci.ShowDialog();
         }
 
@@ -110,14 +108,15 @@ namespace PhotoIdentifier {
             }
         }
         #endregion
-
+        
         #region Add/remove/clear images
 
         private void TSB_add_Click(object sender, EventArgs e) {
 
             // Add photos to the list
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Multiselect = true;
+            OpenFileDialog ofd = new OpenFileDialog {
+                Multiselect = true
+            };
             if(ofd.ShowDialog() == DialogResult.OK) {
                 ILV_photos.Items.AddRange(ofd.FileNames);
                 TSB_clear.Enabled = true;
@@ -283,6 +282,11 @@ namespace PhotoIdentifier {
                     // Check internet connection
                     if(internet_connection) {
 
+                        // Start identification
+                        Identify identify = new Identify {
+                            photos_to_identify = ILV_photos
+                        };
+                        identify.ShowDialog();
                     } else {
                         MessageBox.Show("No Internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -329,67 +333,5 @@ namespace PhotoIdentifier {
             }
         }
         #endregion
-
-        async private void button1_Click(object sender, EventArgs e) {
-
-            //TODO maybe add PersistedFaceIds to 
-
-            // Create an empty person group
-            //await faceServiceClient.GetPersonGroupAsync()
-            // await faceServiceClient.CreatePersonGroupAsync(person_group_id, "president");
-
-            // Define president obama and trump
-            CreatePersonResult person_obama = await faceServiceClient.CreatePersonAsync(person_group_id, "obama");
-            // CreatePersonResult person_trump = await faceServiceClient.CreatePersonAsync(person_group_id, "trump");
-
-            foreach(string imagePath in Directory.GetFiles(obama_image, "*.jpg")) {
-                using(Stream s = File.OpenRead(imagePath)) {
-
-                    // Detect faces in the image and add to Anna
-                    await faceServiceClient.AddPersonFaceAsync(person_group_id, person_obama.PersonId, s);
-                }
-            }
-
-            await faceServiceClient.TrainPersonGroupAsync(person_group_id);
-            TrainingStatus trainingStatus = null;
-            while(true) {
-                trainingStatus = await faceServiceClient.GetPersonGroupTrainingStatusAsync(person_group_id);
-
-                if(trainingStatus.Status.ToString() != "running") {
-                    break;
-                }
-
-                await Task.Delay(1000);
-            }
-
-            Debug.WriteLine("trainingStatus OK");
-        }
-
-        async private void button2_Click(object sender, EventArgs e) {
-
-            // The list of Face attributes to return.
-            IEnumerable<FaceAttributeType> faceAttributes = new FaceAttributeType[] { FaceAttributeType.Gender, FaceAttributeType.Age, FaceAttributeType.Smile, FaceAttributeType.Emotion, FaceAttributeType.Glasses, FaceAttributeType.Hair };
-
-            string img = Path.Combine(obama_family_image, "0.jpg");
-            using(Stream s = File.OpenRead(img)) {
-                var faces = await faceServiceClient.DetectAsync(s, returnFaceId: true, returnFaceLandmarks: false, returnFaceAttributes: faceAttributes);
-
-                var faceIds = faces.Select(face => face.FaceId).ToArray();
-
-                var results = await faceServiceClient.IdentifyAsync(person_group_id, faceIds);
-
-                foreach(var identifyResult in results) {
-                    Debug.WriteLine("Result of face: {0}", identifyResult.FaceId);
-                    if(identifyResult.Candidates.Length == 0) {
-                        Debug.WriteLine("No one identified");
-                    } else {
-                        // Get top 1 among all candidates returned
-                        var candidateId = identifyResult.Candidates[0].PersonId;
-                        var person = await faceServiceClient.GetPersonAsync(person_group_id, candidateId);
-                        Debug.WriteLine("Identified as {0}", person.Name);
-                    }
-                }
-            }
-        }
     }
 }

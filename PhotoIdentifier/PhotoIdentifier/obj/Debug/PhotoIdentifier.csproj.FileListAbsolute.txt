@@ -19,11 +19,11 @@ C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Primitives.xml
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.AddPerson.resources
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ColumnsInfos.resources
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Form1.resources
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Identify.resources
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.PI.resources
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ManagePerson.resources
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Properties.Resources.resources
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.GenerateResource.Cache
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.exe
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.pdb
-C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csprojResolveAssemblyReference.cache
