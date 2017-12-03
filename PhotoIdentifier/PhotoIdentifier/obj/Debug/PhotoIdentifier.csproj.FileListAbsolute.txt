@@ -17,6 +17,7 @@ C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Extensions.xml
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Primitives.xml
+C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csprojResolveAssemblyReference.cache
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.AddPerson.resources
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ColumnsInfos.resources
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Identify.resources

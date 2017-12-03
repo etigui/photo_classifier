@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using Microsoft.ProjectOxford.Face;
 using Microsoft.ProjectOxford.Face.Contract;
 using PhotoIdentifier.Properties;
@@ -38,12 +37,11 @@ namespace PhotoIdentifier {
         }
 
         private void Identify_Load(object sender, EventArgs e) {
-           // Init();
-
-            //identify_async();
+            init();
+            identify_async();
         }
 
-        private void Init() {
+        private void init() {
 
             // Get person
             preson = new Person();
@@ -52,181 +50,242 @@ namespace PhotoIdentifier {
             conf = new Conf(conf_file_path);
 
             // Write log
-            LB_log.Items.Add($"[{date.ToString("dd.MM.yyy HH: mm:ss")}] Identification started");
+            //LB_log.Items.Add($"[{date.ToString("dd.MM.yyy HH: mm:ss")}] Identification started");
         }
         #endregion
 
-        #region controls
-
-        private void BT_show_Click(object sender, EventArgs e) {
-            if(BT_show.Text == "˅") {
-                BT_show.Text = "˄";
-                LB_log.Visible = true;
-                LB_log.Location = new System.Drawing.Point(12, 66);
-                this.Width = 450;
-                this.Height = 355;
-            } else if(BT_show.Text == "˄") {
-                BT_show.Text = "˅";
-                LB_log.Visible = false;
-                LB_log.Location = new System.Drawing.Point(12, 36);
-                this.Width = 450;
-                this.Height = 130;
-
-            } else {
-                throw new NotImplementedException("button log error");
-            }
+        #region Controls
+        private void BT_cancel_Click(object sender, EventArgs e) {
+            this.Close();
         }
+
         #endregion
 
         #region Identify
 
         private async Task identify_async() {
-            await add_person_async();
-            PersonIdentified pi = await identify_person_async();
-            List<AnalysisResult> ar = await identify_image_async();
 
-            //TODO get datas
-        }
-
-        private async Task<PersonIdentified> identify_person_async() {
-
-            // Init class
-            PersonIdentified pi = new PersonIdentified {
-                all_faces = new List<Microsoft.ProjectOxford.Face.Contract.Face[]>(),
-                dico_person = new Dictionary<string, string>()
-            };
+            // List of photos infos
+            List<IdentifyInfos> infos_list = new List<IdentifyInfos>();
 
             // Get current group id
             string person_group_id = conf.read_group();
 
-            // The list of Face attributes to return.
-            IEnumerable<FaceAttributeType> faceAttributes = new FaceAttributeType[] { FaceAttributeType.Gender, FaceAttributeType.Age, FaceAttributeType.Smile, FaceAttributeType.Emotion, FaceAttributeType.Glasses, FaceAttributeType.Hair };
+            // Add person for identification
+            if(await add_person_async(person_group_id)) {
 
-            // Get all photos from imagelistview
-            foreach(ImageListViewItem item in photos_to_identify.Items) {
-                if(File.Exists(item.FileName)) {
-                    Debug.WriteLine($"Identify photo: {item.FileName}"); //TODO
+                // Get all photos from imagelistview
+                foreach(ImageListViewItem item in photos_to_identify.Items) {
 
-                    // Read file
-                    using(Stream stream = File.OpenRead(item.FileName)) {
+                    // Check if file existe
+                    if(File.Exists(item.FileName)) {
 
-                        Microsoft.ProjectOxford.Face.Contract.Face[] faces = await face_service_client.DetectAsync(stream, returnFaceId: true, returnFaceLandmarks: false, returnFaceAttributes: faceAttributes);
-                        Guid[] faceIds = faces.Select(face => face.FaceId).ToArray();
-                        IdentifyResult[] results = await face_service_client.IdentifyAsync(person_group_id, faceIds);
-                        pi.all_faces.Add(faces);
-
-                        // Process face detected
-                        foreach(var identifyResult in results) {
-                            Debug.WriteLine("Result of face: {0}", identifyResult.FaceId);
-                            if(identifyResult.Candidates.Length == 0) {
-                                Debug.WriteLine("No one identified");
-                                pi.dico_person.Add(identifyResult.FaceId.ToString(), "No one identified");
-                            } else {
-
-                                // Get top 1 among all candidates returned
-                                var candidateId = identifyResult.Candidates[0].PersonId;
-                                var person = await face_service_client.GetPersonAsync(person_group_id, candidateId);
-                                Debug.WriteLine("Identified as {0}", person.Name);
-                                pi.dico_person.Add(identifyResult.FaceId.ToString(), person.Name.ToString());
-                            }
+                        // Identify person in the photos
+                        IdentifyInfos ii = await identify_person_async(item.FileName, person_group_id);
+                        if(ii != null) {
+                            infos_list.Add(ii);
                         }
                     }
                 }
+
+                // Add infos to db and copy photos to identify dir
+                if(!add_photos(infos_list)) {
+                    //TODO ERROR
+                }
             }
-            return pi;
+        }
+        private async Task<IdentifyInfos> identify_person_async(string path, string person_group_id) {
+            Debug.WriteLine($"Identify photo: {path}"); //TODO
+
+            // Init class
+            IdentifyInfos infos = new IdentifyInfos {
+                person = new Dictionary<string, string>(),
+                info = new AnalysisResult()
+            };
+
+            //Get current photo
+            infos.path = path;
+
+            // The list of Face attributes to return.
+            IEnumerable<FaceAttributeType> faceAttributes = new FaceAttributeType[] { FaceAttributeType.Gender, FaceAttributeType.Age, FaceAttributeType.Smile, FaceAttributeType.Emotion, FaceAttributeType.Glasses, FaceAttributeType.Hair, FaceAttributeType.Accessories, FaceAttributeType.Blur, FaceAttributeType.Exposure, FaceAttributeType.FacialHair, FaceAttributeType.HeadPose, FaceAttributeType.Makeup, FaceAttributeType.Noise, FaceAttributeType.Occlusion };
+            try {
+
+                // Read file
+                using(Stream stream = File.OpenRead(path)) {
+
+                    infos.faces = await face_service_client.DetectAsync(stream, returnFaceId: true, returnFaceLandmarks: false, returnFaceAttributes: faceAttributes);
+                    Guid[] faceIds = infos.faces.Select(face => face.FaceId).ToArray();
+                    IdentifyResult[] results = await face_service_client.IdentifyAsync(person_group_id, faceIds);
+
+                    // Process face detected
+                    foreach(var identifyResult in results) {
+                        Debug.WriteLine("Result of face: {0}", identifyResult.FaceId);
+                        if(identifyResult.Candidates.Length == 0) {
+                            Debug.WriteLine("No one identified");
+                            infos.person.Add(identifyResult.FaceId.ToString(), "No one identified");
+                        } else {
+
+                            // Get top 1 among all candidates returned
+                            var candidateId = identifyResult.Candidates[0].PersonId;
+                            var person = await face_service_client.GetPersonAsync(person_group_id, candidateId);
+                            Debug.WriteLine("Identified as {0}", person.Name);
+                            infos.person.Add(identifyResult.FaceId.ToString(), person.Name.ToString());
+                        }
+                    }
+                }
+            } catch { infos = null; }
+
+            // If error during person identify
+            if(infos != null) {
+
+                //Identify things in the photo
+                infos.info = await identify_image_async(path);
+            }
+
+            // If error during photo identify
+            if(infos.info != null) {
+                return infos;
+            } else {
+                return null;
+            }
         }
 
-        private async Task<List<AnalysisResult>> identify_image_async() {
-
+        private async Task<AnalysisResult> identify_image_async(string path) {
             Debug.WriteLine("Start visio");
 
             // The list of Visual Features to return
             VisualFeature[] features = new VisualFeature[] { VisualFeature.Tags, VisualFeature.Description, VisualFeature.Adult, VisualFeature.Categories, VisualFeature.Color, VisualFeature.ImageType };
-            List<AnalysisResult> analysisResult = new List<AnalysisResult>();
+            AnalysisResult ar = new AnalysisResult();
+            try {
 
-            // Get all photos from imagelistview
-            foreach(ImageListViewItem item in photos_to_identify.Items) {
-                if(File.Exists(item.FileName)) {
-
-                    // Read file
-                    using(Stream stream = File.OpenRead(item.FileName)) {
-                        analysisResult.Add(await vision_client.AnalyzeImageAsync(stream, features));
-                    }
+                // Read file
+                using(Stream stream = File.OpenRead(path)) {
+                    ar = await vision_client.AnalyzeImageAsync(stream, features);
                 }
-            }
-            return analysisResult;
+            } catch { ar = null; }
+            return ar;
         }
         #endregion
 
         #region Add person
 
-        private async Task add_person_async() {
+        private async Task<bool> add_person_async(string person_group_id) {
+            try {
 
-            // Get current group id
-            string person_group_id = conf.read_group();
+                //TEMPORARY Delete current group (dmhbfikfavpxw)
+                PersonGroup ifsc = await face_service_client.GetPersonGroupAsync("dmhbfikfavpxw");
+                if(ifsc.Name.ToString() == "dmhbfikfavpxw") {
+                    await face_service_client.DeletePersonGroupAsync("dmhbfikfavpxw");
+                }
 
-            //TEMPORARY Delete current group (dmhbfikfavpxw)
-            PersonGroup ifsc = await face_service_client.GetPersonGroupAsync("dmhbfikfavpxw");
-            if(ifsc.Name.ToString() == "dmhbfikfavpxw") {
-                await face_service_client.DeletePersonGroupAsync("dmhbfikfavpxw");
-            }
+                // Create group
+                await face_service_client.CreatePersonGroupAsync(person_group_id, person_group_id);
 
-            // Create group
-            await face_service_client.CreatePersonGroupAsync(person_group_id, person_group_id);
+                // Get all directory in "person dir"
+                foreach(string person_name_dir_path in preson.get_all_person_dir()) {
 
-            // Get all directory in "person dir"
-            foreach(string person_name_dir_path in preson.get_all_person_dir()) {
+                    // Get only last directory
+                    string dir_person_name = person_name_dir_path.Split(Path.DirectorySeparatorChar).Last();//.Replace("_","");
 
-                // Get only last directory
-                string dir_person_name = person_name_dir_path.Split(Path.DirectorySeparatorChar).Last();//.Replace("_","");
+                    //Create person with current groupe
+                    CreatePersonResult person = await face_service_client.CreatePersonAsync(person_group_id, dir_person_name);
 
-                //Create person with current groupe
-                CreatePersonResult person = await face_service_client.CreatePersonAsync(person_group_id, dir_person_name);
+                    // TODO Add "*.id" file
+                    add_person_id_file(person_name_dir_path, person.PersonId.ToString());
 
-                // TODO Add "*.id" file
-                add_person_id_file(person_name_dir_path, person.PersonId.ToString());
+                    // Get all photos
+                    foreach(string person_photo in Directory.EnumerateFiles(person_name_dir_path, "*.*", SearchOption.AllDirectories).Where(n => Path.GetExtension(n) != ".id").ToList()) {
+                        if(File.Exists(person_photo)) {
+                            Debug.WriteLine($"Add person photo: {person_photo}"); //TODO
+                            using(Stream stream = File.OpenRead(person_photo)) {
 
-                // Get all photos
-                foreach(string person_photo in Directory.EnumerateFiles(person_name_dir_path, "*.*", SearchOption.AllDirectories).Where(n => Path.GetExtension(n) != ".id").ToList()) {
-                    if(File.Exists(person_photo)) {
-                        Debug.WriteLine($"Add person photo: {person_photo}"); //TODO
-                        using(Stream stream = File.OpenRead(person_photo)) {
-
-                            // Detect faces in the image and add to Anna
-                            await face_service_client.AddPersonFaceAsync(person_group_id, person.PersonId, stream);
+                                // Detect faces in the image and add to Anna
+                                await face_service_client.AddPersonFaceAsync(person_group_id, person.PersonId, stream);
+                            }
                         }
                     }
                 }
-            }
 
-            // Training person group
-            await face_service_client.TrainPersonGroupAsync(person_group_id);
-            TrainingStatus trainingStatus = null;
-            while(true) {
-                trainingStatus = await face_service_client.GetPersonGroupTrainingStatusAsync(person_group_id);
+                // Training person group
+                await face_service_client.TrainPersonGroupAsync(person_group_id);
+                TrainingStatus trainingStatus = null;
+                while(true) {
+                    trainingStatus = await face_service_client.GetPersonGroupTrainingStatusAsync(person_group_id);
 
-                if(trainingStatus.Status.ToString() != "running") {
-                    break;
+                    if(trainingStatus.Status.ToString() != "running") {
+                        break;
+                    }
+
+                    await Task.Delay(1000);
                 }
 
-                await Task.Delay(1000);
-            }
-
-            Debug.WriteLine("Training ok");
+                Debug.WriteLine("Training ok");
+            } catch { return false; }
+            return true;
         }
 
-        private void add_person_id_file(string path, string person_id) {
-            string person_id_file_path = Path.Combine(path, $"{person_id}.id");
-            if(!File.Exists(person_id_file_path)) {
-                //File.Delete(person_id_file_path);
-                File.Create(person_id_file_path);
+        private bool add_person_id_file(string path, string person_id) {
+            try {
+                string person_id_file_path = Path.Combine(path, $"{person_id}.id");
+                if(!File.Exists(person_id_file_path)) {
+                    //File.Delete(person_id_file_path);
+                    File.Create(person_id_file_path);
+                }
+            } catch { return false; }
+            return true;
+        }
+        #endregion
+
+        #region Add photos
+
+        private bool add_photos(List<IdentifyInfos> infos_list) {
+
+            // Get all photos from IdentifyInfos
+            foreach(IdentifyInfos info in infos_list) {
+
+                // Copy photo to indentify directory
+                if(copy_photos(info.path)) {
+
+                    // add photo info in database
+                    if(!add_photos_db(info)) {
+                        return false;
+                    }
+                }
             }
+            return true;
+        }
+
+        private bool add_photos_db(IdentifyInfos info) {
+            return true;
+        }
+
+
+        #endregion
+
+        #region Copy photo
+
+        private bool copy_photos(string path) {
+            try {
+                string source = path;
+                string dest = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "identify", Path.GetFileName(path));
+                if(File.Exists(path)) {
+                    if(!File.Exists(dest)) {
+                        File.Copy(source, dest);
+                    }
+                }
+            } catch { return false; }
+            return true;
         }
         #endregion
     }
 
-    public class PersonIdentified {
-        public Dictionary<string, string> dico_person { get; set; }
-        public List<Microsoft.ProjectOxford.Face.Contract.Face[]> all_faces { get; set; }
+    #region Class Identify
+
+    public class IdentifyInfos {
+        public string path { get; set; }
+        public Dictionary<string, string> person { get; set; }
+        public Microsoft.ProjectOxford.Face.Contract.Face[] faces { get; set; }
+        public AnalysisResult info { get; set; }
     }
+    #endregion
 }

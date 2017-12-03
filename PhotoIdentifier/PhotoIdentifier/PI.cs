@@ -64,10 +64,16 @@ namespace PhotoIdentifier {
             // Check internet
             check_internet();
 
-            // Creat person dir of not exist
+            // Creat person dir if not exist
             string person_dir_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
             if(!Directory.Exists(person_dir_path)){
                 Directory.CreateDirectory(person_dir_path);
+            }
+
+            // Create identify for if not exist
+            string identify_dir_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "identify");
+            if(!Directory.Exists(identify_dir_path)) {
+                Directory.CreateDirectory(identify_dir_path);
             }
 
             // Create config file
