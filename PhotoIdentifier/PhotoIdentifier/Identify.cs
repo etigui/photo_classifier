@@ -39,8 +39,11 @@ namespace PhotoIdentifier {
 
         private void Identify_Load(object sender, EventArgs e) {
             init();
+#pragma warning disable 4014
             identify_async();
+#pragma warning restore 4014
         }
+
 
         private void init() {
 
