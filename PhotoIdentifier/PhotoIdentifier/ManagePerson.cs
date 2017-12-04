@@ -14,9 +14,6 @@ using System.Windows.Forms;
 
 namespace PhotoIdentifier {
     public partial class ManagePerson:Form {
-        public ManagePerson() {
-            InitializeComponent();
-        }
 
         #region Vars
         private string person_app_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
@@ -25,7 +22,11 @@ namespace PhotoIdentifier {
         Person person = null;
         #endregion
 
-        #region Load
+        #region Init
+
+        public ManagePerson() {
+            InitializeComponent();
+        }
 
         private void ManagePerson_Load(object sender, EventArgs e) {
 

@@ -63,9 +63,18 @@ namespace PhotoIdentifier.Properties {
         /// <summary>
         ///   Looks up a localized string similar to aeb4502d493444c0bf75969ad78f9e99.
         /// </summary>
-        internal static string api_key {
+        internal static string face_api_key {
             get {
-                return ResourceManager.GetString("api_key", resourceCulture);
+                return ResourceManager.GetString("face_api_key", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to e3ca2a08abfb4957aee13ee0989798be.
+        /// </summary>
+        internal static string visio_api_key {
+            get {
+                return ResourceManager.GetString("visio_api_key", resourceCulture);
             }
         }
     }

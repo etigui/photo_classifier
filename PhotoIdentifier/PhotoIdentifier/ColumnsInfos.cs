@@ -12,11 +12,18 @@ using System.Windows.Forms;
 namespace PhotoIdentifier {
     public partial class ColumnsInfos:Form {
 
+        #region Vars
         public ImageListView ILV_photos;
+        #endregion
+
+        #region Init
 
         public ColumnsInfos() {
             InitializeComponent();
         }
+        #endregion
+
+        #region Controls
 
         private void BT_close_Click(object sender, EventArgs e) {
             this.Close();
@@ -32,5 +39,6 @@ namespace PhotoIdentifier {
                 CLB_infos.Items.Add(column.Text, column.Visible);
             }
         }
+        #endregion
     }
 }

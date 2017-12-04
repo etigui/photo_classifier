@@ -21,11 +21,12 @@ namespace PhotoIdentifier {
     public partial class Identify:Form {
 
         #region Vars
+        private const string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
+        private readonly IFaceServiceClient face_service_client = new FaceServiceClient(Resources.face_api_key.ToString(), "https://westeurope.api.cognitive.microsoft.com/face/v1.0");
+        private readonly IVisionServiceClient vision_client = new VisionServiceClient(Resources.visio_api_key.ToString(), "https://westeurope.api.cognitive.microsoft.com/vision/v1.0");
+        private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
         public ImageListView photos_to_identify;
         private DateTime date = DateTime.Now;
-        private readonly IFaceServiceClient face_service_client = new FaceServiceClient(Resources.api_key.ToString(), "https://westeurope.api.cognitive.microsoft.com/face/v1.0");
-        private readonly IVisionServiceClient vision_client = new VisionServiceClient("e3ca2a08abfb4957aee13ee0989798be", "https://westeurope.api.cognitive.microsoft.com/vision/v1.0");
-        private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
         private Person preson;
         private Conf conf;
         #endregion

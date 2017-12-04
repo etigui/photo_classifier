@@ -15,16 +15,16 @@ using System.Windows.Forms;
 
 namespace PhotoIdentifier {
     public partial class AddPerson:Form {
-        public AddPerson() {
-            InitializeComponent();
-        }
 
         #region Vars
         private Person person = null;
         #endregion
 
-        #region Load
+        #region Init
 
+        public AddPerson() {
+            InitializeComponent();
+        }
         private void AddPerson_Load(object sender, EventArgs e) {
             person = new Person();
         }

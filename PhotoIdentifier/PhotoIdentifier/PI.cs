@@ -35,7 +35,7 @@ namespace PhotoIdentifier {
     public partial class PI:Form {
 
         #region vars
-        private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient(Resources.api_key.ToString(), "https://westeurope.api.cognitive.microsoft.com/face/v1.0");
+        private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient(Resources.face_api_key.ToString(), "https://westeurope.api.cognitive.microsoft.com/face/v1.0");
         private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
         private bool internet_connection = false;
         private Conf conf;
