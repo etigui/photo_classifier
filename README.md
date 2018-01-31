@@ -3,7 +3,8 @@
 
 ## Objective and specification
 
-Studding and try ["API Vision"](https://azure.microsoft.com/en-us/services/cognitive-services/directory/vision/) of Microsoft, then program an application in C#, which is going to classify a photo as mentioned in the point below.
+Studding and try ["API Vision"](https://azure.microsoft.com/en-us/services/cognitive-services/directory/vision/) of Microsoft, then program an application in C#, which is going to classify a photo as mentioned in the point below:
+
 1.	Get one or more photo of well-known people and try to associate the bunch of photo to that people.
 2.	Get a list of photos which contain or not the people associate before.
 3.	Compare by processing in the Azure cloud the photo using ["Face API"](https://azure.microsoft.com/en-us/services/cognitive-services/face/)
