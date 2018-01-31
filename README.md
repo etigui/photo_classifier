@@ -1,5 +1,5 @@
 # Semester project HEPIA 2017-2018
-![alt text][logo]
+![Micrisoft and Hepia logo][logo.png]
 
 ## Objective and specification
 
