@@ -107,6 +107,7 @@
       <DependentUpon>ColumnsInfos.cs</DependentUpon>
     </Compile>
     <Compile Include="Conf.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="Identify.cs">
       <SubType>Form</SubType>
     </Compile>

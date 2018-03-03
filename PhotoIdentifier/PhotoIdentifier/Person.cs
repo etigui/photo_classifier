@@ -75,7 +75,7 @@ namespace PhotoIdentifier {
                     if(File.Exists(source)) {
 
                         // Get hash from source file
-                        string hash = get_hsah256_file(source);
+                        string hash = get_md5_file(source);
 
                         // Dest file
                         string dest = Path.Combine(person_app_path, name_path, (hash + Path.GetExtension(item.FileName)));
@@ -130,11 +130,28 @@ namespace PhotoIdentifier {
             } catch { return ""; }
         }
 
-        #endregion
+        private string get_md5_file(string path) {
+            string hash = "";
+            try
+            {
+                using (var md5 = MD5.Create())
+                {
+                    using (var stream = File.OpenRead(path))
+                    {
+                        hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", String.Empty).ToLowerInvariant();
+                    }
+                }
 
-        #region Get files/directory
+                return hash;
+            }catch { return ""; }
 
-        public string[] get_all_person_dir() {
+        }
+
+            #endregion
+
+            #region Get files/directory
+
+            public string[] get_all_person_dir() {
             return Directory.GetDirectories(person_app_path);
         }
 
@@ -202,7 +219,7 @@ namespace PhotoIdentifier {
                 if(File.Exists(path)) {
 
                     // Get hash from file
-                    string hash = get_hsah256_file(path);
+                    string hash = get_md5_file(path);
 
                     // Check if hash could be calculated
                     if(hash != "") {

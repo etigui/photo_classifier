@@ -49,6 +49,7 @@ namespace PhotoIdentifier {
 
             // Get person
             preson = new Person();
+            //preson.
 
             // Get conf
             conf = new Conf(conf_file_path);
@@ -118,26 +119,35 @@ namespace PhotoIdentifier {
                 using(Stream stream = File.OpenRead(path)) {
 
                     infos.faces = await face_service_client.DetectAsync(stream, returnFaceId: true, returnFaceLandmarks: false, returnFaceAttributes: faceAttributes);
-                    Guid[] faceIds = infos.faces.Select(face => face.FaceId).ToArray();
-                    IdentifyResult[] results = await face_service_client.IdentifyAsync(person_group_id, faceIds);
 
-                    // Process face detected
-                    foreach(var identifyResult in results) {
-                        Debug.WriteLine("Result of face: {0}", identifyResult.FaceId);
-                        if(identifyResult.Candidates.Length == 0) {
-                            Debug.WriteLine("No one identified");
-                            infos.person.Add(identifyResult.FaceId.ToString(), "No one identified");
-                        } else {
+                    // If face identified in the photo
+                    if (infos.faces.Length != 0){
+                        Guid[] faceIds = infos.faces.Select(face => face.FaceId).ToArray();
+                    
+                        IdentifyResult[] results = await face_service_client.IdentifyAsync(person_group_id, faceIds);
 
-                            // Get top 1 among all candidates returned
-                            var candidateId = identifyResult.Candidates[0].PersonId;
-                            var person = await face_service_client.GetPersonAsync(person_group_id, candidateId);
-                            Debug.WriteLine("Identified as {0}", person.Name);
-                            infos.person.Add(identifyResult.FaceId.ToString(), person.Name.ToString());
+                        // Process face detected
+                        foreach (var identifyResult in results){
+                            Debug.WriteLine("Result of face: {0}", identifyResult.FaceId);
+                            if (identifyResult.Candidates.Length == 0){
+                                Debug.WriteLine("No one identified");
+                                infos.person.Add(identifyResult.FaceId.ToString(), "No one identified");
+                            }
+                            else{
+
+                                // Get top 1 among all candidates returned
+                                var candidateId = identifyResult.Candidates[0].PersonId;
+                                var person = await face_service_client.GetPersonAsync(person_group_id, candidateId);
+                                Debug.WriteLine("Identified as {0}", person.Name);
+                                infos.person.Add(identifyResult.FaceId.ToString(), person.Name.ToString());
+                            }
                         }
                     }
+                    else{
+                        // No face identified
+                    }
                 }
-            } catch { infos = null; }
+            } catch(Exception ex){ MessageBox.Show(ex.ToString()); infos = null; }
 
             // If error during person identify
             if(infos != null) {
@@ -158,7 +168,7 @@ namespace PhotoIdentifier {
             Debug.WriteLine("Start visio");
 
             // The list of Visual Features to return
-            VisualFeature[] features = new VisualFeature[] { VisualFeature.Tags, VisualFeature.Description, VisualFeature.Adult, VisualFeature.Categories, VisualFeature.Color, VisualFeature.ImageType };
+            VisualFeature[] features = new VisualFeature[] { VisualFeature.Tags, VisualFeature.Description, VisualFeature.Adult, VisualFeature.Categories, VisualFeature.Color, VisualFeature.ImageType};
             AnalysisResult ar = new AnalysisResult();
             try {
 
@@ -176,26 +186,34 @@ namespace PhotoIdentifier {
         private async Task<bool> add_person_async(string person_group_id) {
             try {
 
+                update_status("Add person", "process person 1", 1);
+
                 //TEMPORARY Delete current group (dmhbfikfavpxw)
-                PersonGroup ifsc = await face_service_client.GetPersonGroupAsync("dmhbfikfavpxw");
-                if(ifsc.Name.ToString() == "dmhbfikfavpxw") {
-                    await face_service_client.DeletePersonGroupAsync("dmhbfikfavpxw");
+                //PersonGroup ifsc = await face_service_client.GetPersonGroupAsync("dmhbfikfavpxw");
+                //if(ifsc.Name.ToString() == "dmhbfikfavpxw") {
+                //    await face_service_client.DeletePersonGroupAsync("dmhbfikfavpxw");
+                //}
+
+                //TEMPORARY Delete current group (dmhbfikfavpxw)
+                PersonGroup ifsc = await face_service_client.GetPersonGroupAsync(person_group_id);
+                if(ifsc.Name.ToString() == person_group_id) {
+                    await face_service_client.DeletePersonGroupAsync(person_group_id);
                 }
 
                 // Create group
-                await face_service_client.CreatePersonGroupAsync(person_group_id, person_group_id);
+                await face_service_client.CreatePersonGroupAsync(person_group_id, person_group_id); //person_group_id
 
                 // Get all directory in "person dir"
-                foreach(string person_name_dir_path in preson.get_all_person_dir()) {
+                foreach (string person_name_dir_path in preson.get_all_person_dir()) {
 
                     // Get only last directory
                     string dir_person_name = person_name_dir_path.Split(Path.DirectorySeparatorChar).Last();//.Replace("_","");
 
                     //Create person with current groupe
-                    CreatePersonResult person = await face_service_client.CreatePersonAsync(person_group_id, dir_person_name);
+                    CreatePersonResult cpr = await face_service_client.CreatePersonAsync(person_group_id, dir_person_name);
 
                     // TODO Add "*.id" file
-                    add_person_id_file(person_name_dir_path, person.PersonId.ToString());
+                    add_person_id_file(person_name_dir_path, cpr.PersonId.ToString());
 
                     // Get all photos
                     foreach(string person_photo in Directory.EnumerateFiles(person_name_dir_path, "*.*", SearchOption.AllDirectories).Where(n => Path.GetExtension(n) != ".id").ToList()) {
@@ -204,11 +222,13 @@ namespace PhotoIdentifier {
                             using(Stream stream = File.OpenRead(person_photo)) {
 
                                 // Detect faces in the image and add to Anna
-                                await face_service_client.AddPersonFaceAsync(person_group_id, person.PersonId, stream);
+                                await face_service_client.AddPersonFaceAsync(person_group_id, cpr.PersonId, stream);
                             }
                         }
                     }
                 }
+
+                update_status("Training group", "process group 1", 30);
 
                 // Training person group
                 await face_service_client.TrainPersonGroupAsync(person_group_id);
@@ -224,7 +244,8 @@ namespace PhotoIdentifier {
                 }
 
                 Debug.WriteLine("Training ok");
-            } catch { return false; }
+                update_status("Training group", "process group 1", 50);
+            } catch(Exception ex){ MessageBox.Show(ex.ToString()); return false; }
             return true;
         }
 
@@ -279,6 +300,22 @@ namespace PhotoIdentifier {
                 }
             } catch { return false; }
             return true;
+        }
+        #endregion
+
+        #region Update status
+
+        /// <summary>
+        /// Update label and progress bar
+        /// </summary>
+        /// <param name="up"></param>
+        /// <param name="down"></param>
+        /// <param name="value"></param>
+        private void update_status(string up, string down, int value){
+            LB_status_up.Text = up;
+            Lb_status_down.Text = down;
+            PB_status.Value = value;
+            PB_status.Refresh();
         }
         #endregion
     }

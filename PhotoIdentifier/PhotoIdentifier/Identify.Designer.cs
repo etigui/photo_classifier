@@ -26,9 +26,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Identify));
             this.PB_status = new System.Windows.Forms.ProgressBar();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.Lb_status_down = new System.Windows.Forms.Label();
             this.LB_status_up = new System.Windows.Forms.Label();
             this.BT_cancel = new System.Windows.Forms.Button();
-            this.Lb_status_down = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -39,6 +39,7 @@
             this.PB_status.Location = new System.Drawing.Point(13, 47);
             this.PB_status.Name = "PB_status";
             this.PB_status.Size = new System.Drawing.Size(411, 23);
+            this.PB_status.Step = 1;
             this.PB_status.TabIndex = 0;
             // 
             // panel1
@@ -52,6 +53,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(436, 113);
             this.panel1.TabIndex = 1;
+            // 
+            // Lb_status_down
+            // 
+            this.Lb_status_down.AutoSize = true;
+            this.Lb_status_down.Location = new System.Drawing.Point(13, 83);
+            this.Lb_status_down.Name = "Lb_status_down";
+            this.Lb_status_down.Size = new System.Drawing.Size(165, 13);
+            this.Lb_status_down.TabIndex = 2;
+            this.Lb_status_down.Text = "Identify photos: C:\\Image\\test.jpg";
             // 
             // LB_status_up
             // 
@@ -71,15 +81,6 @@
             this.BT_cancel.Text = "Cancel";
             this.BT_cancel.UseVisualStyleBackColor = true;
             this.BT_cancel.Click += new System.EventHandler(this.BT_cancel_Click);
-            // 
-            // Lb_status_down
-            // 
-            this.Lb_status_down.AutoSize = true;
-            this.Lb_status_down.Location = new System.Drawing.Point(13, 83);
-            this.Lb_status_down.Name = "Lb_status_down";
-            this.Lb_status_down.Size = new System.Drawing.Size(165, 13);
-            this.Lb_status_down.TabIndex = 2;
-            this.Lb_status_down.Text = "Identify photos: C:\\Image\\test.jpg";
             // 
             // Identify
             // 
