@@ -184,6 +184,7 @@ namespace PhotoIdentifier {
         /// </summary>
         private void add_person_photos() {
             ILV_photos.Items.Clear();
+            ILV_photos.ClearThumbnailCache();
 
             // Get current person name
             KeyValuePair<string, string> item = (KeyValuePair<string, string>)CB_name.SelectedItem;

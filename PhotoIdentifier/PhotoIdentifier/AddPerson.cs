@@ -159,6 +159,8 @@ namespace PhotoIdentifier {
                             // Clear fild for new person
                             TB_name.Text = "";
                             ILV_photos.Items.Clear();
+                            TSB_clear.Enabled = false;
+                            TSB_remove.Enabled = false;
                             update_status();
                         }else {
                             MessageBox.Show("Fatal error. Creation failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
