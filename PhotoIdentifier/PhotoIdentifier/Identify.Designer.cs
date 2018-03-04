@@ -59,9 +59,8 @@
             this.Lb_status_down.AutoSize = true;
             this.Lb_status_down.Location = new System.Drawing.Point(13, 83);
             this.Lb_status_down.Name = "Lb_status_down";
-            this.Lb_status_down.Size = new System.Drawing.Size(165, 13);
+            this.Lb_status_down.Size = new System.Drawing.Size(0, 13);
             this.Lb_status_down.TabIndex = 2;
-            this.Lb_status_down.Text = "Identify photos: C:\\Image\\test.jpg";
             // 
             // LB_status_up
             // 

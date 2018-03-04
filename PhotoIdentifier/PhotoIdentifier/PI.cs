@@ -340,5 +340,10 @@ namespace PhotoIdentifier {
         }
         #endregion
 
+        private void PI_Load(object sender, EventArgs e)
+        {
+            spinner s = new spinner();
+            s.ShowDialog();
+        }
     }
 }

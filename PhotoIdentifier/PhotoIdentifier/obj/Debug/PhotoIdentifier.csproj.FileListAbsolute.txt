@@ -53,3 +53,8 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.pdb
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\CircularProgressBar.dll
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\WinFormAnimation.dll
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\CircularProgressBar.xml
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\WinFormAnimation.xml
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.spinner.resources

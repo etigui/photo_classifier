@@ -378,6 +378,7 @@
             this.Name = "PI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PI";
+            this.Load += new System.EventHandler(this.PI_Load);
             this.SS.ResumeLayout(false);
             this.SS.PerformLayout();
             this.TS_action.ResumeLayout(false);

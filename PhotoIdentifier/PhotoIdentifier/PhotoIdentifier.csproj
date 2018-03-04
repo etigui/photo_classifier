@@ -52,6 +52,9 @@
     <ApplicationIcon>logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CircularProgressBar, Version=2.5.6403.13419, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\CircularProgressBar.2.5.6403.13419\lib\net35-client\CircularProgressBar.dll</HintPath>
+    </Reference>
     <Reference Include="ImageListView">
       <HintPath>..\..\..\..\Downloads\ImageListViewDemo\ImageListView.dll</HintPath>
     </Reference>
@@ -92,6 +95,9 @@
     <Reference Include="UIAutomationProvider" />
     <Reference Include="WindowsBase" />
     <Reference Include="WindowsFormsIntegration" />
+    <Reference Include="WinFormAnimation, Version=1.5.6298.3372, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WinFormAnimation.1.5.6298.3372\lib\net35-client\WinFormAnimation.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AddPerson.cs">
@@ -129,6 +135,12 @@
     <Compile Include="Person.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="spinner.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="spinner.Designer.cs">
+      <DependentUpon>spinner.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddPerson.resx">
       <DependentUpon>AddPerson.cs</DependentUpon>
     </EmbeddedResource>
@@ -154,6 +166,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="spinner.resx">
+      <DependentUpon>spinner.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -17,8 +17,10 @@ using System.Collections;
 using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
 
-namespace PhotoIdentifier {
-    public partial class Identify:Form {
+namespace PhotoIdentifier
+{
+    public partial class Identify : Form
+    {
 
         #region Vars
         private const string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
@@ -29,23 +31,29 @@ namespace PhotoIdentifier {
         private DateTime date = DateTime.Now;
         private Person preson;
         private Conf conf;
+        private int progress = 0;
         #endregion
 
         #region Init
 
-        public Identify() {
+        public Identify()
+        {
             InitializeComponent();
         }
 
-        private void Identify_Load(object sender, EventArgs e) {
+        private async void Identify_Load(object sender, EventArgs e)
+        {
             init();
-#pragma warning disable 4014
-            identify_async();
-#pragma warning restore 4014
+
+            //#pragma warning disable 4014
+            await identify_async();
+            //#pragma warning restore 4014
+            this.Close();
         }
 
 
-        private void init() {
+        private void init()
+        {
 
             // Get person
             preson = new Person();
@@ -54,13 +62,17 @@ namespace PhotoIdentifier {
             // Get conf
             conf = new Conf(conf_file_path);
 
+            // Set max progress
+            set_max_progress();
+
             // Write log
             //LB_log.Items.Add($"[{date.ToString("dd.MM.yyy HH: mm:ss")}] Identification started");
         }
         #endregion
 
         #region Controls
-        private void BT_cancel_Click(object sender, EventArgs e) {
+        private void BT_cancel_Click(object sender, EventArgs e)
+        {
             this.Close();
         }
 
@@ -68,7 +80,8 @@ namespace PhotoIdentifier {
 
         #region Identify
 
-        private async Task identify_async() {
+        private async Task identify_async()
+        {
 
             // List of photos infos
             List<IdentifyInfos> infos_list = new List<IdentifyInfos>();
@@ -85,6 +98,9 @@ namespace PhotoIdentifier {
                     // Check if file existe
                     if(File.Exists(item.FileName)) {
 
+                        // PROGRESS
+                        update_progress("Identify photo", $"Process photo: {Path.GetFileName(item.FileName).ToString()}", progress++);
+
                         // Identify person in the photos
                         IdentifyInfos ii = await identify_person_async(item.FileName, person_group_id);
                         if(ii != null) {
@@ -97,14 +113,15 @@ namespace PhotoIdentifier {
                 if(!add_photos_db(infos_list)) {
                     //TODO ERROR
                 }
-                int a = 0;
+
                 // Add infos to db and copy photos to identify dir
                 //if(!add_photos(infos_list)) {
-                    //TODO ERROR
+                //TODO ERROR
                 //}
             }
         }
-        private async Task<IdentifyInfos> identify_person_async(string path, string person_group_id) {
+        private async Task<IdentifyInfos> identify_person_async(string path, string person_group_id)
+        {
             Debug.WriteLine($"Identify photo: {path}"); //TODO
 
             // Init class
@@ -126,19 +143,18 @@ namespace PhotoIdentifier {
                     infos.faces = await face_service_client.DetectAsync(stream, returnFaceId: true, returnFaceLandmarks: false, returnFaceAttributes: faceAttributes);
 
                     // If face identified in the photo
-                    if (infos.faces.Length != 0){
+                    if(infos.faces.Length != 0) {
                         Guid[] faceIds = infos.faces.Select(face => face.FaceId).ToArray();
-                    
+
                         IdentifyResult[] results = await face_service_client.IdentifyAsync(person_group_id, faceIds);
 
                         // Process face detected
-                        foreach (var identifyResult in results){
+                        foreach(var identifyResult in results) {
                             Debug.WriteLine("Result of face: {0}", identifyResult.FaceId);
-                            if (identifyResult.Candidates.Length == 0){
+                            if(identifyResult.Candidates.Length == 0) {
                                 Debug.WriteLine("No one identified");
                                 infos.person.Add(identifyResult.FaceId.ToString(), "not identified");
-                            }
-                            else{
+                            } else {
 
                                 // Get top 1 among all candidates returned
                                 var candidateId = identifyResult.Candidates[0].PersonId;
@@ -147,18 +163,17 @@ namespace PhotoIdentifier {
                                 infos.person.Add(identifyResult.FaceId.ToString(), person.Name.ToString());
                             }
                         }
-                    }
-                    else{
+                    } else {
                         // No face identified
                     }
                 }
-            } catch(Exception ex){ MessageBox.Show(ex.ToString()); infos = null; }
+            } catch(Exception ex) { MessageBox.Show(ex.ToString()); infos = null; }
 
 
             // If error during person identify
             //if(infos != null) {
             // If error during person identify or no person identified
-            if (infos.faces.Length != 0) { 
+            if(infos.faces.Length != 0) {
 
                 //Identify things in the photo
                 infos.info = await identify_image_async(path);
@@ -172,11 +187,12 @@ namespace PhotoIdentifier {
             }
         }
 
-        private async Task<AnalysisResult> identify_image_async(string path) {
+        private async Task<AnalysisResult> identify_image_async(string path)
+        {
             Debug.WriteLine("Start visio");
 
             // The list of Visual Features to return
-            VisualFeature[] features = new VisualFeature[] { VisualFeature.Tags, VisualFeature.Description, VisualFeature.Adult, VisualFeature.Categories, VisualFeature.Color, VisualFeature.ImageType};
+            VisualFeature[] features = new VisualFeature[] { VisualFeature.Tags, VisualFeature.Description, VisualFeature.Adult, VisualFeature.Categories, VisualFeature.Color, VisualFeature.ImageType };
             AnalysisResult ar = new AnalysisResult();
             try {
 
@@ -191,10 +207,9 @@ namespace PhotoIdentifier {
 
         #region Add person
 
-        private async Task<bool> add_person_async(string person_group_id) {
+        private async Task<bool> add_person_async(string person_group_id)
+        {
             try {
-
-                update_status("Add person", "process person 1", 1);
 
                 //TEMPORARY Delete current group (dmhbfikfavpxw)
                 //PersonGroup ifsc = await face_service_client.GetPersonGroupAsync("dmhbfikfavpxw");
@@ -212,7 +227,7 @@ namespace PhotoIdentifier {
                 await face_service_client.CreatePersonGroupAsync(person_group_id, person_group_id); //person_group_id
 
                 // Get all directory in "person dir"
-                foreach (string person_name_dir_path in preson.get_all_person_dir()) {
+                foreach(string person_name_dir_path in preson.get_all_person_dir()) {
 
                     // Get only last directory
                     string dir_person_name = person_name_dir_path.Split(Path.DirectorySeparatorChar).Last();//.Replace("_","");
@@ -221,22 +236,29 @@ namespace PhotoIdentifier {
                     CreatePersonResult cpr = await face_service_client.CreatePersonAsync(person_group_id, dir_person_name);
 
                     // TODO Add "*.id" file
-                    add_person_id_file(person_name_dir_path, cpr.PersonId.ToString());
+                    //add_person_id_file(person_name_dir_path, cpr.PersonId.ToString());
 
                     // Get all photos
                     foreach(string person_photo in Directory.EnumerateFiles(person_name_dir_path, "*.*", SearchOption.AllDirectories).Where(n => Path.GetExtension(n) != ".id").ToList()) {
                         if(File.Exists(person_photo)) {
                             Debug.WriteLine($"Add person photo: {person_photo}"); //TODO
+
+                            // PROGRESS
+                            update_progress("Add person", $"Process person: {dir_person_name.Split('_')[0]}", progress++);
                             using(Stream stream = File.OpenRead(person_photo)) {
 
-                                // Detect faces in the image and add to Anna
-                                await face_service_client.AddPersonFaceAsync(person_group_id, cpr.PersonId, stream);
+                                // If the person photo containe no face => throw error
+                                try {
+                                    // Detect faces in the image and add to Anna
+                                    await face_service_client.AddPersonFaceAsync(person_group_id, cpr.PersonId, stream);
+                                } catch { Console.WriteLine("Person photo containe no face"); }
                             }
                         }
                     }
                 }
 
-                update_status("Training group", "process group 1", 30);
+                // PROGRESS
+                update_progress("Training group", $"Process group: {person_group_id}", progress);
 
                 // Training person group
                 await face_service_client.TrainPersonGroupAsync(person_group_id);
@@ -252,12 +274,12 @@ namespace PhotoIdentifier {
                 }
 
                 Debug.WriteLine("Training ok");
-                update_status("Training group", "process group 1", 50);
-            } catch(Exception ex){ MessageBox.Show(ex.ToString()); return false; }
+            } catch(Exception ex) { MessageBox.Show(ex.ToString()); return false; }
             return true;
         }
 
-        private bool add_person_id_file(string path, string person_id) {
+        private bool add_person_id_file(string path, string person_id)
+        {
             try {
                 string person_id_file_path = Path.Combine(path, $"{person_id}.id");
                 if(!File.Exists(person_id_file_path)) {
@@ -290,13 +312,17 @@ namespace PhotoIdentifier {
 
 
         /// <summary>
-        /// Add all identifed photo the the db
+        /// Add all identifed photo to the db
         /// </summary>
         /// <param name="infos"></param>
         /// <returns></returns>
-        private bool add_photos_db(List<IdentifyInfos> infos) {
+        private bool add_photos_db(List<IdentifyInfos> infos)
+        {
             Data data = new Data();
             data.infos_list = infos;
+
+            // PROGRESS
+            update_progress("Add infos to database", $"Process infos...", progress++);
             return data.process_photos();
         }
 
@@ -305,7 +331,8 @@ namespace PhotoIdentifier {
 
         #region Copy photo
 
-        private bool copy_photos(string path) {
+        private bool copy_photos(string path)
+        {
             try {
                 string source = path;
                 string dest = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "identify", Path.GetFileName(path));
@@ -319,7 +346,7 @@ namespace PhotoIdentifier {
         }
         #endregion
 
-        #region Update status
+        #region Progress bar
 
         /// <summary>
         /// Update label and progress bar
@@ -327,18 +354,57 @@ namespace PhotoIdentifier {
         /// <param name="up"></param>
         /// <param name="down"></param>
         /// <param name="value"></param>
-        private void update_status(string up, string down, int value){
+        private void update_progress(string up, string down, int value)
+        {
             LB_status_up.Text = up;
             Lb_status_down.Text = down;
             PB_status.Value = value;
+            ///PB_status.Invalidate();
+            PB_status.Update();
             PB_status.Refresh();
+            //Application.DoEvents();
+        }
+
+        /// <summary>
+        /// Get max progress to set progress bar max value
+        /// </summary>
+        /// <returns></returns>
+        private void set_max_progress()
+        {
+            int photos = 0;
+            int per = 0;
+
+            // Get all photos from imagelistview
+            foreach(ImageListViewItem item in photos_to_identify.Items) {
+
+                // Check if file existe
+                if(File.Exists(item.FileName)) {
+                    photos++;
+                }
+            }
+
+
+            // Get all dir
+            foreach(string p in preson.get_all_person_dir()) {
+
+                // Get all photos
+                foreach(string person_photo in Directory.EnumerateFiles(p, "*.*", SearchOption.AllDirectories).Where(n => Path.GetExtension(n) != ".id").ToList()) {
+                    if(File.Exists(person_photo)) {
+                        per++;
+                    }
+                }
+            }
+
+            // Set max value
+            PB_status.Maximum = photos + per;
         }
         #endregion
     }
 
     #region Class Identify
 
-    public class IdentifyInfos {
+    public class IdentifyInfos
+    {
         public string path { get; set; }
         public Dictionary<string, string> person { get; set; }
         public Microsoft.ProjectOxford.Face.Contract.Face[] faces { get; set; }
