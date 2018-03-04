@@ -293,6 +293,8 @@ namespace PhotoIdentifier {
                             photos_to_identify = ILV_photos
                         };
                         identify.ShowDialog();
+
+                        //TODO clear ILV_photos (The current identification is already done) ?
                     } else {
                         MessageBox.Show("No Internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -339,11 +341,5 @@ namespace PhotoIdentifier {
             }
         }
         #endregion
-
-        private void PI_Load(object sender, EventArgs e)
-        {
-            spinner s = new spinner();
-            s.ShowDialog();
-        }
     }
 }

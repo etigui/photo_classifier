@@ -18,6 +18,8 @@ namespace PhotoIdentifier
         public List<IdentifyInfos> infos_list;
         #endregion
 
+        #region Init
+
         public Data() {
             init();
         }
@@ -27,6 +29,8 @@ namespace PhotoIdentifier
             // TODO remove
             reset_pk();
         }
+
+        #endregion
 
         #region Add photos
         /// <summary>

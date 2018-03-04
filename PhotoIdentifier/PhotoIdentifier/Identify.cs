@@ -47,7 +47,11 @@ namespace PhotoIdentifier
 
             //#pragma warning disable 4014
             await identify_async();
-            //#pragma warning restore 4014
+            //#pragma warning restore 4014   
+
+            // PROGRESS
+            update_progress("Identify finised", "", ++progress);
+
             this.Close();
         }
 
@@ -99,7 +103,7 @@ namespace PhotoIdentifier
                     if(File.Exists(item.FileName)) {
 
                         // PROGRESS
-                        update_progress("Identify photo", $"Process photo: {Path.GetFileName(item.FileName).ToString()}", progress++);
+                        update_progress("Identify photo", $"Process photo: {Path.GetFileName(item.FileName).ToString()}", ++progress);
 
                         // Identify person in the photos
                         IdentifyInfos ii = await identify_person_async(item.FileName, person_group_id);
@@ -211,20 +215,17 @@ namespace PhotoIdentifier
         {
             try {
 
-                //TEMPORARY Delete current group (dmhbfikfavpxw)
-                //PersonGroup ifsc = await face_service_client.GetPersonGroupAsync("dmhbfikfavpxw");
-                //if(ifsc.Name.ToString() == "dmhbfikfavpxw") {
-                //    await face_service_client.DeletePersonGroupAsync("dmhbfikfavpxw");
-                //}
-
-                //TEMPORARY Delete current group (dmhbfikfavpxw)
-                PersonGroup ifsc = await face_service_client.GetPersonGroupAsync(person_group_id);
-                if(ifsc.Name.ToString() == person_group_id) {
-                    await face_service_client.DeletePersonGroupAsync(person_group_id);
+                // Check if group already exist
+                // If yes => delete
+                PersonGroup[] person_groups = await face_service_client.ListPersonGroupsAsync();
+                foreach(PersonGroup pg in person_groups) {
+                    if(pg.PersonGroupId == person_group_id) {
+                        await face_service_client.DeletePersonGroupAsync(person_group_id);
+                    }
                 }
 
                 // Create group
-                await face_service_client.CreatePersonGroupAsync(person_group_id, person_group_id); //person_group_id
+                await face_service_client.CreatePersonGroupAsync(person_group_id, person_group_id);
 
                 // Get all directory in "person dir"
                 foreach(string person_name_dir_path in preson.get_all_person_dir()) {
@@ -244,7 +245,7 @@ namespace PhotoIdentifier
                             Debug.WriteLine($"Add person photo: {person_photo}"); //TODO
 
                             // PROGRESS
-                            update_progress("Add person", $"Process person: {dir_person_name.Split('_')[0]}", progress++);
+                            update_progress("Add person", $"Process person: {dir_person_name.Split('_')[0]}", ++progress);
                             using(Stream stream = File.OpenRead(person_photo)) {
 
                                 // If the person photo containe no face => throw error
@@ -316,13 +317,12 @@ namespace PhotoIdentifier
         /// </summary>
         /// <param name="infos"></param>
         /// <returns></returns>
-        private bool add_photos_db(List<IdentifyInfos> infos)
-        {
-            Data data = new Data();
-            data.infos_list = infos;
+        private bool add_photos_db(List<IdentifyInfos> infos){
 
             // PROGRESS
-            update_progress("Add infos to database", $"Process infos...", progress++);
+            update_progress("Add infos to database", $"Process infos...", progress);
+            Data data = new Data();
+            data.infos_list = infos;
             return data.process_photos();
         }
 
@@ -354,15 +354,10 @@ namespace PhotoIdentifier
         /// <param name="up"></param>
         /// <param name="down"></param>
         /// <param name="value"></param>
-        private void update_progress(string up, string down, int value)
-        {
-            LB_status_up.Text = up;
-            Lb_status_down.Text = down;
-            PB_status.Value = value;
-            ///PB_status.Invalidate();
-            PB_status.Update();
-            PB_status.Refresh();
-            //Application.DoEvents();
+        private void update_progress(string up, string down, int value){
+            LB_status_up.Invoke((Action)(() => LB_status_up.Text = up));
+            Lb_status_down.Invoke((Action)(() => Lb_status_down.Text = down));
+            PB_status.Invoke((Action)(() => PB_status.Value = value));
         }
 
         /// <summary>
@@ -373,6 +368,7 @@ namespace PhotoIdentifier
         {
             int photos = 0;
             int per = 0;
+          
 
             // Get all photos from imagelistview
             foreach(ImageListViewItem item in photos_to_identify.Items) {
@@ -396,7 +392,9 @@ namespace PhotoIdentifier
             }
 
             // Set max value
-            PB_status.Maximum = photos + per;
+            // +1 = database
+            PB_status.Value = 0;
+            PB_status.Maximum = photos + per + 1;
         }
         #endregion
     }

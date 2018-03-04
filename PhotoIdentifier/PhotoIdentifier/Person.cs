@@ -9,8 +9,10 @@ using System.IO;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 
-namespace PhotoIdentifier {
-    class Person {
+namespace PhotoIdentifier
+{
+    class Person
+    {
 
         #region Vars
         private string person_app_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
@@ -26,7 +28,8 @@ namespace PhotoIdentifier {
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public bool add_person(string name) {
+        public bool add_person(string name)
+        {
             if(!add_dir_name(name))
                 return false;
             if(!copy_photos())
@@ -39,7 +42,8 @@ namespace PhotoIdentifier {
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private bool add_dir_name(string name) {
+        private bool add_dir_name(string name)
+        {
             try {
 
                 // Dir will be created to store the photos
@@ -63,7 +67,8 @@ namespace PhotoIdentifier {
         /// Copy photos
         /// </summary>
         /// <returns></returns>
-        private bool copy_photos() {
+        private bool copy_photos()
+        {
             try {
                 // Get all photos from imagelistview
                 foreach(ImageListViewItem item in ILV_photos.Items) {
@@ -100,7 +105,8 @@ namespace PhotoIdentifier {
         /// </summary>
         /// <param name="length">Random length</param>
         /// <returns></returns>
-        private string get_random(int length) {
+        private string get_random(int length)
+        {
             const string chars = "abcdefghijklmnopqrstuvwxyz";
             return new string(Enumerable.Repeat(chars, length).Select(s => s[rnd.Next(s.Length)]).ToArray());
         }
@@ -110,7 +116,8 @@ namespace PhotoIdentifier {
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private string get_hsah256_file(string path) {
+        private string get_hsah256_file(string path)
+        {
             string hash = "";
             try {
 
@@ -130,28 +137,27 @@ namespace PhotoIdentifier {
             } catch { return ""; }
         }
 
-        private string get_md5_file(string path) {
+        private string get_md5_file(string path)
+        {
             string hash = "";
-            try
-            {
-                using (var md5 = MD5.Create())
-                {
-                    using (var stream = File.OpenRead(path))
-                    {
+            try {
+                using(var md5 = MD5.Create()) {
+                    using(var stream = File.OpenRead(path)) {
                         hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", String.Empty).ToLowerInvariant();
                     }
                 }
 
                 return hash;
-            }catch { return ""; }
+            } catch { return ""; }
 
         }
 
-            #endregion
+        #endregion
 
-            #region Get files/directory
+        #region Get files/directory
 
-            public string[] get_all_person_dir() {
+        public string[] get_all_person_dir()
+        {
             return Directory.GetDirectories(person_app_path);
         }
 
@@ -160,7 +166,8 @@ namespace PhotoIdentifier {
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        public string[] get_person_photos(string path) {
+        public string[] get_person_photos(string path)
+        {
             return Directory.GetFiles(path, "*.*");
         }
 
@@ -168,7 +175,8 @@ namespace PhotoIdentifier {
         /// Get name and path from person directory
         /// </summary>
         /// <returns></returns>
-        public Dictionary<string, string> get_all_person() {
+        public Dictionary<string, string> get_all_person()
+        {
             Dictionary<string, string> person_name = new Dictionary<string, string>();
             string[] names = Directory.GetDirectories(person_app_path);
             foreach(string name in names) {
@@ -190,7 +198,8 @@ namespace PhotoIdentifier {
         /// <param name="lst_photos_add"></param>
         /// <param name="lst_photos_remove"></param>
         /// <returns></returns>
-        public bool process_photos(List<string> lst_photos_add, List<string> lst_photos_remove, string name) {
+        public bool process_photos(List<string> lst_photos_add, List<string> lst_photos_remove, string name)
+        {
 
             // Process addded photos
             foreach(string photo in lst_photos_add) {
@@ -214,7 +223,8 @@ namespace PhotoIdentifier {
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private bool add_photos(string path, string name) {
+        private bool add_photos(string path, string name)
+        {
             try {
                 if(File.Exists(path)) {
 
@@ -242,7 +252,8 @@ namespace PhotoIdentifier {
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private bool remove_photos(string path) {
+        private bool remove_photos(string path)
+        {
             try {
                 if(File.Exists(path)) {
                     File.Delete(path);
