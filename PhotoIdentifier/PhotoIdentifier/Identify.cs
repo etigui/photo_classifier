@@ -93,10 +93,15 @@ namespace PhotoIdentifier {
                     }
                 }
 
-                // Add infos to db and copy photos to identify dir
-                if(!add_photos(infos_list)) {
+                // Add infos to db
+                if(!add_photos_db(infos_list)) {
                     //TODO ERROR
                 }
+                int a = 0;
+                // Add infos to db and copy photos to identify dir
+                //if(!add_photos(infos_list)) {
+                    //TODO ERROR
+                //}
             }
         }
         private async Task<IdentifyInfos> identify_person_async(string path, string person_group_id) {
@@ -131,7 +136,7 @@ namespace PhotoIdentifier {
                             Debug.WriteLine("Result of face: {0}", identifyResult.FaceId);
                             if (identifyResult.Candidates.Length == 0){
                                 Debug.WriteLine("No one identified");
-                                infos.person.Add(identifyResult.FaceId.ToString(), "No one identified");
+                                infos.person.Add(identifyResult.FaceId.ToString(), "not identified");
                             }
                             else{
 
@@ -149,8 +154,11 @@ namespace PhotoIdentifier {
                 }
             } catch(Exception ex){ MessageBox.Show(ex.ToString()); infos = null; }
 
+
             // If error during person identify
-            if(infos != null) {
+            //if(infos != null) {
+            // If error during person identify or no person identified
+            if (infos.faces.Length != 0) { 
 
                 //Identify things in the photo
                 infos.info = await identify_image_async(path);
@@ -263,7 +271,7 @@ namespace PhotoIdentifier {
 
         #region Add photos
 
-        private bool add_photos(List<IdentifyInfos> infos_list) {
+        /*private bool add_photos(List<IdentifyInfos> infos_list) {
 
             // Get all photos from IdentifyInfos
             foreach(IdentifyInfos info in infos_list) {
@@ -278,10 +286,18 @@ namespace PhotoIdentifier {
                 }
             }
             return true;
-        }
+        }*/
 
-        private bool add_photos_db(IdentifyInfos info) {
-            return true;
+
+        /// <summary>
+        /// Add all identifed photo the the db
+        /// </summary>
+        /// <param name="infos"></param>
+        /// <returns></returns>
+        private bool add_photos_db(List<IdentifyInfos> infos) {
+            Data data = new Data();
+            data.infos_list = infos;
+            return data.process_photos();
         }
 
 

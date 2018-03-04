@@ -50,7 +50,7 @@ namespace PhotoIdentifier {
             //string pathss = @"C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\person\obama_vjkfesnbkjld";
             //IEnumerable<string> ss = Directory.GetFiles(pathss, "*.*").Where(file => !string.Equals(file, ".zip", StringComparison.InvariantCultureIgnoreCase));//.Where(name => !name.EndsWith(".id"));
             //List<string> files = Directory.EnumerateFiles(pathss, "*.*",SearchOption.AllDirectories).Where(n => Path.GetExtension(n) != ".id").ToList();
-        }
+       }
 
         private void init() {
 
