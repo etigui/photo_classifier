@@ -18,3 +18,13 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\ob
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.pdb
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\photos.mdf
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\photos_log.ldf
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotoIdentifier.exe
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\ImageListView.dll
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\Microsoft.ProjectOxford.Common.dll
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\Microsoft.ProjectOxford.Face.dll
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\Microsoft.ProjectOxford.Vision.dll
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotoIdentifier.pdb
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotoIdentifier.exe.config
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.exe.config

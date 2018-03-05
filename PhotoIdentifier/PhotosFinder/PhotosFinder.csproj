@@ -48,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data.cs" />
+    <Compile Include="Locate.cs" />
     <Compile Include="PF.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +85,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PhotoIdentifier\PhotoIdentifier.csproj">
+      <Project>{1e9ea440-b4ae-442c-955a-501f13d11b9b}</Project>
+      <Name>PhotoIdentifier</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

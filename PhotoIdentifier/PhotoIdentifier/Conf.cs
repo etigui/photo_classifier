@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using System.Xml;
 
 namespace PhotoIdentifier {
-    class Conf {
+    public class Conf {
 
         #region Vars
         private string path = string.Empty;
         private string xml_file_id = "1a30ed961f81b1d86bad52343c93e738d8844095491d3f2d7bbc022ccd6b9512";
         private static Random random = new Random();
-        private int attribute_nb = 5;
+        private int attribute_nb = 6;
         #endregion
 
         #region Constructor
@@ -37,7 +37,6 @@ namespace PhotoIdentifier {
         /// <summary>
         /// Create conf file with specific path
         /// </summary>
-        /// <param name="path">eg: C:\Users\Guest\Documents\app_config.xml</param>
         private void create() {
             XmlDocument create_doc = new XmlDocument();
 
@@ -62,8 +61,14 @@ namespace PhotoIdentifier {
                 writer.Close();
             }
 
+            // Create the base identify directory
+            string identify_path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "identify");
+            if(!Directory.Exists(identify_path)) {
+                Directory.CreateDirectory(identify_path);
+            }
+
             // Write conf in conf xml file
-            write_config();
+            write_config(identify_path);
         }
         #endregion
 
@@ -121,7 +126,7 @@ namespace PhotoIdentifier {
         /// <summary>
         /// Write conf in xml file
         /// </summary>
-        private void write_config() {
+        private void write_config(string identify_path) {
 
             //Load xml file
             XmlDocument doc = load(true);
@@ -139,7 +144,8 @@ namespace PhotoIdentifier {
             write_config(doc, root_node, "version", version);
             write_config(doc, root_node, "cdate", date.ToString("dd.MM.yyy HH:mm:ss"));
             write_config(doc, root_node, "xmlfiletype", xml_file_id);
-            write_config(doc, root_node, "group", random_string(20));
+            write_config(doc, root_node, "group", "hepia");//random_string(20)
+            write_config(doc, root_node, "path", identify_path);
             doc.Save(path);
         }
 
@@ -170,6 +176,21 @@ namespace PhotoIdentifier {
             }
             return group;
         }
+
+        public string read_path() {
+
+            // Load xml file
+            XmlDocument doc = load(false);
+
+            // get group attribute
+            string identify_path = doc.GetElementsByTagName("config")[0].ChildNodes[5].InnerText;
+
+            // Group attribute not found
+            if(string.IsNullOrEmpty(identify_path)) {
+                throw new Conf_exception("Identify path attribute cannot be found.");
+            }
+            return identify_path;
+        } 
         #endregion
 
         #region Others

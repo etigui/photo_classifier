@@ -26,11 +26,15 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PF));
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.CB_value2 = new System.Windows.Forms.ComboBox();
+            this.CB_type2 = new System.Windows.Forms.ComboBox();
+            this.CB_value1 = new System.Windows.Forms.ComboBox();
+            this.CB_type1 = new System.Windows.Forms.ComboBox();
             this.TS_action = new System.Windows.Forms.ToolStrip();
             this.TSB_left = new System.Windows.Forms.ToolStripButton();
             this.TSB_right = new System.Windows.Forms.ToolStripButton();
@@ -48,12 +52,7 @@
             this.x120ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x150ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x200ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.TSB_search = new System.Windows.Forms.ToolStripButton();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
+            this.BT_reset = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.TS_action.SuspendLayout();
             this.SuspendLayout();
@@ -68,21 +67,58 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.BT_reset);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.comboBox4);
-            this.groupBox1.Controls.Add(this.comboBox3);
-            this.groupBox1.Controls.Add(this.comboBox2);
-            this.groupBox1.Controls.Add(this.comboBox1);
+            this.groupBox1.Controls.Add(this.CB_value2);
+            this.groupBox1.Controls.Add(this.CB_type2);
+            this.groupBox1.Controls.Add(this.CB_value1);
+            this.groupBox1.Controls.Add(this.CB_type1);
             this.groupBox1.Location = new System.Drawing.Point(818, 34);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(176, 167);
+            this.groupBox1.Size = new System.Drawing.Size(176, 218);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Search";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(16, 126);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(37, 13);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Value:";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(16, 59);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(37, 13);
+            this.label4.TabIndex = 7;
+            this.label4.Text = "Value:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(19, 99);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(34, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Type:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(19, 32);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(34, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Type:";
             // 
             // label1
             // 
@@ -93,37 +129,67 @@
             this.label1.TabIndex = 4;
             this.label1.Text = "AND";
             // 
-            // comboBox4
+            // CB_value2
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(59, 123);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(104, 21);
-            this.comboBox4.TabIndex = 3;
+            this.CB_value2.Enabled = false;
+            this.CB_value2.FormattingEnabled = true;
+            this.CB_value2.Location = new System.Drawing.Point(59, 123);
+            this.CB_value2.Name = "CB_value2";
+            this.CB_value2.Size = new System.Drawing.Size(104, 21);
+            this.CB_value2.Sorted = true;
+            this.CB_value2.TabIndex = 3;
+            this.CB_value2.Text = "Select a value";
+            this.CB_value2.SelectedIndexChanged += new System.EventHandler(this.CB_value2_SelectedIndexChanged);
+            this.CB_value2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CB_value2_KeyPress);
             // 
-            // comboBox3
+            // CB_type2
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(59, 96);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(104, 21);
-            this.comboBox3.TabIndex = 2;
+            this.CB_type2.Enabled = false;
+            this.CB_type2.FormattingEnabled = true;
+            this.CB_type2.Items.AddRange(new object[] {
+            "Age",
+            "Emotion",
+            "Smile",
+            "Tag"});
+            this.CB_type2.Location = new System.Drawing.Point(59, 96);
+            this.CB_type2.Name = "CB_type2";
+            this.CB_type2.Size = new System.Drawing.Size(104, 21);
+            this.CB_type2.Sorted = true;
+            this.CB_type2.TabIndex = 2;
+            this.CB_type2.Text = "Select a type";
+            this.CB_type2.SelectedIndexChanged += new System.EventHandler(this.CB_type2_SelectedIndexChanged);
+            this.CB_type2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CB_type2_KeyPress);
             // 
-            // comboBox2
+            // CB_value1
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(59, 56);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(104, 21);
-            this.comboBox2.TabIndex = 1;
+            this.CB_value1.FormattingEnabled = true;
+            this.CB_value1.Location = new System.Drawing.Point(59, 56);
+            this.CB_value1.Name = "CB_value1";
+            this.CB_value1.Size = new System.Drawing.Size(104, 21);
+            this.CB_value1.Sorted = true;
+            this.CB_value1.TabIndex = 1;
+            this.CB_value1.Text = "Select a value";
+            this.CB_value1.SelectedIndexChanged += new System.EventHandler(this.CB_value1_SelectedIndexChanged);
+            this.CB_value1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CB_value1_KeyPress);
             // 
-            // comboBox1
+            // CB_type1
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(59, 29);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(104, 21);
-            this.comboBox1.TabIndex = 0;
+            this.CB_type1.FormattingEnabled = true;
+            this.CB_type1.Items.AddRange(new object[] {
+            "Age",
+            "Emotion",
+            "Gender",
+            "Name",
+            "Smile",
+            "Tag"});
+            this.CB_type1.Location = new System.Drawing.Point(59, 29);
+            this.CB_type1.Name = "CB_type1";
+            this.CB_type1.Size = new System.Drawing.Size(104, 21);
+            this.CB_type1.Sorted = true;
+            this.CB_type1.TabIndex = 0;
+            this.CB_type1.Text = "Select a type";
+            this.CB_type1.SelectedIndexChanged += new System.EventHandler(this.CB_type1_SelectedIndexChanged);
+            this.CB_type1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.CB_type1_KeyPress);
             // 
             // TS_action
             // 
@@ -139,9 +205,7 @@
             this.toolStripSeparator4,
             this.TSB_info,
             this.toolStripSeparator2,
-            this.TSDDB_size,
-            this.toolStripSeparator3,
-            this.TSB_search});
+            this.TSDDB_size});
             this.TS_action.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.TS_action.Location = new System.Drawing.Point(0, 0);
             this.TS_action.Name = "TS_action";
@@ -280,56 +344,15 @@
             this.x200ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.x200ToolStripMenuItem.Text = "200 x 200";
             // 
-            // toolStripSeparator3
+            // BT_reset
             // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 31);
-            // 
-            // TSB_search
-            // 
-            this.TSB_search.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSB_search.Image = ((System.Drawing.Image)(resources.GetObject("TSB_search.Image")));
-            this.TSB_search.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.TSB_search.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TSB_search.Name = "TSB_search";
-            this.TSB_search.Size = new System.Drawing.Size(28, 28);
-            this.TSB_search.Text = "Lunch PhotosFinder";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(19, 32);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(34, 13);
-            this.label2.TabIndex = 5;
-            this.label2.Text = "Type:";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(19, 99);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(34, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Type:";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(16, 59);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "Value:";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(16, 126);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(37, 13);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Value:";
+            this.BT_reset.Location = new System.Drawing.Point(72, 171);
+            this.BT_reset.Name = "BT_reset";
+            this.BT_reset.Size = new System.Drawing.Size(75, 23);
+            this.BT_reset.TabIndex = 9;
+            this.BT_reset.Text = "Reset";
+            this.BT_reset.UseVisualStyleBackColor = true;
+            this.BT_reset.Click += new System.EventHandler(this.BT_reset_Click);
             // 
             // PF
             // 
@@ -355,7 +378,7 @@
 
         private System.Windows.Forms.RichTextBox richTextBox1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox CB_type1;
         private System.Windows.Forms.ToolStrip TS_action;
         private System.Windows.Forms.ToolStripButton TSB_left;
         private System.Windows.Forms.ToolStripButton TSB_right;
@@ -373,16 +396,15 @@
         private System.Windows.Forms.ToolStripMenuItem x120ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem x150ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem x200ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton TSB_search;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private System.Windows.Forms.ComboBox CB_value2;
+        private System.Windows.Forms.ComboBox CB_type2;
+        private System.Windows.Forms.ComboBox CB_value1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button BT_reset;
     }
 }
 

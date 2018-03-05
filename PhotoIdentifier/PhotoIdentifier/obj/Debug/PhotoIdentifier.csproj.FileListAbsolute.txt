@@ -54,3 +54,4 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.pdb
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csprojResolveAssemblyReference.cache
