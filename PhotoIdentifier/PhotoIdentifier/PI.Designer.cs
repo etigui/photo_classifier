@@ -32,16 +32,11 @@
             this.TSB_remove = new System.Windows.Forms.ToolStripButton();
             this.TSB_clear = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.TSB_left = new System.Windows.Forms.ToolStripButton();
-            this.TSB_right = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.TSB_thumbnails = new System.Windows.Forms.ToolStripButton();
             this.TSB_gallery = new System.Windows.Forms.ToolStripButton();
             this.TSB_pane = new System.Windows.Forms.ToolStripButton();
             this.TSB_list = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-            this.TSB_info = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.TSDDB_size = new System.Windows.Forms.ToolStripDropDownButton();
             this.x48ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x96ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,16 +93,11 @@
             this.TSB_remove,
             this.TSB_clear,
             this.toolStripSeparator1,
-            this.TSB_left,
-            this.TSB_right,
-            this.toolStripSeparator7,
             this.TSB_thumbnails,
             this.TSB_gallery,
             this.TSB_pane,
             this.TSB_list,
             this.toolStripSeparator4,
-            this.TSB_info,
-            this.toolStripSeparator2,
             this.TSDDB_size,
             this.toolStripSeparator3,
             this.TSB_person,
@@ -163,33 +153,6 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
             // 
-            // TSB_left
-            // 
-            this.TSB_left.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSB_left.Image = ((System.Drawing.Image)(resources.GetObject("TSB_left.Image")));
-            this.TSB_left.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.TSB_left.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TSB_left.Name = "TSB_left";
-            this.TSB_left.Size = new System.Drawing.Size(28, 28);
-            this.TSB_left.Text = "Rotate left (90°)";
-            this.TSB_left.Click += new System.EventHandler(this.TSB_left_Click);
-            // 
-            // TSB_right
-            // 
-            this.TSB_right.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSB_right.Image = ((System.Drawing.Image)(resources.GetObject("TSB_right.Image")));
-            this.TSB_right.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.TSB_right.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TSB_right.Name = "TSB_right";
-            this.TSB_right.Size = new System.Drawing.Size(28, 28);
-            this.TSB_right.Text = "Rotate right  (90°)";
-            this.TSB_right.Click += new System.EventHandler(this.TSB_right_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 31);
-            // 
             // TSB_thumbnails
             // 
             this.TSB_thumbnails.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -238,22 +201,6 @@
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
             this.toolStripSeparator4.Size = new System.Drawing.Size(6, 31);
-            // 
-            // TSB_info
-            // 
-            this.TSB_info.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSB_info.Image = ((System.Drawing.Image)(resources.GetObject("TSB_info.Image")));
-            this.TSB_info.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.TSB_info.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TSB_info.Name = "TSB_info";
-            this.TSB_info.Size = new System.Drawing.Size(28, 28);
-            this.TSB_info.Text = "Columns info";
-            this.TSB_info.Click += new System.EventHandler(this.TSB_info_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 31);
             // 
             // TSDDB_size
             // 
@@ -397,8 +344,6 @@
         private System.Windows.Forms.ToolStripButton TSB_thumbnails;
         private System.Windows.Forms.ToolStripButton TSB_gallery;
         private System.Windows.Forms.ToolStripButton TSB_pane;
-        private System.Windows.Forms.ToolStripButton TSB_info;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton TSB_person;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripButton TSB_search;
@@ -415,9 +360,6 @@
         private System.Windows.Forms.ToolStripStatusLabel TSSL_infos;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripButton TSB_identify;
-        private System.Windows.Forms.ToolStripButton TSB_left;
-        private System.Windows.Forms.ToolStripButton TSB_right;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripButton TSB_manage_person;
     }
 }

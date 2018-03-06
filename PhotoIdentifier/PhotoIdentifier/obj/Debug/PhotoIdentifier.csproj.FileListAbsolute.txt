@@ -45,7 +45,6 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Primitives.xml
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\WinFormAnimation.xml
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.AddPerson.resources
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ColumnsInfos.resources
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Identify.resources
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.PI.resources
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ManagePerson.resources
@@ -54,4 +53,3 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.pdb
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csprojResolveAssemblyReference.cache

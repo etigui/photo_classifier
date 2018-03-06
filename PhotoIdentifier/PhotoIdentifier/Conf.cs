@@ -177,7 +177,7 @@ namespace PhotoIdentifier {
             return group;
         }
 
-        public string read_path() {
+        public string read_identify_path() {
 
             // Load xml file
             XmlDocument doc = load(false);

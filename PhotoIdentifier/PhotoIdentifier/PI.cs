@@ -61,8 +61,16 @@ namespace PhotoIdentifier {
             //Init thumbnails size tick
             x96ToolStripMenuItem.Checked = true;
 
+            // Add all details
+            foreach(ImageListView.ImageListViewColumnHeader c in ILV_photos.Columns) {
+                c.Visible = true;
+            }
+
             // Check internet
             check_internet();
+
+            // Create config file
+            conf = new Conf(conf_file_path);
 
             // Creat person dir if not exist
             string person_dir_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
@@ -70,28 +78,17 @@ namespace PhotoIdentifier {
                 Directory.CreateDirectory(person_dir_path);
             }
 
-            // Create identify for if not exist
-            string identify_dir_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "identify");
+            // Create identify if not exist
+            string identify_dir_path = conf.read_identify_path();
             if(!Directory.Exists(identify_dir_path)) {
                 Directory.CreateDirectory(identify_dir_path);
             }
-
-            // Create config file
-            conf = new Conf(conf_file_path);
         }
 
         #endregion
 
         #region Controls
 
-        private void TSB_info_Click(object sender, EventArgs e) {
-
-            // Lunch columns form
-            ColumnsInfos ci = new ColumnsInfos {
-                ILV_photos = ILV_photos
-            };
-            ci.ShowDialog();
-        }
 
         private void TSB_person_Click(object sender, EventArgs e) {
             AddPerson ap = new AddPerson();
@@ -121,7 +118,8 @@ namespace PhotoIdentifier {
 
             // Add photos to the list
             OpenFileDialog ofd = new OpenFileDialog {
-                Multiselect = true
+                Multiselect = true,
+                InitialDirectory = conf.read_identify_path()
             };
             if(ofd.ShowDialog() == DialogResult.OK) {
                 ILV_photos.Items.AddRange(ofd.FileNames);
@@ -241,7 +239,7 @@ namespace PhotoIdentifier {
 
         #region Rotate image right/left
 
-        private void TSB_left_Click(object sender, EventArgs e) {
+        /*private void TSB_left_Click(object sender, EventArgs e) {
             if(ILV_photos.SelectedItems.Count != 0) {
                 if(MessageBox.Show("Rotating will overwrite original images. Are you sure you want to continue?", "Rotate left", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation) == DialogResult.Yes) {
                     foreach(ImageListViewItem item in ILV_photos.SelectedItems) {
@@ -271,7 +269,7 @@ namespace PhotoIdentifier {
                     }
                 }
             }
-        }
+        }*/
 
         #endregion
 

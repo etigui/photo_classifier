@@ -111,7 +111,7 @@ namespace PhotoIdentifier {
                     // Add value to request
                     cmd.Parameters.AddWithValue("@hash", hash);
                     cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@path", path.Replace(conf.read_path(), string.Empty));
+                    cmd.Parameters.AddWithValue("@path", path.Replace(conf.read_identify_path(), string.Empty));
                     cmd.Parameters.AddWithValue("@width", width);
                     cmd.Parameters.AddWithValue("@height", height);
                     cmd.Parameters.AddWithValue("@date", date);
