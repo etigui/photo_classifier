@@ -11,6 +11,7 @@ namespace PhotosFinder {
 
         #region Vars
         public string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
+        
         #endregion
 
         #region Init

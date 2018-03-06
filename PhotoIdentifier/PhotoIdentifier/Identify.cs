@@ -184,7 +184,7 @@ namespace PhotoIdentifier
             }
 
             // If error during photo identify
-            if(infos.info != null) {
+            if(infos.info.ImageType != null) {
                 return infos;
             } else {
                 return null;

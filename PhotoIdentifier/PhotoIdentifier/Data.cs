@@ -6,16 +6,16 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-
-namespace PhotoIdentifier
-{
-    class Data
-    {
+namespace PhotoIdentifier {
+    class Data {
 
         #region Vars
         private const string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
+        private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
         public List<IdentifyInfos> infos_list;
+        Conf conf;
         #endregion
 
         #region Init
@@ -24,10 +24,12 @@ namespace PhotoIdentifier
             init();
         }
 
-        private void init(){
+        private void init() {
+
+            conf = new Conf(conf_file_path);
 
             // TODO remove
-            reset_pk();
+            //reset_pk();
         }
 
         #endregion
@@ -36,10 +38,10 @@ namespace PhotoIdentifier
         /// <summary>
         /// Process all identified photo
         /// </summary>
-        public bool process_photos(){
-            try{
+        public bool process_photos() {
+            try {
                 // Process all photos
-                foreach(IdentifyInfos info in infos_list){
+                foreach(IdentifyInfos info in infos_list) {
                     int photo_id = 0;
 
                     // Calculate file hash and check if no error.
@@ -47,7 +49,7 @@ namespace PhotoIdentifier
                     // If the photo is already in the database we dont add it.
                     // TODO  => if exist => delet db file entree and add the new one.
                     string hash = get_md5_file(info.path);
-                    if(hash != "" && !check_photo_exist(hash)){
+                    if(hash != "" && !check_photo_exist(hash)) {
 
                         // TODO check those value
                         string path = info.path;
@@ -56,11 +58,14 @@ namespace PhotoIdentifier
                         int height = info.info.Metadata.Height;
                         string date = get_date_time();
 
+                        // Get last id
+                        //photo_id = get_last_id();
+
                         // Add info about the photo in the photo table
                         photo_id = add_photo(hash, file_name, path, width, height, date);
 
                         int face = 0;
-                        foreach(KeyValuePair<string, string> person in info.person){
+                        foreach(KeyValuePair<string, string> person in info.person) {
 
                             // TODO check those value
                             string name = get_name(person.Value);
@@ -75,8 +80,7 @@ namespace PhotoIdentifier
                         }
 
                         // TODO check those value
-                        foreach(string tag in info.info.Description.Tags)
-                        {
+                        foreach(string tag in info.info.Description.Tags) {
 
                             // Add image info in image table
                             add_image(tag, photo_id);
@@ -84,7 +88,7 @@ namespace PhotoIdentifier
                     }
                 }
                 return true;
-            } catch { return false; }
+            } catch(Exception ex) { Console.WriteLine(ex.ToString()); return false; }
         }
 
 
@@ -98,30 +102,38 @@ namespace PhotoIdentifier
         /// <param name="height"></param>
         /// <param name="date"></param>
         /// <returns></returns>
-        private int add_photo(string hash, string name, string path, int width, int height, string date)
-        {
+        private int add_photo(string hash, string name, string path, int width, int height, string date) {
             int photo_id = 0;
-            using(SqlConnection conn = new SqlConnection(connection_string))
-            {
-                string query = "INSERT INTO dbo.photo (hash,name,path,width,height,date) VALUES (@hash,@name,@path,@width,@height,@date)SELECT SCOPE_IDENTITY()";
-                using(SqlCommand cmd = new SqlCommand(query, conn))
-                {
+            using(SqlConnection conn = new SqlConnection(connection_string)) {
+                string query = "INSERT INTO dbo.photo (hash,name,path,width,height,date) VALUES (@hash,@name,@path,@width,@height,@date); SELECT SCOPE_IDENTITY();";
+                using(SqlCommand cmd = new SqlCommand(query, conn)) {
 
                     // Add value to request
                     cmd.Parameters.AddWithValue("@hash", hash);
                     cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@path", path);
+                    cmd.Parameters.AddWithValue("@path", path.Replace(conf.read_path(), string.Empty));
                     cmd.Parameters.AddWithValue("@width", width);
                     cmd.Parameters.AddWithValue("@height", height);
                     cmd.Parameters.AddWithValue("@date", date);
 
                     // Execute query and get last primary key
                     conn.Open();
+
                     //int result = cmd.ExecuteNonQuery();
                     photo_id = Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
             return photo_id;
+        }
+
+        private int get_last_id() {
+            using(SqlConnection conn = new SqlConnection(connection_string)) {
+                string query = "SELECT MAX(id) FROM dbo.photo";
+                using(SqlCommand cmd = new SqlCommand(query, conn)) {
+                    conn.Open();
+                    return Convert.ToInt32(cmd.ExecuteScalar()) + 1;
+                }
+            }
         }
 
         /// <summary>
@@ -133,13 +145,10 @@ namespace PhotoIdentifier
         /// <param name="age"></param>
         /// <param name="emotion"></param>
         /// <param name="photo_id"></param>
-        private void add_person(string name, string gender, int smile, int age, string emotion, int photo_id)
-        {
-            using(SqlConnection conn = new SqlConnection(connection_string))
-            {
+        private void add_person(string name, string gender, int smile, int age, string emotion, int photo_id) {
+            using(SqlConnection conn = new SqlConnection(connection_string)) {
                 string query = "INSERT INTO dbo.person (name,gender,smile,age,emotion,photo_id) VALUES (@name,@gender,@smile,@age,@emotion,@photo_id)";
-                using(SqlCommand cmd = new SqlCommand(query, conn))
-                {
+                using(SqlCommand cmd = new SqlCommand(query, conn)) {
 
                     // Add value to request
                     cmd.Parameters.AddWithValue("@name", name);
@@ -160,13 +169,10 @@ namespace PhotoIdentifier
         /// </summary>
         /// <param name="tag"></param>
         /// <param name="photo_id"></param>
-        private void add_image(string tag, int photo_id)
-        {
-            using(SqlConnection conn = new SqlConnection(connection_string))
-            {
+        private void add_image(string tag, int photo_id) {
+            using(SqlConnection conn = new SqlConnection(connection_string)) {
                 string query = "INSERT INTO dbo.image (tag,photo_id) VALUES (@tag,@photo_id)";
-                using(SqlCommand cmd = new SqlCommand(query, conn))
-                {
+                using(SqlCommand cmd = new SqlCommand(query, conn)) {
 
                     // Add value to request
                     cmd.Parameters.AddWithValue("@tag", tag);
@@ -185,8 +191,7 @@ namespace PhotoIdentifier
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private string get_emotion(Microsoft.ProjectOxford.Common.Contract.EmotionScores value)
-        {
+        private string get_emotion(Microsoft.ProjectOxford.Common.Contract.EmotionScores value) {
             Dictionary<string, double> emotion = new Dictionary<string, double>();
             emotion.Add("Anger", value.Anger);
             emotion.Add("Contempt", value.Contempt);
@@ -211,21 +216,17 @@ namespace PhotoIdentifier
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        private int get_smile(double value)
-        {
-            if(value > 0.5)
-            {
+        private int get_smile(double value) {
+            if(value > 0.5) {
                 return 1;
-            } else
-            {
+            } else {
                 return 0;
             }
         }
 
 
         // Get current date time
-        private string get_date_time()
-        {
+        private string get_date_time() {
             DateTime time = DateTime.Now;
             return time.ToString("yyyy-MM-dd HH:mm:ss");
         }
@@ -235,11 +236,9 @@ namespace PhotoIdentifier
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        private string get_name(string name)
-        {
+        private string get_name(string name) {
             int index = name.LastIndexOf("_");
-            if(index > 0)
-            {
+            if(index > 0) {
                 return name.Substring(0, index);
             }
             return name;
@@ -250,17 +249,12 @@ namespace PhotoIdentifier
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        private string get_md5_file(string path)
-        {
+        private string get_md5_file(string path) {
             string hash = "";
-            try
-            {
-                if(File.Exists(path))
-                {
-                    using(var md5 = MD5.Create())
-                    {
-                        using(var stream = File.OpenRead(path))
-                        {
+            try {
+                if(File.Exists(path)) {
+                    using(var md5 = MD5.Create()) {
+                        using(var stream = File.OpenRead(path)) {
                             hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", String.Empty).ToLowerInvariant();
                         }
                     }
@@ -272,14 +266,11 @@ namespace PhotoIdentifier
         #endregion
 
         #region Check hash
-        private bool check_photo_exist(string hash)
-        {
+        private bool check_photo_exist(string hash) {
             bool found = false;
-            using(SqlConnection conn = new SqlConnection(connection_string))
-            {
+            using(SqlConnection conn = new SqlConnection(connection_string)) {
                 string query = "SELECT COUNT(*) FROM dbo.photo WHERE hash=@hash";
-                using(SqlCommand cmd = new SqlCommand(query, conn))
-                {
+                using(SqlCommand cmd = new SqlCommand(query, conn)) {
 
                     // Add value to request
                     cmd.Parameters.AddWithValue("@hash", hash);
@@ -287,11 +278,9 @@ namespace PhotoIdentifier
                     conn.Open();
                     Int32 count = Convert.ToInt32(cmd.ExecuteScalar());
 
-                    if(count > 0)
-                    {
+                    if(count > 0) {
                         found = true;
-                    } else
-                    {
+                    } else {
                         found = false;
                     }
                 }
@@ -305,8 +294,8 @@ namespace PhotoIdentifier
         /// <summary>
         /// Reset the primary key of each table
         /// </summary>
-        private void reset_pk(){
-            string[] tables = new string[] { "photo", "image","person" };
+        private void reset_pk() {
+            string[] tables = new string[] { "photo", "image", "person" };
             foreach(string table in tables) {
                 using(SqlConnection conn = new SqlConnection(connection_string)) {
                     string query = $"DBCC CHECKIDENT ('dbo.{table}', RESEED, 0)";
