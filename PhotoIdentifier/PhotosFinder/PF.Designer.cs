@@ -54,9 +54,11 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.CMS_action = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ssToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BT_save_all = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.TS_action.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.CMS_action.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,7 +75,7 @@
             this.groupBox1.Controls.Add(this.CB_type2);
             this.groupBox1.Controls.Add(this.CB_value1);
             this.groupBox1.Controls.Add(this.CB_type1);
-            this.groupBox1.Location = new System.Drawing.Point(818, 34);
+            this.groupBox1.Location = new System.Drawing.Point(700, 34);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(176, 197);
             this.groupBox1.TabIndex = 2;
@@ -209,7 +211,7 @@
             this.TS_action.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.TS_action.Location = new System.Drawing.Point(0, 0);
             this.TS_action.Name = "TS_action";
-            this.TS_action.Size = new System.Drawing.Size(1002, 31);
+            this.TS_action.Size = new System.Drawing.Size(884, 31);
             this.TS_action.TabIndex = 8;
             this.TS_action.Text = "toolStrip1";
             // 
@@ -323,7 +325,7 @@
             this.ILV_photos.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ILV_photos.Location = new System.Drawing.Point(0, 34);
             this.ILV_photos.Name = "ILV_photos";
-            this.ILV_photos.Size = new System.Drawing.Size(811, 557);
+            this.ILV_photos.Size = new System.Drawing.Size(693, 461);
             this.ILV_photos.TabIndex = 9;
             this.ILV_photos.Text = "";
             this.ILV_photos.SelectionChanged += new System.EventHandler(this.ILV_photos_SelectionChanged);
@@ -333,9 +335,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSSL_infos});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 591);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 495);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1002, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(884, 22);
             this.statusStrip1.TabIndex = 10;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -349,37 +351,49 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Location = new System.Drawing.Point(818, 237);
+            this.groupBox2.Controls.Add(this.BT_save_all);
+            this.groupBox2.Location = new System.Drawing.Point(700, 237);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(176, 351);
+            this.groupBox2.Size = new System.Drawing.Size(176, 75);
             this.groupBox2.TabIndex = 11;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Photo infos";
+            this.groupBox2.Text = "Options";
             // 
             // CMS_action
             // 
             this.CMS_action.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ssToolStripMenuItem});
             this.CMS_action.Name = "CMS_action";
-            this.CMS_action.Size = new System.Drawing.Size(153, 48);
+            this.CMS_action.Size = new System.Drawing.Size(85, 26);
             // 
             // ssToolStripMenuItem
             // 
             this.ssToolStripMenuItem.Name = "ssToolStripMenuItem";
-            this.ssToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ssToolStripMenuItem.Size = new System.Drawing.Size(84, 22);
             this.ssToolStripMenuItem.Text = "ss";
+            // 
+            // BT_save_all
+            // 
+            this.BT_save_all.Location = new System.Drawing.Point(51, 31);
+            this.BT_save_all.Name = "BT_save_all";
+            this.BT_save_all.Size = new System.Drawing.Size(75, 23);
+            this.BT_save_all.TabIndex = 10;
+            this.BT_save_all.Text = "Save all";
+            this.BT_save_all.UseVisualStyleBackColor = true;
+            this.BT_save_all.Click += new System.EventHandler(this.BT_save_all_Click);
             // 
             // PF
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1002, 613);
+            this.ClientSize = new System.Drawing.Size(884, 517);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.ILV_photos);
             this.Controls.Add(this.TS_action);
             this.Controls.Add(this.groupBox1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(900, 555);
             this.Name = "PF";
             this.Text = "Photos Finder";
             this.groupBox1.ResumeLayout(false);
@@ -388,6 +402,7 @@
             this.TS_action.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             this.CMS_action.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -424,6 +439,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ContextMenuStrip CMS_action;
         private System.Windows.Forms.ToolStripMenuItem ssToolStripMenuItem;
+        private System.Windows.Forms.Button BT_save_all;
     }
 }
 

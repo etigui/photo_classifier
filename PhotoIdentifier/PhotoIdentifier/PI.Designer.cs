@@ -58,9 +58,9 @@
             // 
             this.SS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSSL_infos});
-            this.SS.Location = new System.Drawing.Point(0, 281);
+            this.SS.Location = new System.Drawing.Point(0, 495);
             this.SS.Name = "SS";
-            this.SS.Size = new System.Drawing.Size(703, 22);
+            this.SS.Size = new System.Drawing.Size(734, 22);
             this.SS.TabIndex = 2;
             // 
             // TSSL_infos
@@ -80,7 +80,7 @@
             this.ILV_photos.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ILV_photos.Location = new System.Drawing.Point(-1, 34);
             this.ILV_photos.Name = "ILV_photos";
-            this.ILV_photos.Size = new System.Drawing.Size(705, 247);
+            this.ILV_photos.Size = new System.Drawing.Size(736, 461);
             this.ILV_photos.TabIndex = 5;
             this.ILV_photos.Text = "";
             this.ILV_photos.SelectionChanged += new System.EventHandler(this.ILV_photos_SelectionChanged);
@@ -109,7 +109,7 @@
             this.TS_action.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.TS_action.Location = new System.Drawing.Point(0, 0);
             this.TS_action.Name = "TS_action";
-            this.TS_action.Size = new System.Drawing.Size(703, 31);
+            this.TS_action.Size = new System.Drawing.Size(734, 31);
             this.TS_action.TabIndex = 7;
             this.TS_action.Text = "toolStrip1";
             // 
@@ -317,11 +317,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(703, 303);
+            this.ClientSize = new System.Drawing.Size(734, 517);
             this.Controls.Add(this.TS_action);
             this.Controls.Add(this.ILV_photos);
             this.Controls.Add(this.SS);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(750, 555);
             this.Name = "PI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PI";

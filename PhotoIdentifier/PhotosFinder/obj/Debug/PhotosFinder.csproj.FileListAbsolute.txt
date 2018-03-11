@@ -13,6 +13,7 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bi
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotosFinder.exe.config
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotosFinder.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotosFinder.pdb
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\ImageListView.dll
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotoIdentifier.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\Microsoft.ProjectOxford.Common.dll
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\Microsoft.ProjectOxford.Face.dll
@@ -24,8 +25,8 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bi
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csprojResolveAssemblyReference.cache
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.PF.resources
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.Properties.Resources.resources
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csproj.GenerateResource.Cache
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csproj.GenerateResource.cache
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csproj.CopyComplete
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.pdb
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\ImageListView.dll

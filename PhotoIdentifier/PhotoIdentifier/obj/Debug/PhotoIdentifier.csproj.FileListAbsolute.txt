@@ -28,8 +28,8 @@ C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.exe
 C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.pdb
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\photos.mdf
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\photos_log.ldf
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\photos.mdf
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.exe.config
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.pdb
@@ -49,7 +49,8 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.PI.resources
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.ManagePerson.resources
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Properties.Resources.resources
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.GenerateResource.Cache
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.GenerateResource.cache
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CopyComplete
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.pdb

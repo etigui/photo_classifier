@@ -325,9 +325,13 @@ namespace PhotosFinder {
             if(e.Button == MouseButtons.Right) {
                 //ILV_photos.ContextMenu = CMS_action;
                 ILV_photos.ContextMenu.Show(ILV_photos, e.Location);
-
+                // TODO right click (locate image) => open explorer with the image selected 
                 
             }
+        }
+
+        private void BT_save_all_Click(object sender, EventArgs e) {
+            //TODO get all phot from ILV sa save it where the user want (save_files_dialog)
         }
     }
 }

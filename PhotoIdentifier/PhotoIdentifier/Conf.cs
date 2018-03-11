@@ -58,7 +58,7 @@ namespace PhotoIdentifier {
             // Create file
             using(XmlWriter writer = XmlWriter.Create(path, settings)) {
                 create_doc.WriteContentTo(writer);
-                writer.Close();
+                //writer.Close();
             }
 
             // Create the base identify directory
