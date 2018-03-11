@@ -5,13 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PhotoIdentifier;
+using System.IO;
+using System.Windows.Forms;
 
 namespace PhotosFinder {
     class Data {
 
         #region Vars
-        public string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
-        
+        //public string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
+        private static string db_path = (Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.mdf")).ToString();
+        private string connection_string = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={db_path};Persist Security Info=True;Connect Timeout=30";
         #endregion
 
         #region Init
@@ -67,7 +70,7 @@ namespace PhotosFinder {
                     }
                     return res;
                 }
-            } catch { return null; }
+            } catch(Exception ex) { Console.WriteLine(ex.ToString());  return null; }
         }
 
         public List<string> get_value_one(string type, string value) {
@@ -109,8 +112,12 @@ namespace PhotosFinder {
                 }
 
                 return get_photo_path(ids);
-            } catch(Exception ex) { Console.WriteLine(ex.ToString()); return null; }
-        }
+            } catch(Exception ex) { Console.WriteLine(ex.ToString()); return null; } /*finally {
+                if(conn != null) {
+                    conn.cl
+                }
+            }*/
+                                                                                 }
 
         public List<string> get_value_two(string type1, string type2, string value1, string value2) {
             try {

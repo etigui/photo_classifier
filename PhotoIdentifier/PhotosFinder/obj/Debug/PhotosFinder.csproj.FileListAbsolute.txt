@@ -21,7 +21,6 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bi
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotoIdentifier.pdb
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotoIdentifier.exe.config
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.csprojResolveAssemblyReference.cache
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.PF.resources
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\obj\Debug\PhotosFinder.Properties.Resources.resources

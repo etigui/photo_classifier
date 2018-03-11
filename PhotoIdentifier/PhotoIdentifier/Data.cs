@@ -12,10 +12,15 @@ namespace PhotoIdentifier {
     class Data {
 
         #region Vars
-        private const string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
+        //private const string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
+        private static string db_path = (Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.mdf")).ToString();
+        private string connection_string = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={db_path};Persist Security Info=True;Connect Timeout=30";
+
+
         private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
         public List<IdentifyInfos> infos_list;
         Conf conf;
+
         #endregion
 
         #region Init
@@ -25,7 +30,6 @@ namespace PhotoIdentifier {
         }
 
         private void init() {
-
             conf = new Conf(conf_file_path);
 
             // TODO remove

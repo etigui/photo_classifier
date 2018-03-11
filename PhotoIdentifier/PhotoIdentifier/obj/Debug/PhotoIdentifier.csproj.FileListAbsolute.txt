@@ -33,14 +33,9 @@ C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.exe.config
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.exe
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\PhotoIdentifier.pdb
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\Microsoft.ProjectOxford.Common.dll
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\Microsoft.ProjectOxford.Face.dll
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\Microsoft.ProjectOxford.Vision.dll
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Extensions.dll
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Primitives.dll
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\WinFormAnimation.dll
-C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Extensions.xml
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Primitives.xml
 C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\WinFormAnimation.xml

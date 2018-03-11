@@ -20,6 +20,7 @@ namespace PhotosFinder {
         Conf conf;
 
         private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
+        //string identify_dir_path = string.Empty;
         #endregion
 
         #region Init
@@ -52,7 +53,6 @@ namespace PhotosFinder {
 
 
         #endregion
-
 
         #region Controls
 
@@ -175,6 +175,7 @@ namespace PhotosFinder {
         /// </summary>
         /// <param name="files"></param>
         private void add_files(List<string> files) {
+            ILV_photos.ClearThumbnailCache();
 
             // Db error
             if(files == null) {
@@ -184,20 +185,21 @@ namespace PhotosFinder {
 
                 foreach(string file in files) {
 
-
                     // Check if full path
                     // Full => c:/
                     // Not full => /....
                     if(!check_path(file)) {
 
                         // Get photo path
-                        string photo = Path.Combine(conf.read_identify_path(), file);
+                        //string photo = Path.Combine(id, file);
+                        string photo = $"{conf.read_identify_path()}{file}";
 
                         // If exist add it to the Image list
                         if(File.Exists(photo)) {
                             ILV_photos.Items.Add(photo);
                         } else {
                             // TODO locate
+                            MessageBox.Show("locate");
                         }
                     } else {
 
@@ -206,6 +208,7 @@ namespace PhotosFinder {
                             ILV_photos.Items.Add(file);
                         } else {
                             // TODO locate
+                            MessageBox.Show("locate");
                         }
                     }
                 }
@@ -247,7 +250,6 @@ namespace PhotosFinder {
         }
 
         #endregion
-
 
         #region Change thumbnails size
 
@@ -323,8 +325,6 @@ namespace PhotosFinder {
 
         private void ILV_photos_MouseDown(object sender, MouseEventArgs e) {
             if(e.Button == MouseButtons.Right) {
-                //ILV_photos.ContextMenu = CMS_action;
-                ILV_photos.ContextMenu.Show(ILV_photos, e.Location);
                 // TODO right click (locate image) => open explorer with the image selected 
                 
             }
