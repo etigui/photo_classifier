@@ -15,6 +15,7 @@ namespace PhotosFinder {
         //public string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
         private static string db_path = (Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.mdf")).ToString();
         private string connection_string = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={db_path};Persist Security Info=True;Connect Timeout=30";
+        string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         #endregion
 
         #region Init

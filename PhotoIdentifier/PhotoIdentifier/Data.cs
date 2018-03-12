@@ -15,6 +15,7 @@ namespace PhotoIdentifier {
         //private const string connection_string = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Admin\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\photos.mdf;Persist Security Info=True;Connect Timeout=30";
         private static string db_path = (Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.mdf")).ToString();
         private string connection_string = $"Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename={db_path};Persist Security Info=True;Connect Timeout=30";
+        string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
 
         private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
@@ -115,7 +116,7 @@ namespace PhotoIdentifier {
                     // Add value to request
                     cmd.Parameters.AddWithValue("@hash", hash);
                     cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@path", path.Replace(conf.read_identify_path(), string.Empty));
+                    cmd.Parameters.AddWithValue("@path", path.Replace(identify_dir_path, string.Empty)); // conf.read_identify_path(
                     cmd.Parameters.AddWithValue("@width", width);
                     cmd.Parameters.AddWithValue("@height", height);
                     cmd.Parameters.AddWithValue("@date", date);

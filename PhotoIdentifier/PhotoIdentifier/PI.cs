@@ -39,6 +39,7 @@ namespace PhotoIdentifier {
         private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
         private bool internet_connection = false;
         private Conf conf;
+        string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
 
         #endregion
 
@@ -79,10 +80,10 @@ namespace PhotoIdentifier {
             }
 
             // Create identify if not exist
-            string identify_dir_path = conf.read_identify_path();
-            if(!Directory.Exists(identify_dir_path)) {
-                Directory.CreateDirectory(identify_dir_path);
-            }
+            //string identify_dir_path = conf.read_identify_path();
+            //if(!Directory.Exists(identify_dir_path)) {
+             //   Directory.CreateDirectory(identify_dir_path);
+            //}
         }
 
         #endregion
@@ -117,10 +118,11 @@ namespace PhotoIdentifier {
         private void TSB_add_Click(object sender, EventArgs e) {
 
             // Add photos to the list
+            //conf.read_identify_path()
             OpenFileDialog ofd = new OpenFileDialog {
                 Multiselect = true,
-                InitialDirectory = conf.read_identify_path()
-            };
+                InitialDirectory = identify_dir_path
+        };
             if(ofd.ShowDialog() == DialogResult.OK) {
                 ILV_photos.Items.AddRange(ofd.FileNames);
                 TSB_clear.Enabled = true;

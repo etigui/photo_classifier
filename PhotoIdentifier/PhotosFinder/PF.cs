@@ -20,6 +20,7 @@ namespace PhotosFinder {
         Conf conf;
 
         private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
+        string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         //string identify_dir_path = string.Empty;
         #endregion
 
@@ -34,10 +35,10 @@ namespace PhotosFinder {
             conf = new Conf(conf_file_path);
 
             // Create identify if not exist
-            string identify_dir_path = conf.read_identify_path();
+           /*string identify_dir_path = conf.read_identify_path();
             if(!Directory.Exists(identify_dir_path)) {
                 Directory.CreateDirectory(identify_dir_path);
-            }
+            }*/
 
             //Init thumbnails size tick
             x96ToolStripMenuItem.Checked = true;
@@ -192,7 +193,7 @@ namespace PhotosFinder {
 
                         // Get photo path
                         //string photo = Path.Combine(id, file);
-                        string photo = $"{conf.read_identify_path()}{file}";
+                        string photo = $"{identify_dir_path}{file}";
 
                         // If exist add it to the Image list
                         if(File.Exists(photo)) {
@@ -332,6 +333,24 @@ namespace PhotosFinder {
 
         private void BT_save_all_Click(object sender, EventArgs e) {
             //TODO get all phot from ILV sa save it where the user want (save_files_dialog)
+            try {
+                using(FolderBrowserDialog obd = new FolderBrowserDialog()) {
+
+                    if(obd.ShowDialog() == DialogResult.OK) {
+                        string dir = obd.SelectedPath;
+
+                        // Get all photos from imagelistview
+                        foreach(ImageListViewItem item in ILV_photos.Items) {
+
+                            // Copy the files from the ILV to the selected directory
+                            if(File.Exists(item.FileName)) {
+                                File.Copy(item.FileName, $"{dir}\\{Path.GetFileName(item.FileName)}");
+                            }
+                        }
+                    }
+                }
+                MessageBox.Show("File saved","Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            } catch { }
         }
     }
 }
