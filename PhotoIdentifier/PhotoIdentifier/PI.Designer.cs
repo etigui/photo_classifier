@@ -56,17 +56,19 @@
             // 
             // SS
             // 
+            this.SS.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.SS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSSL_infos});
-            this.SS.Location = new System.Drawing.Point(0, 495);
+            this.SS.Location = new System.Drawing.Point(0, 611);
             this.SS.Name = "SS";
-            this.SS.Size = new System.Drawing.Size(734, 22);
+            this.SS.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.SS.Size = new System.Drawing.Size(979, 25);
             this.SS.TabIndex = 2;
             // 
             // TSSL_infos
             // 
             this.TSSL_infos.Name = "TSSL_infos";
-            this.TSSL_infos.Size = new System.Drawing.Size(63, 17);
+            this.TSSL_infos.Size = new System.Drawing.Size(79, 20);
             this.TSSL_infos.Text = "No photos";
             // 
             // ILV_photos
@@ -78,9 +80,10 @@
             this.ILV_photos.DefaultImage = ((System.Drawing.Image)(resources.GetObject("ILV_photos.DefaultImage")));
             this.ILV_photos.ErrorImage = ((System.Drawing.Image)(resources.GetObject("ILV_photos.ErrorImage")));
             this.ILV_photos.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ILV_photos.Location = new System.Drawing.Point(-1, 34);
+            this.ILV_photos.Location = new System.Drawing.Point(-1, 42);
+            this.ILV_photos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.ILV_photos.Name = "ILV_photos";
-            this.ILV_photos.Size = new System.Drawing.Size(736, 461);
+            this.ILV_photos.Size = new System.Drawing.Size(981, 567);
             this.ILV_photos.TabIndex = 5;
             this.ILV_photos.Text = "";
             this.ILV_photos.SelectionChanged += new System.EventHandler(this.ILV_photos_SelectionChanged);
@@ -88,6 +91,7 @@
             // TS_action
             // 
             this.TS_action.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.TS_action.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.TS_action.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSB_add,
             this.TSB_remove,
@@ -109,7 +113,7 @@
             this.TS_action.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.TS_action.Location = new System.Drawing.Point(0, 0);
             this.TS_action.Name = "TS_action";
-            this.TS_action.Size = new System.Drawing.Size(734, 31);
+            this.TS_action.Size = new System.Drawing.Size(979, 31);
             this.TS_action.TabIndex = 7;
             this.TS_action.Text = "toolStrip1";
             // 
@@ -215,41 +219,41 @@
             this.TSDDB_size.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.TSDDB_size.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.TSDDB_size.Name = "TSDDB_size";
-            this.TSDDB_size.Size = new System.Drawing.Size(37, 28);
+            this.TSDDB_size.Size = new System.Drawing.Size(38, 28);
             this.TSDDB_size.Text = "Photos size";
             // 
             // x48ToolStripMenuItem
             // 
             this.x48ToolStripMenuItem.Name = "x48ToolStripMenuItem";
-            this.x48ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x48ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x48ToolStripMenuItem.Text = "48 x 48";
             this.x48ToolStripMenuItem.Click += new System.EventHandler(this.x48ToolStripMenuItem_Click);
             // 
             // x96ToolStripMenuItem
             // 
             this.x96ToolStripMenuItem.Name = "x96ToolStripMenuItem";
-            this.x96ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x96ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x96ToolStripMenuItem.Text = "96 x 96";
             this.x96ToolStripMenuItem.Click += new System.EventHandler(this.x96ToolStripMenuItem_Click);
             // 
             // x120ToolStripMenuItem
             // 
             this.x120ToolStripMenuItem.Name = "x120ToolStripMenuItem";
-            this.x120ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x120ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x120ToolStripMenuItem.Text = "120 x 120";
             this.x120ToolStripMenuItem.Click += new System.EventHandler(this.x120ToolStripMenuItem_Click);
             // 
             // x150ToolStripMenuItem
             // 
             this.x150ToolStripMenuItem.Name = "x150ToolStripMenuItem";
-            this.x150ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x150ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x150ToolStripMenuItem.Text = "150 x 150";
             this.x150ToolStripMenuItem.Click += new System.EventHandler(this.x150ToolStripMenuItem_Click);
             // 
             // x200ToolStripMenuItem
             // 
             this.x200ToolStripMenuItem.Name = "x200ToolStripMenuItem";
-            this.x200ToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
+            this.x200ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x200ToolStripMenuItem.Text = "200 x 200";
             this.x200ToolStripMenuItem.Click += new System.EventHandler(this.x200ToolStripMenuItem_Click);
             // 
@@ -315,14 +319,15 @@
             // 
             // PI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(734, 517);
+            this.ClientSize = new System.Drawing.Size(979, 636);
             this.Controls.Add(this.TS_action);
             this.Controls.Add(this.ILV_photos);
             this.Controls.Add(this.SS);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MinimumSize = new System.Drawing.Size(750, 555);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.MinimumSize = new System.Drawing.Size(994, 672);
             this.Name = "PI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "PI";
