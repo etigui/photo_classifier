@@ -32,7 +32,7 @@ ILV_photos.Focus();
 */
 
 namespace PhotoIdentifier {
-    public partial class PI:Form {
+    public partial class PI : Form {
 
         #region vars
         private readonly IFaceServiceClient faceServiceClient = new FaceServiceClient(Resources.face_api_key.ToString(), "https://westeurope.api.cognitive.microsoft.com/face/v1.0");
@@ -51,7 +51,7 @@ namespace PhotoIdentifier {
             //string pathss = @"C:\Users\Admin\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\person\obama_vjkfesnbkjld";
             //IEnumerable<string> ss = Directory.GetFiles(pathss, "*.*").Where(file => !string.Equals(file, ".zip", StringComparison.InvariantCultureIgnoreCase));//.Where(name => !name.EndsWith(".id"));
             //List<string> files = Directory.EnumerateFiles(pathss, "*.*",SearchOption.AllDirectories).Where(n => Path.GetExtension(n) != ".id").ToList();
-       }
+        }
 
         private void init() {
 
@@ -63,7 +63,7 @@ namespace PhotoIdentifier {
             x96ToolStripMenuItem.Checked = true;
 
             // Add all details
-            foreach(ImageListView.ImageListViewColumnHeader c in ILV_photos.Columns) {
+            foreach (ImageListView.ImageListViewColumnHeader c in ILV_photos.Columns) {
                 c.Visible = true;
             }
 
@@ -75,14 +75,14 @@ namespace PhotoIdentifier {
 
             // Creat person dir if not exist
             string person_dir_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
-            if(!Directory.Exists(person_dir_path)){
+            if (!Directory.Exists(person_dir_path)) {
                 Directory.CreateDirectory(person_dir_path);
             }
 
             // Create identify if not exist
             //string identify_dir_path = conf.read_identify_path();
             //if(!Directory.Exists(identify_dir_path)) {
-             //   Directory.CreateDirectory(identify_dir_path);
+            //   Directory.CreateDirectory(identify_dir_path);
             //}
         }
 
@@ -103,16 +103,16 @@ namespace PhotoIdentifier {
 
         private void TSB_search_Click(object sender, EventArgs e) {
             string photos_finder_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), @"PhotosFinder.exe");
-            if(File.Exists(photos_finder_path)) {
+            if (File.Exists(photos_finder_path)) {
 
                 //Lunch or not the PhotoFinder program
-                if(MessageBox.Show("Do you want to lunch PhotoFinder ?", "Lunch", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                if (MessageBox.Show("Do you want to lunch PhotoFinder ?", "Lunch", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
                     Process.Start(photos_finder_path);
                 }
             }
         }
         #endregion
-        
+
         #region Add/remove/clear images
 
         private void TSB_add_Click(object sender, EventArgs e) {
@@ -122,8 +122,8 @@ namespace PhotoIdentifier {
             OpenFileDialog ofd = new OpenFileDialog {
                 Multiselect = true,
                 InitialDirectory = identify_dir_path
-        };
-            if(ofd.ShowDialog() == DialogResult.OK) {
+            };
+            if (ofd.ShowDialog() == DialogResult.OK) {
                 ILV_photos.Items.AddRange(ofd.FileNames);
                 TSB_clear.Enabled = true;
                 TSB_remove.Enabled = true;
@@ -136,7 +136,7 @@ namespace PhotoIdentifier {
             ILV_photos.SuspendLayout();
 
             // Remove selected items
-            foreach(var item in ILV_photos.SelectedItems)
+            foreach (var item in ILV_photos.SelectedItems)
                 ILV_photos.Items.Remove(item);
 
             // Resume layout logic.
@@ -156,9 +156,9 @@ namespace PhotoIdentifier {
         /// Get how many photo selected
         /// </summary>
         private void update_status() {
-            if(ILV_photos.Items.Count == 0)
+            if (ILV_photos.Items.Count == 0)
                 update_status("No photos");
-            else if(ILV_photos.SelectedItems.Count == 0)
+            else if (ILV_photos.SelectedItems.Count == 0)
                 update_status(string.Format("{0} Photos", ILV_photos.Items.Count));
             else
                 update_status(string.Format("{0} Photos ({1} selected)", ILV_photos.Items.Count, ILV_photos.SelectedItems.Count));
@@ -280,13 +280,13 @@ namespace PhotoIdentifier {
         private void TSB_identify_Click(object sender, EventArgs e) {
 
             //Lunch the identification ?
-            if(MessageBox.Show("Do you want to identify the current photos ?", "Identify", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+            if (MessageBox.Show("Do you want to identify the current photos ?", "Identify", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
 
                 // Check if the list is not empty
-                if(ILV_photos.Items.Count != 0) {
+                if (ILV_photos.Items.Count != 0) {
 
                     // Check internet connection
-                    if(internet_connection) {
+                    if (internet_connection) {
 
                         // Start identification
                         Identify identify = new Identify {
@@ -313,15 +313,13 @@ namespace PhotoIdentifier {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void ping_completed_callback(object sender, PingCompletedEventArgs e) {
-            if(e.Cancelled) {
+            if (e.Cancelled) {
                 MessageBox.Show("No internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
-            }
-            if(e.Error != null) {
+            } else if (e.Error != null) {
                 MessageBox.Show("No internet connection", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Application.Exit();
-            }
-            if(e.Reply.Status == IPStatus.Success) {
+            } else if (e.Reply.Status == IPStatus.Success) {
                 internet_connection = true;
                 TSB_identify.Enabled = true;
             }

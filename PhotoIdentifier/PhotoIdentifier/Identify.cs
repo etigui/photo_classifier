@@ -116,6 +116,7 @@ namespace PhotoIdentifier
                 // Add infos to db
                 if(!add_photos_db(infos_list)) {
                     //TODO ERROR
+                    MessageBox.Show("Db error");
                 }
 
                 // Add infos to db and copy photos to identify dir
@@ -321,9 +322,11 @@ namespace PhotoIdentifier
 
             // PROGRESS
             update_progress("Add infos to database", $"Process infos...", progress);
-            Data data = new Data();
+            DataSet data = new DataSet();
+            return data.add_identified_photos(infos);
+            /*Data data = new Data();
             data.infos_list = infos;
-            return data.process_photos();
+            return data.process_photos();*/
         }
 
 

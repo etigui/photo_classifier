@@ -35,6 +35,7 @@ C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotosFinder.exe
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotosFinder.pdb
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\ImageListView.dll
+C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\LiteDB.dll
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\PhotoIdentifier.exe
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\Microsoft.ProjectOxford.Common.dll
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotosFinder\bin\Debug\Microsoft.ProjectOxford.Face.dll
