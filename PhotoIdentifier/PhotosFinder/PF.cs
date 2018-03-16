@@ -36,6 +36,12 @@ namespace PhotosFinder {
             data = new DataGet();
             conf = new Conf(conf_file_path);
 
+            /*ContextMenu cm = new ContextMenu();
+            cm.MenuItems.Add("Item 1");
+            cm.MenuItems.Add("Item 2");
+
+            ILV_photos.ContextMenu = cm;*/
+
             // Create identify if not exist
             /*string identify_dir_path = conf.read_identify_path();
              if(!Directory.Exists(identify_dir_path)) {
@@ -92,6 +98,7 @@ namespace PhotosFinder {
         private void CB_type1_SelectedIndexChanged(object sender, EventArgs e) {
 
             ILV_photos.Items.Clear();
+            update_status();
 
             // Reset the AND if not => Name
             if (CB_type1.Text != "Name") {
@@ -99,9 +106,6 @@ namespace PhotosFinder {
                 CB_value2.Enabled = false;
                 CB_type2.Text = "Select a type";
                 CB_value2.Text = "Select a value";
-            } else {
-                CB_type2.Enabled = true;
-                CB_value2.Enabled = true;
             }
 
             // Clear and add value from type
@@ -116,13 +120,15 @@ namespace PhotosFinder {
         }
 
         private void CB_type2_SelectedIndexChanged(object sender, EventArgs e) {
-
             ILV_photos.Items.Clear();
+            update_status();
 
             // Clear and add value from type
             CB_value2.Items.Clear();
             CB_value2.Text = "Select a value";
-            string[] res = data.get_type(CB_type2.Text).ToArray();
+            //string[] res = data.get_type(CB_type2.Text).ToArray();
+            string[] res = data.get_two_type(CB_type1.Text, CB_value1.Text, CB_type2.Text).ToArray();
+            
             if (res != null) {
                 CB_value2.Items.AddRange(res);
             } else {
@@ -135,6 +141,20 @@ namespace PhotosFinder {
         #region Get files
 
         private void CB_value1_SelectedIndexChanged(object sender, EventArgs e) {
+
+            // Reset the AND if not => Name
+            // Set AND CB to enable = true if Name + value1
+            if (CB_type1.Text == "Name" && CB_value1.Text != "Select a value") {
+                CB_type2.Text = "Select a type";
+                CB_value2.Text = "Select a value";
+                CB_type2.Enabled = true;
+                CB_value2.Enabled = true;
+            } else {
+                CB_type2.Enabled = false;
+                CB_value2.Enabled = false;
+                CB_type2.Text = "Select a type";
+                CB_value2.Text = "Select a value";
+            }
 
             List<string> files = new List<string>();
             ILV_photos.Items.Clear();
@@ -155,6 +175,7 @@ namespace PhotosFinder {
                 // Add file to the ImageList
                 add_files(files);
             }
+            update_status();
         }
 
         private void CB_value2_SelectedIndexChanged(object sender, EventArgs e) {
@@ -171,6 +192,7 @@ namespace PhotosFinder {
                 // Add file to the ImageList
                 add_files(files);
             }
+            update_status();
         }
 
         /// <summary>
@@ -326,13 +348,13 @@ namespace PhotosFinder {
 
         #endregion
 
-        private void ILV_photos_MouseDown(object sender, MouseEventArgs e) {
-            if (e.Button == MouseButtons.Right) {
-                // TODO right click (locate image) => open explorer with the image selected 
+        #region Save images
 
-            }
-        }
-
+        /// <summary>
+        /// Save current photos in ILV_photos
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BT_save_all_Click(object sender, EventArgs e) {
             //TODO get all phot from ILV sa save it where the user want (save_files_dialog)
             try {
@@ -354,5 +376,7 @@ namespace PhotosFinder {
                 MessageBox.Show("File saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch { }
         }
+
+        #endregion
     }
 }

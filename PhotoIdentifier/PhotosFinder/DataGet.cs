@@ -11,10 +11,45 @@ namespace PhotosFinder {
     class DataGet {
 
         #region Vars
-        private string connection_string = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "MyData.db");
+        private string connection_string = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.db");
         #endregion
 
         #region Get type
+
+        public List<string> get_two_type(string type1, string value1, string type2) {
+
+            List<string> res = new List<string>();
+
+            // Open database (or create if doesn't exist)
+            using (var db = new LiteDatabase(connection_string)) {
+
+                // Get a collection (or create, if doesn't exist)
+                var persons = db.GetCollection<TPerson>("persons");
+
+                // Get all data
+                var query = persons.Find(Query.Where(type1, t1 => t1 == value1));
+                foreach (var data in query) {
+                    string value = string.Empty;
+                    if (type2 == "Age") {
+                        value = data.Age.ToString();
+                    } else if (type2 == "Emotion") {
+                        value = data.Emotion.ToString();
+                    } else if (type2 == "Gender") {
+                        value = data.Gender.ToString();
+                    } else if (type2 == "Name") {
+                        value = data.Name.ToString();
+                    } else if (type2 == "Smile") {
+                        value = data.Smile.ToString();
+                    }
+
+                    // Add to list
+                    if ((!res.Contains(value)) && (value != string.Empty)) {
+                        res.Add(value);
+                    }
+                }
+            }
+            return res;
+        }
 
         /// <summary>
         /// Get data from type
@@ -133,8 +168,17 @@ namespace PhotosFinder {
                 // Get a collection (or create, if doesn't exist)
                 var persons = db.GetCollection<TPerson>("persons");
 
+                // Check if the value is numeric (smile, age)
+                // TODO if too complicated change (smile, age) from int to string in DB
+                IEnumerable<TPerson> query;
+                if (int.TryParse(value, out int n)) {
+                    query = persons.Find(Query.Where(type, t => t == n));
+                } else {
+                    query = persons.Find(Query.Where(type, t => t == value));
+                }
+
                 // Get by type
-                var query = persons.Find(Query.Where(type, t => t == value));
+                //var query = persons.Find(Query.Where(type, t => t == value));
                 foreach (var data in query) {
 
                     // Add value in list
@@ -202,8 +246,16 @@ namespace PhotosFinder {
                 // Get a collection (or create, if doesn't exist)
                 var persons = db.GetCollection<TPerson>("persons");
 
+                // Check if the value is numeric (smile, age)    
+                // TODO if too complicated change (smile, age) from int to string in DB
+                IEnumerable<TPerson> query;
+                if (int.TryParse(value2, out int n)) {
+                    query = persons.Find(Query.And(Query.Where(type1, t1 => t1 == value1), Query.Where(type2, t2 => t2 == n)));
+                } else {
+                    query = persons.Find(Query.And(Query.Where(type1, t1 => t1 == value1), Query.Where(type2, t2 => t2 == value2)));
+                }
+
                 // Get data by two type
-                var query = persons.Find(Query.And(Query.Where(type1, t1 => t1 == value1), Query.Where(type2, t2 => t2 == value2)));
                 foreach (var data in query) {
 
                     // Add value in list

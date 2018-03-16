@@ -329,7 +329,6 @@
             this.ILV_photos.TabIndex = 9;
             this.ILV_photos.Text = "";
             this.ILV_photos.SelectionChanged += new System.EventHandler(this.ILV_photos_SelectionChanged);
-            this.ILV_photos.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ILV_photos_MouseDown);
             // 
             // statusStrip1
             // 

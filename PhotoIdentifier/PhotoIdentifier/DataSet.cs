@@ -12,7 +12,7 @@ namespace PhotoIdentifier {
     class DataSet {
 
         #region Vars
-        private string connection_string = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "MyData.db");
+        private string connection_string = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.db");
         #endregion
 
         #region Add info in DB

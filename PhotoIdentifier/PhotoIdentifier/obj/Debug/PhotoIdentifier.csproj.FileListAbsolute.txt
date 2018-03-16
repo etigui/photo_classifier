@@ -60,6 +60,7 @@ C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifi
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Extensions.xml
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\System.Net.Http.Primitives.xml
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\bin\Debug\WinFormAnimation.xml
+C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csprojResolveAssemblyReference.cache
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.AddPerson.resources
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.Identify.resources
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.PI.resources
@@ -69,4 +70,3 @@ C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifi
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csproj.CoreCompileInputs.cache
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.exe
 C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.pdb
-C:\Users\Etienne\Documents\GitHub\semester_project\PhotoIdentifier\PhotoIdentifier\obj\Debug\PhotoIdentifier.csprojResolveAssemblyReference.cache
