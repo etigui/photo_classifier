@@ -81,7 +81,7 @@
             this.ILV_photos.ErrorImage = ((System.Drawing.Image)(resources.GetObject("ILV_photos.ErrorImage")));
             this.ILV_photos.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ILV_photos.Location = new System.Drawing.Point(-1, 42);
-            this.ILV_photos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ILV_photos.Margin = new System.Windows.Forms.Padding(4);
             this.ILV_photos.Name = "ILV_photos";
             this.ILV_photos.Size = new System.Drawing.Size(981, 567);
             this.ILV_photos.TabIndex = 5;
@@ -326,11 +326,11 @@
             this.Controls.Add(this.ILV_photos);
             this.Controls.Add(this.SS);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(994, 672);
             this.Name = "PI";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "PI";
+            this.Text = "Photo Identifier";
             this.SS.ResumeLayout(false);
             this.SS.PerformLayout();
             this.TS_action.ResumeLayout(false);

@@ -79,6 +79,12 @@
   <ItemGroup>
     <Compile Include="Data.cs" />
     <Compile Include="DataGet.cs" />
+    <Compile Include="ImportExport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportExport.Designer.cs">
+      <DependentUpon>ImportExport.cs</DependentUpon>
+    </Compile>
     <Compile Include="Locate.cs" />
     <Compile Include="PF.cs">
       <SubType>Form</SubType>
@@ -88,6 +94,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ImportExport.resx">
+      <DependentUpon>ImportExport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PF.resx">
       <DependentUpon>PF.cs</DependentUpon>
     </EmbeddedResource>

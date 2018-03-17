@@ -48,20 +48,20 @@
             this.x120ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x150ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.x200ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.TSB_export = new System.Windows.Forms.ToolStripButton();
             this.ILV_photos = new Manina.Windows.Forms.ImageListView();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.TSSL_infos = new System.Windows.Forms.ToolStripStatusLabel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.BT_save_all = new System.Windows.Forms.Button();
             this.CMS_action = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ssToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.TSB_export = new System.Windows.Forms.ToolStripButton();
+            this.TSSL_infos = new System.Windows.Forms.ToolStripStatusLabel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.groupBox1.SuspendLayout();
             this.TS_action.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.CMS_action.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -300,37 +300,53 @@
             // x48ToolStripMenuItem
             // 
             this.x48ToolStripMenuItem.Name = "x48ToolStripMenuItem";
-            this.x48ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.x48ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x48ToolStripMenuItem.Text = "48 x 48";
             this.x48ToolStripMenuItem.Click += new System.EventHandler(this.x48ToolStripMenuItem_Click);
             // 
             // x96ToolStripMenuItem
             // 
             this.x96ToolStripMenuItem.Name = "x96ToolStripMenuItem";
-            this.x96ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.x96ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x96ToolStripMenuItem.Text = "96 x 96";
             this.x96ToolStripMenuItem.Click += new System.EventHandler(this.x96ToolStripMenuItem_Click);
             // 
             // x120ToolStripMenuItem
             // 
             this.x120ToolStripMenuItem.Name = "x120ToolStripMenuItem";
-            this.x120ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.x120ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x120ToolStripMenuItem.Text = "120 x 120";
             this.x120ToolStripMenuItem.Click += new System.EventHandler(this.x120ToolStripMenuItem_Click);
             // 
             // x150ToolStripMenuItem
             // 
             this.x150ToolStripMenuItem.Name = "x150ToolStripMenuItem";
-            this.x150ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.x150ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x150ToolStripMenuItem.Text = "150 x 150";
             this.x150ToolStripMenuItem.Click += new System.EventHandler(this.x150ToolStripMenuItem_Click);
             // 
             // x200ToolStripMenuItem
             // 
             this.x200ToolStripMenuItem.Name = "x200ToolStripMenuItem";
-            this.x200ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.x200ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
             this.x200ToolStripMenuItem.Text = "200 x 200";
             this.x200ToolStripMenuItem.Click += new System.EventHandler(this.x200ToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            // 
+            // TSB_export
+            // 
+            this.TSB_export.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.TSB_export.Image = ((System.Drawing.Image)(resources.GetObject("TSB_export.Image")));
+            this.TSB_export.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.TSB_export.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.TSB_export.Name = "TSB_export";
+            this.TSB_export.Size = new System.Drawing.Size(28, 28);
+            this.TSB_export.Text = "Export";
+            this.TSB_export.Click += new System.EventHandler(this.TSB_export_Click);
             // 
             // ILV_photos
             // 
@@ -349,24 +365,6 @@
             this.ILV_photos.ItemClick += new Manina.Windows.Forms.ItemClickEventHandler(this.ILV_photos_ItemClick);
             this.ILV_photos.SelectionChanged += new System.EventHandler(this.ILV_photos_SelectionChanged);
             this.ILV_photos.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ILV_photos_MouseClick);
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TSSL_infos});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 611);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1179, 25);
-            this.statusStrip1.TabIndex = 10;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // TSSL_infos
-            // 
-            this.TSSL_infos.Name = "TSSL_infos";
-            this.TSSL_infos.Size = new System.Drawing.Size(79, 20);
-            this.TSSL_infos.Text = "No photos";
             // 
             // groupBox2
             // 
@@ -407,21 +405,23 @@
             this.ssToolStripMenuItem.Size = new System.Drawing.Size(90, 24);
             this.ssToolStripMenuItem.Text = "ss";
             // 
-            // toolStripSeparator1
+            // TSSL_infos
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
+            this.TSSL_infos.Name = "TSSL_infos";
+            this.TSSL_infos.Size = new System.Drawing.Size(79, 20);
+            this.TSSL_infos.Text = "No photos";
             // 
-            // TSB_export
+            // statusStrip1
             // 
-            this.TSB_export.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.TSB_export.Image = ((System.Drawing.Image)(resources.GetObject("TSB_export.Image")));
-            this.TSB_export.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.TSB_export.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.TSB_export.Name = "TSB_export";
-            this.TSB_export.Size = new System.Drawing.Size(28, 28);
-            this.TSB_export.Text = "Export";
-            this.TSB_export.Click += new System.EventHandler(this.TSB_export_Click);
+            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.TSSL_infos});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 611);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(1179, 25);
+            this.statusStrip1.TabIndex = 10;
+            this.statusStrip1.Text = "statusStrip1";
             // 
             // PF
             // 
@@ -437,15 +437,16 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(1194, 672);
             this.Name = "PF";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Photos Finder";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.TS_action.ResumeLayout(false);
             this.TS_action.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.CMS_action.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -476,14 +477,14 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button BT_reset;
         private Manina.Windows.Forms.ImageListView ILV_photos;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel TSSL_infos;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ContextMenuStrip CMS_action;
         private System.Windows.Forms.ToolStripMenuItem ssToolStripMenuItem;
         private System.Windows.Forms.Button BT_save_all;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton TSB_export;
+        private System.Windows.Forms.ToolStripStatusLabel TSSL_infos;
+        private System.Windows.Forms.StatusStrip statusStrip1;
     }
 }
 

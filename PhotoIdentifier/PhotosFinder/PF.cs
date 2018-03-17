@@ -471,7 +471,8 @@ namespace PhotosFinder {
         #region Export DB and image
 
         private void TSB_export_Click(object sender, EventArgs e) {
-            //data.
+            ImportExport ie = new ImportExport();
+            ie.ShowDialog();
         }
         #endregion
     }

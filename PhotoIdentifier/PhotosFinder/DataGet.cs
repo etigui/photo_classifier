@@ -276,6 +276,36 @@ namespace PhotosFinder {
 
         #endregion
 
+        #region Export data
+
+        public List<string> export() {
+
+            List<string> res = new List<string>();
+
+            // Open database (or create if doesn't exist)
+            using (var db = new LiteDatabase(connection_string)) {
+
+                // Get a collection (or create, if doesn't exist)
+                var photos = db.GetCollection<TPhoto>("photos");
+
+                // Get all data
+                var query = photos.Find(Query.All());
+                foreach (var data in query) {
+                    string value = data.Path;
+
+                    // Add to list
+                    if ((!res.Contains(value)) && (value != string.Empty)) {
+                        res.Add(value);
+                    }
+                }
+            }
+            return res;
+
+        }
+
+
+        #endregion
+
         #region Other
 
         /// <summary>
