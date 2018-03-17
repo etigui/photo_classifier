@@ -14,49 +14,14 @@ namespace PhotosFinder {
         private string connection_string = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.db");
         #endregion
 
-        #region Get type
-
-        public List<string> get_two_type(string type1, string value1, string type2) {
-
-            List<string> res = new List<string>();
-
-            // Open database (or create if doesn't exist)
-            using (var db = new LiteDatabase(connection_string)) {
-
-                // Get a collection (or create, if doesn't exist)
-                var persons = db.GetCollection<TPerson>("persons");
-
-                // Get all data
-                var query = persons.Find(Query.Where(type1, t1 => t1 == value1));
-                foreach (var data in query) {
-                    string value = string.Empty;
-                    if (type2 == "Age") {
-                        value = data.Age.ToString();
-                    } else if (type2 == "Emotion") {
-                        value = data.Emotion.ToString();
-                    } else if (type2 == "Gender") {
-                        value = data.Gender.ToString();
-                    } else if (type2 == "Name") {
-                        value = data.Name.ToString();
-                    } else if (type2 == "Smile") {
-                        value = data.Smile.ToString();
-                    }
-
-                    // Add to list
-                    if ((!res.Contains(value)) && (value != string.Empty)) {
-                        res.Add(value);
-                    }
-                }
-            }
-            return res;
-        }
+        #region Get one type
 
         /// <summary>
         /// Get data from type
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public List<string> get_type(string type) {
+        public List<string> get_one_type(string type) {
 
             // Get info in DB
             if (type != "Tag") {
@@ -135,7 +100,46 @@ namespace PhotosFinder {
         }
         #endregion
 
-        #region Get value one
+        #region Get two type
+
+        public List<string> get_two_type(string type1, string value1, string type2) {
+
+            List<string> res = new List<string>();
+
+            // Open database (or create if doesn't exist)
+            using (var db = new LiteDatabase(connection_string)) {
+
+                // Get a collection (or create, if doesn't exist)
+                var persons = db.GetCollection<TPerson>("persons");
+
+                // Get all data
+                var query = persons.Find(Query.Where(type1, t1 => t1 == value1));
+                foreach (var data in query) {
+                    string value = string.Empty;
+                    if (type2 == "Age") {
+                        value = data.Age.ToString();
+                    } else if (type2 == "Emotion") {
+                        value = data.Emotion.ToString();
+                    } else if (type2 == "Gender") {
+                        value = data.Gender.ToString();
+                    } else if (type2 == "Name") {
+                        value = data.Name.ToString();
+                    } else if (type2 == "Smile") {
+                        value = data.Smile.ToString();
+                    }
+
+                    // Add to list
+                    if ((!res.Contains(value)) && (value != string.Empty)) {
+                        res.Add(value);
+                    }
+                }
+            }
+            return res;
+        }
+
+        #endregion
+
+        #region Get one value
 
         /// <summary>
         /// Get photo path by id
@@ -226,7 +230,7 @@ namespace PhotosFinder {
 
         #endregion
 
-        #region Get value two
+        #region Get two value
 
         /// <summary>
         /// Get all file path from two type

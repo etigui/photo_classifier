@@ -16,13 +16,11 @@ namespace PhotosFinder {
     public partial class PF : Form {
 
         #region Vars
-        //Data data;
+        private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
+        private string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+        private string item_path = string.Empty;
         DataGet data;
         Conf conf;
-
-        private string conf_file_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
-        string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-        //string identify_dir_path = string.Empty;
         #endregion
 
         #region Init
@@ -111,7 +109,7 @@ namespace PhotosFinder {
             // Clear and add value from type
             CB_value1.Items.Clear();
             CB_value1.Text = "Select a value";
-            string[] res = data.get_type(CB_type1.Text).ToArray();
+            string[] res = data.get_one_type(CB_type1.Text).ToArray();
             if (res != null) {
                 CB_value1.Items.AddRange(res);
             } else {
@@ -128,7 +126,7 @@ namespace PhotosFinder {
             CB_value2.Text = "Select a value";
             //string[] res = data.get_type(CB_type2.Text).ToArray();
             string[] res = data.get_two_type(CB_type1.Text, CB_value1.Text, CB_type2.Text).ToArray();
-            
+
             if (res != null) {
                 CB_value2.Items.AddRange(res);
             } else {
@@ -356,7 +354,6 @@ namespace PhotosFinder {
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BT_save_all_Click(object sender, EventArgs e) {
-            //TODO get all phot from ILV sa save it where the user want (save_files_dialog)
             try {
                 using (FolderBrowserDialog obd = new FolderBrowserDialog()) {
 
@@ -371,12 +368,111 @@ namespace PhotosFinder {
                                 File.Copy(item.FileName, $"{dir}\\{Path.GetFileName(item.FileName)}");
                             }
                         }
+                        MessageBox.Show("Files saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
-                MessageBox.Show("File saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             } catch { }
         }
 
+        #endregion
+
+        #region Open explorer and save
+
+        /// <summary>
+        /// Get items path
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ILV_photos_ItemClick(object sender, ItemClickEventArgs e) {
+
+            // Get file name when click
+            item_path = e.Item.FileName;
+        }
+
+        /// <summary>
+        /// Get items position and generate menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ILV_photos_MouseClick(object sender, MouseEventArgs e) {
+
+            // Check right click
+            if (e.Button == MouseButtons.Right) {
+
+                // Get position hitted
+                ImageListView.HitInfo hit_info;
+                ILV_photos.HitTest(new Point(e.X, e.Y), out hit_info);
+                int hitted = hit_info.ItemIndex;
+
+                // Add the menu and check if an item is selected
+                ContextMenuStrip cms = new ContextMenuStrip();
+                if (hitted >= 0) {
+                    cms.Items.Add("Open").Name = "open";
+                    cms.Items.Add("Save").Name = "save";
+                    cms.Show(ILV_photos, new Point(e.X, e.Y));
+                    cms.ItemClicked += new ToolStripItemClickedEventHandler(cms_clicked);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Process menu items
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cms_clicked(object sender, ToolStripItemClickedEventArgs e) {
+
+            // Use sender to hide menu 
+            ContextMenuStrip menu = (ContextMenuStrip)(sender);
+
+            // Open in explorer or save file
+            if (e.ClickedItem.Name == "open") {
+                menu.Hide();
+                explore_file(item_path);
+            } else if (e.ClickedItem.Name == "save") {
+                menu.Hide();
+                save_one_photo(item_path);
+            }
+        }
+
+        /// <summary>
+        /// Open the Windows explorer and select a file
+        /// </summary>
+        /// <param name="path"></param>
+        public void explore_file(string path) {
+            if (File.Exists(path)) {
+
+                //Clean up file path so it can be navigated OK
+                path = Path.GetFullPath(path);
+                System.Diagnostics.Process.Start("explorer.exe", string.Format("/select,\"{0}\"", path));
+            }
+        }
+
+        /// <summary>
+        /// Save one photo
+        /// </summary>
+        /// <param name="path"></param>
+        private void save_one_photo(string path) {
+            try {
+                using (FolderBrowserDialog obd = new FolderBrowserDialog()) {
+                    if (obd.ShowDialog() == DialogResult.OK) {
+
+                        // Copy the files from the ILV to the selected directory
+                        if (File.Exists(path)) {
+                            File.Copy(path, $"{obd.SelectedPath}\\{Path.GetFileName(path)}");
+                        }
+                        MessageBox.Show("File saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }  
+            } catch { }   
+        }
+        #endregion
+
+        #region Export DB and image
+
+        private void TSB_export_Click(object sender, EventArgs e) {
+            //data.
+        }
         #endregion
     }
 }
