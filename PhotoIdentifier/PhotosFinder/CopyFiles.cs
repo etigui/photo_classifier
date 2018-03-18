@@ -124,13 +124,15 @@ namespace PhotosFinder {
                 File.Move(Path.Combine(extract_path, "__PhotoIdentifier.exe.config"), conf_exe_path);
 
                 // Move person photo
-                if (LB_status_up.InvokeRequired) { Invoke((MethodInvoker)(() => LB_status_up.Text = "Move person photos")); }
-                if (Lb_status_down.InvokeRequired) { Invoke((MethodInvoker)(() => Lb_status_down.Text = $"Process directory: {Path.Combine(extract_path, "__person")}")); }
                 bw.ReportProgress(3);
-                if (Directory.Exists(person_path)) {
-                    Directory.Delete(person_path, true);
+                if (File.Exists(Path.Combine(extract_path, "__person"))) {
+                    if (LB_status_up.InvokeRequired) { Invoke((MethodInvoker)(() => LB_status_up.Text = "Move person photos")); }
+                    if (Lb_status_down.InvokeRequired) { Invoke((MethodInvoker)(() => Lb_status_down.Text = $"Process directory: {Path.Combine(extract_path, "__person")}")); }
+                    if (Directory.Exists(person_path)) {
+                        Directory.Delete(person_path, true);
+                    }
+                    Directory.Move(Path.Combine(extract_path, "__person"), person_path);
                 }
-                Directory.Move(Path.Combine(extract_path, "__person"), person_path);
 
                 // Move photo directory to SpecialFolder => MyPictures
                 string[] directories = Directory.GetDirectories(extract_path);
@@ -251,35 +253,38 @@ namespace PhotosFinder {
 
         private void export_person(string dst) {
 
-            // Get recursive person file
-            string[] ps = Directory.GetFiles($"{person_path}\\", "*.*", SearchOption.AllDirectories);
+            if (Directory.Exists(person_path)) {
 
-            // Create __person directory
-            string new_person_dest = Path.Combine(dst, "__person");
-            Directory.CreateDirectory(new_person_dest);
+                // Get recursive person file
+                string[] ps = Directory.GetFiles($"{person_path}\\", "*.*", SearchOption.AllDirectories);
 
-            // Get all person file
-            foreach (string p in ps) {
-                if (File.Exists(p)) {
+                // Create __person directory
+                string new_person_dest = Path.Combine(dst, "__person");
+                Directory.CreateDirectory(new_person_dest);
 
-                    // Dont copy if hidden file
-                    FileInfo info = new FileInfo(p);
-                    if (!info.Attributes.HasFlag(FileAttributes.Hidden)) {
+                // Get all person file
+                foreach (string p in ps) {
+                    if (File.Exists(p)) {
 
-                        // Get curretn directory
-                        string add = Path.GetDirectoryName(p).Replace(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person"), string.Empty);
+                        // Dont copy if hidden file
+                        FileInfo info = new FileInfo(p);
+                        if (!info.Attributes.HasFlag(FileAttributes.Hidden)) {
 
-                        // Remove \\ at first to be able to combine path
-                        if (add.StartsWith(@"\")) {
-                            add = add.TrimStart('\\');
+                            // Get curretn directory
+                            string add = Path.GetDirectoryName(p).Replace(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person"), string.Empty);
+
+                            // Remove \\ at first to be able to combine path
+                            if (add.StartsWith(@"\")) {
+                                add = add.TrimStart('\\');
+                            }
+
+                            // Create directory if not exist
+                            Directory.CreateDirectory(Path.Combine(new_person_dest, add));
+
+                            // Copy person directory
+                            File.Copy(p, Path.Combine(new_person_dest, add, Path.GetFileName(p)), true);
+
                         }
-
-                        // Create directory if not exist
-                        Directory.CreateDirectory(Path.Combine(new_person_dest, add));
-
-                        // Copy person directory
-                        File.Copy(p, Path.Combine(new_person_dest, add, Path.GetFileName(p)), true);
-
                     }
                 }
             }

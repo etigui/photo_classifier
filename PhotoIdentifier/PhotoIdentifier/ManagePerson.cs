@@ -106,7 +106,7 @@ namespace PhotoIdentifier {
             // Add photos to the list
             OpenFileDialog ofd = new OpenFileDialog {
                 Multiselect = true,
-                Filter = "JPG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp|JPEG files (*.jpeg)|*.jpeg"
+                Filter = "JPG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp|JPEG files (*.jpeg)|*.jpeg|All files (*.*)|*.*"
             };
             if (ofd.ShowDialog() == DialogResult.OK) {
 
@@ -308,7 +308,7 @@ namespace PhotoIdentifier {
         /// <param name="file"></param>
         /// <returns></returns>
         private bool check_file_ext(string file) {
-            string[] ext = new string[] { ".jpg", ".png", ".gif", ".bmp", ".jpeg" };
+            string[] ext = new string[] { ".jpg", ".png", ".gif", ".bmp", ".jpeg", ".JPG", ".PNG", ".GIF", ".BMP", ".JPEG" };
 
             if (File.Exists(file)) {
                 // Check if the droped file are with good extention

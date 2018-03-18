@@ -16,21 +16,6 @@ using Manina.Windows.Forms;
 using System.Net.NetworkInformation;
 using PhotoIdentifier.Properties;
 
-//Face Detect + Identifier
-//https://docs.microsoft.com/en-us/azure/cognitive-services/face/face-api-how-to-topics/howtoidentifyfacesinimage
-
-// Visio computer
-//https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/vision-api-how-to-topics/howtocallvisionapi
-
-/*
-// Change the renderer
-Assembly assembly = Assembly.GetAssembly(typeof(ImageListView));
-//RendererItem item = (RendererItem)comboBox1.SelectedItem;
-ImageListView.ImageListViewRenderer renderer = assembly.CreateInstance("Manina.Windows.Forms.ImageListViewRenderers+XPRenderer") as ImageListView.ImageListViewRenderer;
-ILV_photos.SetRenderer(renderer);
-ILV_photos.Focus();
-*/
-
 namespace PhotoIdentifier {
     public partial class PI : Form {
 
@@ -122,7 +107,7 @@ namespace PhotoIdentifier {
             OpenFileDialog ofd = new OpenFileDialog {
                 Multiselect = true,
                 InitialDirectory = identify_dir_path,
-                Filter = "JPG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp|JPEG files (*.jpeg)|*.jpeg"
+                Filter = "JPG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp|JPEG files (*.jpeg)|*.jpeg|All files (*.*)|*.*"
             };
             if (ofd.ShowDialog() == DialogResult.OK) {
 
@@ -440,7 +425,7 @@ namespace PhotoIdentifier {
         /// <param name="file"></param>
         /// <returns></returns>
         private bool check_file_ext(string file) {
-            string[] ext = new string[] { ".jpg", ".png", ".gif", ".bmp", ".jpeg" };
+            string[] ext = new string[] { ".jpg", ".png", ".gif", ".bmp", ".jpeg", ".JPG", ".PNG", ".GIF", ".BMP", ".JPEG" };
 
             if (File.Exists(file)) {
                 // Check if the droped file are with good extention
