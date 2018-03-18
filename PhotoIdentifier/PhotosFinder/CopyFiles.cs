@@ -108,6 +108,21 @@ namespace PhotosFinder {
                 }
                 File.Move(Path.Combine(extract_path, "__photos.db"), db_dest);
 
+
+                // Move exe config file
+                string conf_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
+                if (File.Exists(conf_path)) {
+                    File.Delete(conf_path);
+                }
+                File.Move(Path.Combine(extract_path, "__app_conf.xml"), conf_path);
+
+                // Move prog conf file
+                string conf_exe_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "PhotoIdentifier.exe.config");
+                if (File.Exists(conf_exe_path)) {
+                    File.Delete(conf_exe_path);
+                }
+                File.Move(Path.Combine(extract_path, "__PhotoIdentifier.exe.config"), conf_exe_path);
+
                 // Move person photo
                 if (LB_status_up.InvokeRequired) { Invoke((MethodInvoker)(() => LB_status_up.Text = "Move person photos")); }
                 if (Lb_status_down.InvokeRequired) { Invoke((MethodInvoker)(() => Lb_status_down.Text = $"Process directory: {Path.Combine(extract_path, "__person")}")); }
@@ -134,7 +149,7 @@ namespace PhotosFinder {
                 //Directory.Delete(extract_path);
                 bw.ReportProgress(5);
             } catch (Exception ex) { Console.WriteLine(ex.ToString()); MessageBox.Show("Fatal error. Try to import again.", "Import error", MessageBoxButtons.OK, MessageBoxIcon.Error); } finally {
-                Directory.Delete(extract_path);
+                Directory.Delete(extract_path, true);
             }
 
         }
@@ -164,6 +179,18 @@ namespace PhotosFinder {
 
                     // Copy DB file
                     File.Copy(db_path, Path.Combine(dest, $"__{Path.GetFileName(db_path)}"), true);
+
+                    // Copy conf file
+                    string conf_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
+                    if (File.Exists(conf_path)) {
+                        File.Copy(db_path, Path.Combine(dest, "__app_conf.xml"));
+                    }
+
+                    // Copy PhotoIdentifier.exe.config file
+                    string conf_exe_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "PhotoIdentifier.exe.config");
+                    if (File.Exists(conf_exe_path)) {
+                        File.Copy(conf_exe_path, Path.Combine(dest, "__PhotoIdentifier.exe.config"));
+                    }
 
                     // Copy person directory
                     export_person(dest);

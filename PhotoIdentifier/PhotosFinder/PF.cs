@@ -21,6 +21,7 @@ namespace PhotosFinder {
         private string item_path = string.Empty;
         DataGet data;
         Conf conf;
+        Locate locate;
         #endregion
 
         #region Init
@@ -32,6 +33,7 @@ namespace PhotosFinder {
         private void init() {
             data = new DataGet();
             conf = new Conf(conf_file_path);
+            locate = new Locate();
 
             //Init thumbnails size tick
             x96ToolStripMenuItem.Checked = true;
@@ -205,8 +207,12 @@ namespace PhotosFinder {
                         if (File.Exists(photo)) {
                             ILV_photos.Items.Add(photo);
                         } else {
-                            // TODO locate
+                            // Locate photo in Picture Windows folder
                             MessageBox.Show("locate");
+                            string loc = locate.locate_file(file);
+                            if (loc != string.Empty) {
+                                ILV_photos.Items.Add(loc);
+                            }
                         }
                     } else {
 
@@ -214,8 +220,12 @@ namespace PhotosFinder {
                         if (File.Exists(file)) {
                             ILV_photos.Items.Add(file);
                         } else {
-                            // TODO locate
+                            // Locate photo in Picture Windows folder
                             MessageBox.Show("locate");
+                            string loc = locate.locate_file(file);
+                            if (loc != string.Empty) {
+                                ILV_photos.Items.Add(loc);
+                            }
                         }
                     }
                 }
@@ -447,8 +457,8 @@ namespace PhotosFinder {
                         }
                         MessageBox.Show("File saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                }  
-            } catch { }   
+                }
+            } catch { }
         }
         #endregion
 

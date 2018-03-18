@@ -66,10 +66,11 @@ namespace PhotoIdentifier {
                 var photos = db.GetCollection<TPhoto>("photos");
 
                 // Create your new Photo instance
+                //Path = info.path, //////////////////////
                 var photo = new TPhoto {
                     Hash = hash,
                     Name = Path.GetFileName(info.path),
-                    Path = info.path,
+                    Path = get_custom_path(info.path),
                     Width = info.info.Metadata.Width,
                     Height = info.info.Metadata.Height,
                     Date = DateTime.Now
@@ -79,6 +80,15 @@ namespace PhotoIdentifier {
                 photo_id = photos.Insert(photo).AsInt32;
             }
             return photo_id;
+        }
+
+        /// <summary>
+        ///Remove Windows Picture path
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private string get_custom_path(string path) {
+            return path.Replace(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), string.Empty);
         }
 
         /// <summary>
@@ -153,7 +163,7 @@ namespace PhotoIdentifier {
                 var res = db.GetCollection<TPhoto>("photos").Find(Query.EQ("Hash", hash));
 
                 int found = 0;
-                foreach(var data in res) {
+                foreach (var data in res) {
                     found++;
                 }
 
@@ -240,6 +250,24 @@ namespace PhotoIdentifier {
             } catch { return hash; }
         }
 
+        /// <summary>
+        /// Get MD5 hash from string
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private string get_md5_string(string text) {
+            StringBuilder sb = new StringBuilder();
+            try {
+                using (MD5CryptoServiceProvider md5provider = new MD5CryptoServiceProvider()) {
+                    byte[] bytes = md5provider.ComputeHash(new UTF8Encoding().GetBytes(text));
+
+                    for (int i = 0; i < bytes.Length; i++) {
+                        sb.Append(bytes[i].ToString("x2"));
+                    }
+                }
+            } catch { return string.Empty; }
+            return sb.ToString();
+        }
         #endregion
     }
 

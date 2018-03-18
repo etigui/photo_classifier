@@ -16,12 +16,14 @@ namespace PhotosFinder {
         private string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         private string connection_string = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.db");
         private string person_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
+        DataGet data_get;
         #endregion
 
         #region Init
 
         public ImportExport() {
             InitializeComponent();
+            data_get = new DataGet();
         }
         #endregion
 
@@ -47,7 +49,13 @@ namespace PhotosFinder {
         }
 
         private void BT_database_import_Click(object sender, EventArgs e) {
-            get_database();
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Multiselect = false;
+            if (ofd.ShowDialog() == DialogResult.OK) {
+                TB_source.Text = ofd.FileName;
+                TB_source.Focus();
+                TB_source.SelectionStart = TB_source.Text.Length;
+            }
         }
         #endregion
 
@@ -56,12 +64,13 @@ namespace PhotosFinder {
         private void BT_export_Click(object sender, EventArgs e) {
 
             string db_path = connection_string;
-            string photo_path = TB_photo_export.Text;
+            //string photo_path = TB_photo_export.Text;
             string dest = TB_dest.Text;
-            if (File.Exists(db_path) && Directory.Exists(photo_path)) {
 
-                // Get recursive files
-                string[] files = Directory.GetFiles($"{photo_path}\\", "*.*", SearchOption.AllDirectories);
+            if (File.Exists(db_path)) {
+
+                // Get all files from db
+                List<string> files = data_get.get_all_photo();
 
                 // ZIP all data or save in directory
                 CopyFiles cpf = new CopyFiles(files.ToList(), db_path, dest);
@@ -72,74 +81,17 @@ namespace PhotosFinder {
             }
         }
 
-        private void BT_photo_export_Click(object sender, EventArgs e) {
-            get_photo_directory();
-        }
-
-        private void BT_dest_Click(object sender, EventArgs e) {
-            get_destination();
-        }
-        #endregion
-
-        #region Import/Export function
-
         /// <summary>
         /// Get save destination
         /// </summary>
-        private void get_destination() {
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BT_dest_Click(object sender, EventArgs e) {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             if (fbd.ShowDialog() == DialogResult.OK) {
                 TB_dest.Text = fbd.SelectedPath;
                 TB_dest.Focus();
                 TB_dest.SelectionStart = TB_dest.Text.Length;
-            }
-        }
-
-        /// <summary>
-        /// Set db path
-        /// </summary>
-        private void get_database() {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Multiselect = false;
-            if (ofd.ShowDialog() == DialogResult.OK) {
-                TB_source.Text = ofd.FileName;
-                TB_source.Focus();
-                TB_source.SelectionStart = TB_source.Text.Length;
-            }
-        }
-
-        /// <summary>
-        /// Set photo directory path
-        /// </summary>
-        /// <param name="import"></param>
-        private void get_photo_directory() {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.SelectedPath = TB_photo_export.Text;
-            if (fbd.ShowDialog() == DialogResult.OK) {
-
-                // Export tab
-                TB_photo_export.Text = fbd.SelectedPath;
-                TB_photo_export.Focus();
-                TB_photo_export.SelectionStart = TB_photo_export.Text.Length;
-            }
-        }
-
-        /// <summary>
-        /// Get when tab index chnage
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TC_switch_SelectedIndexChanged(object sender, EventArgs e) {
-
-            // Auto fill export info
-            if (TC_switch.SelectedTab.Text == "Export") {
-
-                // Auto fill data
-                TB_photo_export.Text = identify_dir_path;
-
-                // Setting cursor at the end of any text of a textbox
-                TB_photo_export.Focus();
-                TB_photo_export.SelectionStart = TB_photo_export.Text.Length;
             }
         }
         #endregion

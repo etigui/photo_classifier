@@ -10,9 +10,9 @@ namespace PhotosFinder {
     class Locate {
 
         #region Vars
-        string identify_path = string.Empty;
+        private string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+        DataGet data;
         #endregion
-
 
         #region Init
 
@@ -21,104 +21,77 @@ namespace PhotosFinder {
         }
 
         private void init() {
-            // identify_path = conf.get_path....
-            // TODO get conf paath 
+            data = new DataGet();
         }
 
         #endregion
 
         #region Locate file
 
-        public string locate_file(string path, string hash) {
-            string file_found = process_files(path, hash);
-            if(file_found != string.Empty) {
-                // TODO update database with the new path (file_found) as hash as key
-                return file_found;
+        /// <summary>
+        /// Locate lost file (moved)
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public string locate_file(string path) {
+
+            // Check if the file is found
+            Tuple<string, string> file_found = get_file(path);
+            if (file_found != null) {
+                if (File.Exists(file_found.Item2)) {
+                    
+                    // Copy founded file where it missed
+                    File.Copy(file_found.Item2, identify_dir_path + path);
+                    return file_found.Item2;
+                }
+            } else {
+                 // TODO no file found (maybe delete from DB ?)
             }
             return string.Empty;
         }
 
-        private Dictionary<string, string> get_all_files() {
-            Dictionary<string, string> images = new Dictionary<string, string>();
-
-            // Get list of files in the specific directory.
-            // ... Please change the first argument.
-            string[] files = Directory.GetFiles(identify_path, "*.*", SearchOption.AllDirectories);
-
-            // Get all the files.
-            foreach(string file in files) {
-                images.Add(get_md5_file(file), file);
-            }
-            return images;
-        }
-
-        private string process_files(string path, string hash) {
-
-            // Getfile name from path
+        /// <summary>
+        /// Compare from db and Picture
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        private Tuple<string, string> get_file(string path) {
             string file_name = Path.GetFileName(path);
 
-            // Get all file path and the hash ascociate
-            Dictionary<string, string> files = get_all_files();
+            // Get list of files in the specific directory.
+            string[] files = Directory.GetFiles(identify_dir_path, "*.*", SearchOption.AllDirectories);
+            List<Tuple<string, string>> db = data.get_hash_from_name(file_name);
 
-            // Check if we can find the file by his name
-            // Then compare with the hash
-            string file_found = process_files_path(files, path, hash);
-            if(file_found != string.Empty) {
-                return file_found;
-            } else {
+            // Get all the files.
+            foreach (string file in files) {
 
-                // Check if we can find the file by his hash
-                file_found = process_files_hash(files, hash);
-                if(file_found != string.Empty) {
-                    return file_found;
-                }
-            }
-            return string.Empty;
-        }
+                // If found in Picture a same filename
+                if (file_name == Path.GetFileName(file)) {
 
-        private string process_files_path(Dictionary<string, string> files, string path, string hash) {
+                    string hash = get_md5_file(file);
 
-            List<string> found = new List<string>();
-
-            // Process all files
-            foreach(KeyValuePair<string, string> file in files) {
-
-                // Check if a file name match
-                if(Path.GetFileName(file.Value) == path) {
-
-                    // Check if the hash match
-                    // Means is the good file and not a file with the same name
-                    if(conpare_hash(hash, file.Key)) {
-                        return file.Value;
+                    // Search in the db if tuple <hash, file_name>
+                    // Tuple => hash, file, id
+                    foreach (Tuple<string, string> f in db) {
+                        if ((hash == f.Item1) && (file_name == f.Item2)) {
+                            return Tuple.Create(f.Item1, file);
+                        }
                     }
                 }
             }
-            return string.Empty;
+            return null;
         }
 
-        private string process_files_hash(Dictionary<string, string> files, string hash) {
-
-            // Process all files
-            foreach(KeyValuePair<string, string> file in files) {
-                if(conpare_hash(hash, file.Key)) {
-                    return file.Value;
-                }
-            }
-            return string.Empty;
-        }
-
-        private bool conpare_hash(string hash_base, string hash_file_found) {
-            if(hash_base == hash_file_found) {
-                return true;
-            }
-            return false;
-        }
-
+        /// <summary>
+        /// Get MD5 hash from file
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private string get_md5_file(string path) {
             string hash = "";
             try {
-                using(var md5 = MD5.Create()) {
-                    using(var stream = File.OpenRead(path)) {
+                using (var md5 = MD5.Create()) {
+                    using (var stream = File.OpenRead(path)) {
                         hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", String.Empty).ToLowerInvariant();
                     }
                 }

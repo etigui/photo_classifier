@@ -313,6 +313,10 @@ namespace PhotoIdentifier {
                             photos_to_identify = ILV_photos
                         };
                         identify.ShowDialog();
+                        ILV_photos.Items.Clear();
+                        update_status();
+                        TSB_clear.Enabled = false;
+                        TSB_remove.Enabled = false;
 
                         //TODO clear ILV_photos (The current identification is already done) ?
                     } else {

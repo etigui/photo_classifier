@@ -12,6 +12,7 @@ namespace PhotosFinder {
 
         #region Vars
         private string connection_string = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.db");
+        private string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         #endregion
 
         #region Get one type
@@ -164,6 +165,7 @@ namespace PhotosFinder {
         /// <param name="value"></param>
         /// <returns></returns>
         private List<string> get_person_one_value(string type, string value) {
+
             List<int> ids = new List<int>();
 
             // Open database (or create if doesn't exist)
@@ -241,7 +243,6 @@ namespace PhotosFinder {
         /// <param name="value2"></param>
         /// <returns></returns>
         public List<string> get_two_value(string type1, string value1, string type2, string value2) {
-
             List<int> ids = new List<int>();
 
             // Open database (or create if doesn't exist)
@@ -276,11 +277,10 @@ namespace PhotosFinder {
 
         #endregion
 
-        #region Export data
+        #region Locate
 
-        public List<string> export() {
-
-            List<string> res = new List<string>();
+        public List<Tuple<string, string>> get_hash_from_name(string name) {
+            List<Tuple<string, string>> files = new List<Tuple<string, string>>();
 
             // Open database (or create if doesn't exist)
             using (var db = new LiteDatabase(connection_string)) {
@@ -288,22 +288,45 @@ namespace PhotosFinder {
                 // Get a collection (or create, if doesn't exist)
                 var photos = db.GetCollection<TPhoto>("photos");
 
-                // Get all data
-                var query = photos.Find(Query.All());
+                // Get tag
+                var query = photos.Find(Query.Where("Name", n => n == name));
                 foreach (var data in query) {
-                    string value = data.Path;
-
-                    // Add to list
-                    if ((!res.Contains(value)) && (value != string.Empty)) {
-                        res.Add(value);
-                    }
+                    files.Add(Tuple.Create(data.Hash, data.Name));
                 }
             }
-            return res;
-
+            return files;
         }
 
 
+        #endregion
+
+        #region Export
+
+        /// <summary>
+        ///  Get all file in the db to export
+        /// </summary>
+        public List<string> get_all_photo() {
+            List<string> files = new List<string>();
+
+            // Open database (or create if doesn't exist)
+            using (var db = new LiteDatabase(connection_string)) {
+
+                // Get a collection (or create, if doesn't exist)
+                var photos = db.GetCollection<TPhoto>("photos");
+
+                // Get all photos
+                var query = photos.Find(Query.All());
+                foreach(var data in query) {
+
+                    // Check if file exist
+                    string file = identify_dir_path + data.Path;
+                    if (File.Exists(file)) {
+                        files.Add(file);
+                    }
+                }
+            }
+            return files;
+        }
         #endregion
 
         #region Other
@@ -314,7 +337,6 @@ namespace PhotosFinder {
         /// <param name="ids"></param>
         /// <returns></returns>
         private List<string> get_photo_path(List<int> ids) {
-
             List<string> res = new List<string>();
 
             // Open database (or create if doesn't exist)
@@ -327,6 +349,7 @@ namespace PhotosFinder {
                 foreach (int id in ids) {
 
                     // Add path in list
+                    string ff = photos.FindOne(x => x.Id == id).Path.ToString();
                     res.Add(photos.FindOne(x => x.Id == id).Path.ToString());
                 }
             }
