@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PhotoIdentifier {
-    public partial class AddPerson:Form {
+    public partial class AddPerson : Form {
 
         #region Vars
         private Person person = null;
@@ -81,11 +81,18 @@ namespace PhotoIdentifier {
             // Add photos to the list
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = true;
-            if(ofd.ShowDialog() == DialogResult.OK) {
-                ILV_photos.Items.AddRange(ofd.FileNames);
-                TSB_clear.Enabled = true;
-                TSB_remove.Enabled = true;
-                update_status();
+            ofd.Filter = "JPG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp|JPEG files (*.jpeg)|*.jpeg";
+            if (ofd.ShowDialog() == DialogResult.OK) {
+
+                // Check no error in type, dimention, size
+                if (!check_file_type(ofd.FileNames)) {
+                    ILV_photos.Items.AddRange(ofd.FileNames);
+                    TSB_clear.Enabled = true;
+                    TSB_remove.Enabled = true;
+                    update_status();
+                } else {
+                    MessageBox.Show($"Files size must be lower than 4Mb.{Environment.NewLine + Environment.NewLine}File dimension must be greater than 50x50 and lower than 4000x4000.{Environment.NewLine + Environment.NewLine}Only format jpg, jpeg, png, gif and bmp are allowed.", "Files error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -95,7 +102,7 @@ namespace PhotoIdentifier {
             ILV_photos.SuspendLayout();
 
             // Remove selected items
-            foreach(var item in ILV_photos.SelectedItems) {
+            foreach (var item in ILV_photos.SelectedItems) {
                 ILV_photos.Items.Remove(item);
             }
 
@@ -116,9 +123,9 @@ namespace PhotoIdentifier {
         /// Get how many photo selected
         /// </summary>
         private void update_status() {
-            if(ILV_photos.Items.Count == 0) {
+            if (ILV_photos.Items.Count == 0) {
                 update_status("No photos");
-            } else if(ILV_photos.SelectedItems.Count == 0) {
+            } else if (ILV_photos.SelectedItems.Count == 0) {
                 update_status(string.Format("{0} Photos", ILV_photos.Items.Count));
             } else {
                 update_status(string.Format("{0} Photos ({1} selected)", ILV_photos.Items.Count, ILV_photos.SelectedItems.Count));
@@ -138,22 +145,103 @@ namespace PhotoIdentifier {
         }
         #endregion
 
+        #region Check files type
+
+        /// <summary>
+        /// Check file info
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        private bool check_file_type(string[] files) {
+
+            // Get all drag and drop file
+            bool error = false;
+            foreach (string file in files) {
+                if (!check_file_dim(file)) {
+                    error = true;
+                }
+                if (!check_file_size(file)) {
+                    error = true;
+                }
+                if (!check_file_ext(file)) {
+                    error = true;
+                }
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Check file dimention size
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private bool check_file_dim(string file) {
+            if (File.Exists(file)) {
+                // Get image dimention (Image dimension: Greater than 50 x 50 pixels)
+                Image img = null;
+                img = Image.FromFile(file);
+                if ((img.Width <= 50) || (img.Height <= 50)) {
+                    return false;
+                }
+
+                // (Image dimension: Lower than 4096 x 4096 pixels)
+                if ((img.Width >= 4000) || (img.Height >= 4000)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Get max file size
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private bool check_file_size(string file) {
+            if (File.Exists(file)) {
+
+                // Get file size (Image file size: Less than 4 MB)
+                if (new FileInfo(file).Length >= 4000000) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Check file extention
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private bool check_file_ext(string file) {
+            string[] ext = new string[] { ".jpg", ".png", ".gif", ".bmp", ".jpeg" };
+
+            if (File.Exists(file)) {
+                // Check if the droped file are with good extention
+                if (!Array.Exists(ext, ex => ex == Path.GetExtension(file))) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        #endregion
+
         #region Add person
 
         private void BT_add_Click(object sender, EventArgs e) {
 
             // Check if only letter in the textbox
-            if(TB_name.Text.All(Char.IsLetter)) {
+            if (TB_name.Text.All(Char.IsLetter)) {
 
                 // Check if textbox is not empty
-                if(!String.IsNullOrEmpty(TB_name.Text)) {
+                if (!String.IsNullOrEmpty(TB_name.Text)) {
 
                     // Check if added photos
-                    if(ILV_photos.Items.Count() != 0) {
+                    if (ILV_photos.Items.Count() != 0) {
 
                         // Add person
                         person.ILV_photos = ILV_photos;
-                        if(person.add_person(TB_name.Text)) {
+                        if (person.add_person(TB_name.Text)) {
                             MessageBox.Show($"The person '{TB_name.Text}' has been created", "Person created", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                             // Clear fild for new person
@@ -162,7 +250,7 @@ namespace PhotoIdentifier {
                             TSB_clear.Enabled = false;
                             TSB_remove.Enabled = false;
                             update_status();
-                        }else {
+                        } else {
                             MessageBox.Show("Fatal error. Creation failed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     } else {
@@ -179,7 +267,7 @@ namespace PhotoIdentifier {
         private void TB_name_TextChanged(object sender, EventArgs e) {
 
             // Check if only letter in the textbox
-            if(!TB_name.Text.All(Char.IsLetter)) {
+            if (!TB_name.Text.All(Char.IsLetter)) {
                 TB_name.BackColor = Color.Red;
             } else {
                 TB_name.BackColor = Color.White; ;

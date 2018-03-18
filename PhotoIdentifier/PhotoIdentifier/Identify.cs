@@ -98,6 +98,19 @@ namespace PhotoIdentifier {
                         // PROGRESS
                         update_progress("Identify photo", $"Process photo: {Path.GetFileName(item.FileName).ToString()}", ++progress);
 
+
+                        /*// Get file size (Image file size: Less than 4 MB)
+                        if (new FileInfo(item.FileName).Length >= 4000000) {
+                            continue;
+                        }
+
+                        // Get image dimention (Image dimension: Greater than 50 x 50 pixels.)
+                        Image img = null;
+                        img = Image.FromFile(item.FileName);
+                        if ((img.Width > 50) && (img.Height > 50)) {
+                            continue;
+                        }*/
+
                         // Identify person in the photos
                         IdentifyInfos ii = await identify_person_async(item.FileName, person_group_id);
                         if (ii != null) {
@@ -109,7 +122,7 @@ namespace PhotoIdentifier {
                 // Add infos to db
                 if (!add_photos_db(infos_list)) {
                     //TODO ERROR
-                    MessageBox.Show("Db error");
+                    MessageBox.Show("DB error");
                 }
 
                 // Add infos to db and copy photos to identify dir

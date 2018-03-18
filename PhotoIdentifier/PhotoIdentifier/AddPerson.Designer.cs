@@ -57,7 +57,7 @@
             this.ILV_photos.ErrorImage = ((System.Drawing.Image)(resources.GetObject("ILV_photos.ErrorImage")));
             this.ILV_photos.HeaderFont = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ILV_photos.Location = new System.Drawing.Point(-3, 111);
-            this.ILV_photos.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ILV_photos.Margin = new System.Windows.Forms.Padding(4);
             this.ILV_photos.Name = "ILV_photos";
             this.ILV_photos.Size = new System.Drawing.Size(767, 313);
             this.ILV_photos.TabIndex = 3;
@@ -175,7 +175,7 @@
             // 
             this.BT_add.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.BT_add.Location = new System.Drawing.Point(416, 21);
-            this.BT_add.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.BT_add.Margin = new System.Windows.Forms.Padding(4);
             this.BT_add.Name = "BT_add";
             this.BT_add.Size = new System.Drawing.Size(100, 28);
             this.BT_add.TabIndex = 7;
@@ -200,7 +200,7 @@
             this.TB_name.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TB_name.Location = new System.Drawing.Point(276, 23);
-            this.TB_name.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.TB_name.Margin = new System.Windows.Forms.Padding(4);
             this.TB_name.Name = "TB_name";
             this.TB_name.Size = new System.Drawing.Size(131, 22);
             this.TB_name.TabIndex = 9;
@@ -214,9 +214,9 @@
             this.groupBox1.Controls.Add(this.BT_add);
             this.groupBox1.Controls.Add(this.TB_name);
             this.groupBox1.Location = new System.Drawing.Point(16, 42);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(733, 65);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
@@ -249,7 +249,7 @@
             this.Controls.Add(this.TS_action);
             this.Controls.Add(this.ILV_photos);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MinimumSize = new System.Drawing.Size(781, 488);
             this.Name = "AddPerson";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

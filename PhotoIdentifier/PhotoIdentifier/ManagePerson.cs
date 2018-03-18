@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PhotoIdentifier {
-    public partial class ManagePerson:Form {
+    public partial class ManagePerson : Form {
 
         #region Vars
         private string person_app_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
@@ -36,7 +36,7 @@ namespace PhotoIdentifier {
             Dictionary<string, string> person_name = person.get_all_person();
 
             // Check if something in the dico
-            if(person_name.Count() != 0) {
+            if (person_name.Count() != 0) {
 
                 // Add name to combobox
                 CB_name.DataSource = new BindingSource(person_name, null);
@@ -105,16 +105,23 @@ namespace PhotoIdentifier {
 
             // Add photos to the list
             OpenFileDialog ofd = new OpenFileDialog {
-                Multiselect = true
+                Multiselect = true,
+                Filter = "JPG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp|JPEG files (*.jpeg)|*.jpeg"
             };
-            if(ofd.ShowDialog() == DialogResult.OK) {
-                ILV_photos.Items.AddRange(ofd.FileNames);
+            if (ofd.ShowDialog() == DialogResult.OK) {
 
-                // Photos added
-                lst_photos_add.AddRange(ofd.FileNames);
-                TSB_clear.Enabled = true;
-                TSB_remove.Enabled = true;
-                update_status();
+                // Check no error in type, dimention, size
+                if (!check_file_type(ofd.FileNames)) {
+
+                    // Photos added
+                    ILV_photos.Items.AddRange(ofd.FileNames);
+                    lst_photos_add.AddRange(ofd.FileNames);
+                    TSB_clear.Enabled = true;
+                    TSB_remove.Enabled = true;
+                    update_status();
+                } else {
+                    MessageBox.Show($"Files size must be lower than 4Mb.{Environment.NewLine + Environment.NewLine}File dimension must be greater than 50x50 and lower than 4000x4000.{Environment.NewLine + Environment.NewLine}Only format jpg, jpeg, png, gif and bmp are allowed.", "Files error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
@@ -124,7 +131,7 @@ namespace PhotoIdentifier {
             ILV_photos.SuspendLayout();
 
             // Remove selected items
-            foreach(var item in ILV_photos.SelectedItems) {
+            foreach (var item in ILV_photos.SelectedItems) {
                 ILV_photos.Items.Remove(item);
 
                 // Photos remove
@@ -139,7 +146,7 @@ namespace PhotoIdentifier {
         private void TSB_clear_Click(object sender, EventArgs e) {
 
             // Get all photos from imagelistview
-            foreach(ImageListViewItem item in ILV_photos.Items) {
+            foreach (ImageListViewItem item in ILV_photos.Items) {
 
                 // Photos remove all
                 lst_photos_remove.Add(item.FileName);
@@ -155,9 +162,9 @@ namespace PhotoIdentifier {
         /// Get how many photo selected
         /// </summary>
         private void update_status() {
-            if(ILV_photos.Items.Count == 0) {
+            if (ILV_photos.Items.Count == 0) {
                 update_status("No photos");
-            } else if(ILV_photos.SelectedItems.Count == 0) {
+            } else if (ILV_photos.SelectedItems.Count == 0) {
                 update_status(string.Format("{0} Photos", ILV_photos.Items.Count));
             } else {
                 update_status(string.Format("{0} Photos ({1} selected)", ILV_photos.Items.Count, ILV_photos.SelectedItems.Count));
@@ -189,11 +196,11 @@ namespace PhotoIdentifier {
             // Get current person name
             KeyValuePair<string, string> item = (KeyValuePair<string, string>)CB_name.SelectedItem;
             string path = Path.Combine(person_app_path, item.Key);
-            if(Directory.Exists(path)) {
+            if (Directory.Exists(path)) {
                 string[] files = person.get_person_photos(path);
-                if(files != null) {
-                    foreach(string file in files) {
-                        if(File.Exists(file)) {
+                if (files != null) {
+                    foreach (string file in files) {
+                        if (File.Exists(file)) {
                             ILV_photos.Items.Add(file);
                         }
                     }
@@ -211,15 +218,15 @@ namespace PhotoIdentifier {
         private void BT_validate_Click(object sender, EventArgs e) {
 
             // Check if user modify something
-            if((lst_photos_add.Count() != 0) || (lst_photos_remove.Count() != 0)) {
+            if ((lst_photos_add.Count() != 0) || (lst_photos_remove.Count() != 0)) {
                 DialogResult dialogResult = MessageBox.Show("Are you sure you to save the modification ?", "Modify ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if(dialogResult == DialogResult.Yes) {
+                if (dialogResult == DialogResult.Yes) {
 
                     // Get current person name
                     KeyValuePair<string, string> item = (KeyValuePair<string, string>)CB_name.SelectedItem;
-                    
+
                     // Check if could update the person
-                    if(!person.process_photos(lst_photos_add, lst_photos_remove, item.Key)) {
+                    if (!person.process_photos(lst_photos_add, lst_photos_remove, item.Key)) {
                         MessageBox.Show("The person could not be modified", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     } else {
                         MessageBox.Show("Modification saved.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -229,6 +236,87 @@ namespace PhotoIdentifier {
                     }
                 }
             }
+        }
+        #endregion
+
+        #region Check files type
+
+        /// <summary>
+        /// Check file info
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        private bool check_file_type(string[] files) {
+
+            // Get all drag and drop file
+            bool error = false;
+            foreach (string file in files) {
+                if (!check_file_dim(file)) {
+                    error = true;
+                }
+                if (!check_file_size(file)) {
+                    error = true;
+                }
+                if (!check_file_ext(file)) {
+                    error = true;
+                }
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Check file dimention size
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private bool check_file_dim(string file) {
+            if (File.Exists(file)) {
+                // Get image dimention (Image dimension: Greater than 50 x 50 pixels)
+                Image img = null;
+                img = Image.FromFile(file);
+                if ((img.Width <= 50) || (img.Height <= 50)) {
+                    return false;
+                }
+
+                // (Image dimension: Lower than 4096 x 4096 pixels)
+                if ((img.Width >= 4000) || (img.Height >= 4000)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Get max file size
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private bool check_file_size(string file) {
+            if (File.Exists(file)) {
+
+                // Get file size (Image file size: Less than 4 MB)
+                if (new FileInfo(file).Length >= 4000000) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Check file extention
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private bool check_file_ext(string file) {
+            string[] ext = new string[] { ".jpg", ".png", ".gif", ".bmp", ".jpeg" };
+
+            if (File.Exists(file)) {
+                // Check if the droped file are with good extention
+                if (!Array.Exists(ext, ex => ex == Path.GetExtension(file))) {
+                    return false;
+                }
+            }
+            return true;
         }
         #endregion
     }

@@ -121,18 +121,25 @@ namespace PhotoIdentifier {
             //conf.read_identify_path()
             OpenFileDialog ofd = new OpenFileDialog {
                 Multiselect = true,
-                InitialDirectory = identify_dir_path
+                InitialDirectory = identify_dir_path,
+                Filter = "JPG files (*.jpg)|*.jpg|PNG files (*.png)|*.png|GIF files (*.gif)|*.gif|BMP files (*.bmp)|*.bmp|JPEG files (*.jpeg)|*.jpeg"
             };
             if (ofd.ShowDialog() == DialogResult.OK) {
 
                 // Check if the photo prive from Picture directory
                 if (check_picture_directory(ofd.FileNames)) {
-                    ILV_photos.Items.AddRange(ofd.FileNames);
-                    TSB_clear.Enabled = true;
-                    TSB_remove.Enabled = true;
-                    update_status();
+
+                    // Check no error in type, dimention, size
+                    if (!check_file_type(ofd.FileNames)) {
+                        ILV_photos.Items.AddRange(ofd.FileNames);
+                        TSB_clear.Enabled = true;
+                        TSB_remove.Enabled = true;
+                        update_status();
+                    } else {
+                        MessageBox.Show($"Files size must be lower than 4Mb.{Environment.NewLine + Environment.NewLine}File dimension must be greater than 50x50 and lower than 4000x4000.{Environment.NewLine + Environment.NewLine}Only format jpg, jpeg, png, gif and bmp are allowed.", "Files error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 } else {
-                    MessageBox.Show("All the photo must be provied from the Windows Picture directory","Photo error",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("All the photo must be provied from the Windows Picture directory", "Photo error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -361,6 +368,87 @@ namespace PhotoIdentifier {
                 myPing.SendAsync("google.com", 3000, new byte[32], new PingOptions(64, true));
             } catch {
             }
+        }
+        #endregion
+
+        #region Check files type
+
+        /// <summary>
+        /// Check file info
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        private bool check_file_type(string[] files) {
+
+            // Get all drag and drop file
+            bool error = false;
+            foreach (string file in files) {
+                if (!check_file_dim(file)) {
+                    error = true;
+                }
+                if (!check_file_size(file)) {
+                    error = true;
+                }
+                if (!check_file_ext(file)) {
+                    error = true;
+                }
+            }
+            return error;
+        }
+
+        /// <summary>
+        /// Check file dimention size
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private bool check_file_dim(string file) {
+            if (File.Exists(file)) {
+                // Get image dimention (Image dimension: Greater than 50 x 50 pixels)
+                Image img = null;
+                img = Image.FromFile(file);
+                if ((img.Width <= 50) || (img.Height <= 50)) {
+                    return false;
+                }
+
+                // (Image dimension: Lower than 4096 x 4096 pixels)
+                if ((img.Width >= 4000) || (img.Height >= 4000)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Get max file size
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private bool check_file_size(string file) {
+            if (File.Exists(file)) {
+
+                // Get file size (Image file size: Less than 4 MB)
+                if (new FileInfo(file).Length >= 4000000) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Check file extention
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        private bool check_file_ext(string file) {
+            string[] ext = new string[] { ".jpg", ".png", ".gif", ".bmp", ".jpeg" };
+
+            if (File.Exists(file)) {
+                // Check if the droped file are with good extention
+                if (!Array.Exists(ext, ex => ex == Path.GetExtension(file))) {
+                    return false;
+                }
+            }
+            return true;
         }
         #endregion
     }
