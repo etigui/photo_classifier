@@ -101,7 +101,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ZipZip.cs" />
     <EmbeddedResource Include="CopyFiles.resx">
       <DependentUpon>CopyFiles.cs</DependentUpon>
     </EmbeddedResource>
