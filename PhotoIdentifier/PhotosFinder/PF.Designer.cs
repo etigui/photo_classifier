@@ -300,35 +300,35 @@
             // x48ToolStripMenuItem
             // 
             this.x48ToolStripMenuItem.Name = "x48ToolStripMenuItem";
-            this.x48ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
+            this.x48ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.x48ToolStripMenuItem.Text = "48 x 48";
             this.x48ToolStripMenuItem.Click += new System.EventHandler(this.x48ToolStripMenuItem_Click);
             // 
             // x96ToolStripMenuItem
             // 
             this.x96ToolStripMenuItem.Name = "x96ToolStripMenuItem";
-            this.x96ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
+            this.x96ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.x96ToolStripMenuItem.Text = "96 x 96";
             this.x96ToolStripMenuItem.Click += new System.EventHandler(this.x96ToolStripMenuItem_Click);
             // 
             // x120ToolStripMenuItem
             // 
             this.x120ToolStripMenuItem.Name = "x120ToolStripMenuItem";
-            this.x120ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
+            this.x120ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.x120ToolStripMenuItem.Text = "120 x 120";
             this.x120ToolStripMenuItem.Click += new System.EventHandler(this.x120ToolStripMenuItem_Click);
             // 
             // x150ToolStripMenuItem
             // 
             this.x150ToolStripMenuItem.Name = "x150ToolStripMenuItem";
-            this.x150ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
+            this.x150ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.x150ToolStripMenuItem.Text = "150 x 150";
             this.x150ToolStripMenuItem.Click += new System.EventHandler(this.x150ToolStripMenuItem_Click);
             // 
             // x200ToolStripMenuItem
             // 
             this.x200ToolStripMenuItem.Name = "x200ToolStripMenuItem";
-            this.x200ToolStripMenuItem.Size = new System.Drawing.Size(147, 26);
+            this.x200ToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.x200ToolStripMenuItem.Text = "200 x 200";
             this.x200ToolStripMenuItem.Click += new System.EventHandler(this.x200ToolStripMenuItem_Click);
             // 
@@ -345,7 +345,7 @@
             this.TSB_export.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.TSB_export.Name = "TSB_export";
             this.TSB_export.Size = new System.Drawing.Size(28, 28);
-            this.TSB_export.Text = "Export";
+            this.TSB_export.Text = "Import/Export";
             this.TSB_export.Click += new System.EventHandler(this.TSB_export_Click);
             // 
             // ILV_photos

@@ -124,11 +124,31 @@ namespace PhotoIdentifier {
                 InitialDirectory = identify_dir_path
             };
             if (ofd.ShowDialog() == DialogResult.OK) {
-                ILV_photos.Items.AddRange(ofd.FileNames);
-                TSB_clear.Enabled = true;
-                TSB_remove.Enabled = true;
-                update_status();
+
+                // Check if the photo prive from Picture directory
+                if (check_picture_directory(ofd.FileNames)) {
+                    ILV_photos.Items.AddRange(ofd.FileNames);
+                    TSB_clear.Enabled = true;
+                    TSB_remove.Enabled = true;
+                    update_status();
+                } else {
+                    MessageBox.Show("All the photo must be provied from the Windows Picture directory","Photo error",MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+        }
+
+        /// <summary>
+        /// Check if the photo are from Picture directory
+        /// </summary>
+        /// <param name="files"></param>
+        /// <returns></returns>
+        private bool check_picture_directory(string[] files) {
+            foreach (string file in files) {
+                if (!file.Contains(identify_dir_path)) {
+                    return false;
+                }
+            }
+            return true;
         }
         private void TSB_remove_Click(object sender, EventArgs e) {
 
