@@ -30,21 +30,8 @@ namespace PhotosFinder {
         }
 
         private void init() {
-            //data = new Data();
             data = new DataGet();
             conf = new Conf(conf_file_path);
-
-            /*ContextMenu cm = new ContextMenu();
-            cm.MenuItems.Add("Item 1");
-            cm.MenuItems.Add("Item 2");
-
-            ILV_photos.ContextMenu = cm;*/
-
-            // Create identify if not exist
-            /*string identify_dir_path = conf.read_identify_path();
-             if(!Directory.Exists(identify_dir_path)) {
-                 Directory.CreateDirectory(identify_dir_path);
-             }*/
 
             //Init thumbnails size tick
             x96ToolStripMenuItem.Checked = true;
@@ -53,9 +40,6 @@ namespace PhotosFinder {
             foreach (ImageListView.ImageListViewColumnHeader c in ILV_photos.Columns) {
                 c.Visible = true;
             }
-
-            // Add image path to xml file Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
-            // Add identify folder to photo dir
         }
 
 
