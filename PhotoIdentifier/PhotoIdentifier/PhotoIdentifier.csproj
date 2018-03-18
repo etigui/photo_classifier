@@ -132,7 +132,6 @@
       <DependentUpon>AddPerson.cs</DependentUpon>
     </Compile>
     <Compile Include="Conf.cs" />
-    <Compile Include="Data.cs" />
     <Compile Include="DataSet.cs" />
     <Compile Include="Identify.cs">
       <SubType>Form</SubType>
