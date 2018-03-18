@@ -11,36 +11,39 @@ using System.Windows.Forms;
 
 namespace PhotosFinder {
     public partial class ImportExport : Form {
-        public ImportExport() {
-            InitializeComponent();
-        }
 
         #region Vars
         private string identify_dir_path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
         private string connection_string = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "photos.db");
+        private string person_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "person");
+        #endregion
+
+        #region Init
+
+        public ImportExport() {
+            InitializeComponent();
+        }
         #endregion
 
         #region Import
 
         private void BT_import_Click(object sender, EventArgs e) {
 
-            string db_path = TB_database_import.Text;
-            string photo_path = TB_photo_import.Text;
-            if (File.Exists(db_path) && Directory.Exists(photo_path)) {
-
-                // Get recursive files
-                string[] files = Directory.GetFiles($"{photo_path}\\", "*.*", SearchOption.AllDirectories);
+            string source = TB_source.Text;
+            if (File.Exists(source)) {
 
                 // TODO Background Worker copy
                 // Copy db_path => connection_string
                 // Copy files => identify_dir_path
+                //Import or not
+                if (MessageBox.Show($"Do you want to import the new data ? {Environment.NewLine}Warning: All the current data will be overwritten, so think to backup them before to import.", "Import", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes) {
+                    CopyFiles cpf = new CopyFiles(source);
+                    cpf.ShowDialog();
+                    this.Hide();
+                }
             } else {
                 MessageBox.Show("Import paths error");
             }
-        }
-
-        private void BT_photo_import_Click(object sender, EventArgs e) {
-            get_photo_directory(true);
         }
 
         private void BT_database_import_Click(object sender, EventArgs e) {
@@ -61,21 +64,16 @@ namespace PhotosFinder {
                 string[] files = Directory.GetFiles($"{photo_path}\\", "*.*", SearchOption.AllDirectories);
 
                 // ZIP all data or save in directory
-                if (CB_zip.Checked) {
-                    // TODO Background Worker copy
-                } else {
-                    // TODO Background Worker copy
-                    foreach (string file in files) {
-
-                    }
-                }
+                CopyFiles cpf = new CopyFiles(files.ToList(), db_path, dest);
+                cpf.ShowDialog();
+                this.Hide();
             } else {
-                MessageBox.Show("Export paths error");
+                MessageBox.Show("Export or photo paths error");
             }
         }
 
         private void BT_photo_export_Click(object sender, EventArgs e) {
-            get_photo_directory(false);
+            get_photo_directory();
         }
 
         private void BT_dest_Click(object sender, EventArgs e) {
@@ -89,24 +87,11 @@ namespace PhotosFinder {
         /// Get save destination
         /// </summary>
         private void get_destination() {
-
-            // If checked => ZIP
-            if (CB_zip.Checked) {
-                SaveFileDialog sfd = new SaveFileDialog();
-                sfd.Filter = "ZIP file (*.zip)|*.zip";
-                if (sfd.ShowDialog() == DialogResult.OK) {
-                    TB_dest.Text = sfd.FileName;
-                    TB_dest.Focus();
-                    TB_dest.SelectionStart = TB_dest.Text.Length;
-                }
-            } else {
-                FolderBrowserDialog fbd = new FolderBrowserDialog();
-
-                if (fbd.ShowDialog() == DialogResult.OK) {
-                    TB_dest.Text = fbd.SelectedPath;
-                    TB_dest.Focus();
-                    TB_dest.SelectionStart = TB_dest.Text.Length;
-                }
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            if (fbd.ShowDialog() == DialogResult.OK) {
+                TB_dest.Text = fbd.SelectedPath;
+                TB_dest.Focus();
+                TB_dest.SelectionStart = TB_dest.Text.Length;
             }
         }
 
@@ -117,9 +102,9 @@ namespace PhotosFinder {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Multiselect = false;
             if (ofd.ShowDialog() == DialogResult.OK) {
-                TB_database_import.Text = ofd.FileName;
-                TB_database_import.Focus();
-                TB_database_import.SelectionStart = TB_database_import.Text.Length;
+                TB_source.Text = ofd.FileName;
+                TB_source.Focus();
+                TB_source.SelectionStart = TB_source.Text.Length;
             }
         }
 
@@ -127,20 +112,15 @@ namespace PhotosFinder {
         /// Set photo directory path
         /// </summary>
         /// <param name="import"></param>
-        private void get_photo_directory(bool import) {
+        private void get_photo_directory() {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.SelectedPath = TB_photo_export.Text;
             if (fbd.ShowDialog() == DialogResult.OK) {
 
-                // Check if import or export tab
-                if (import) {
-                    TB_photo_import.Text = fbd.SelectedPath;
-                    TB_photo_import.Focus();
-                    TB_photo_import.SelectionStart = TB_photo_import.Text.Length;
-                } else {
-                    TB_photo_export.Text = fbd.SelectedPath;
-                    TB_photo_export.Focus();
-                    TB_photo_export.SelectionStart = TB_photo_export.Text.Length;
-                }
+                // Export tab
+                TB_photo_export.Text = fbd.SelectedPath;
+                TB_photo_export.Focus();
+                TB_photo_export.SelectionStart = TB_photo_export.Text.Length;
             }
         }
 
@@ -185,6 +165,5 @@ namespace PhotosFinder {
             e.Handled = true;
         }
         #endregion
-
     }
 }

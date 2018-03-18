@@ -26,18 +26,14 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImportExport));
             this.TC_switch = new System.Windows.Forms.TabControl();
             this.TP_import = new System.Windows.Forms.TabPage();
-            this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.TB_photo_import = new System.Windows.Forms.TextBox();
-            this.BT_database_import = new System.Windows.Forms.Button();
-            this.TB_database_import = new System.Windows.Forms.TextBox();
-            this.BT_photo_import = new System.Windows.Forms.Button();
+            this.BT_zip_import = new System.Windows.Forms.Button();
+            this.TB_source = new System.Windows.Forms.TextBox();
             this.BT_import = new System.Windows.Forms.Button();
             this.TP_export = new System.Windows.Forms.TabPage();
             this.TB_dest = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.BT_dest = new System.Windows.Forms.Button();
-            this.CB_zip = new System.Windows.Forms.CheckBox();
             this.TB_photo_export = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.BT_photo_export = new System.Windows.Forms.Button();
@@ -63,12 +59,9 @@
             // 
             // TP_import
             // 
-            this.TP_import.Controls.Add(this.label4);
             this.TP_import.Controls.Add(this.label1);
-            this.TP_import.Controls.Add(this.TB_photo_import);
-            this.TP_import.Controls.Add(this.BT_database_import);
-            this.TP_import.Controls.Add(this.TB_database_import);
-            this.TP_import.Controls.Add(this.BT_photo_import);
+            this.TP_import.Controls.Add(this.BT_zip_import);
+            this.TP_import.Controls.Add(this.TB_source);
             this.TP_import.Controls.Add(this.BT_import);
             this.TP_import.Location = new System.Drawing.Point(4, 25);
             this.TP_import.Name = "TP_import";
@@ -78,65 +71,37 @@
             this.TP_import.Text = "Import";
             this.TP_import.UseVisualStyleBackColor = true;
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(31, 83);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(150, 17);
-            this.label4.TabIndex = 24;
-            this.label4.Text = "Select photo directory:";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 20);
+            this.label1.Location = new System.Drawing.Point(31, 48);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(114, 17);
+            this.label1.Size = new System.Drawing.Size(95, 17);
             this.label1.TabIndex = 23;
-            this.label1.Text = "Select database:";
+            this.label1.Text = "Select zip file:";
             // 
-            // TB_photo_import
+            // BT_zip_import
             // 
-            this.TB_photo_import.Location = new System.Drawing.Point(34, 103);
-            this.TB_photo_import.Name = "TB_photo_import";
-            this.TB_photo_import.Size = new System.Drawing.Size(292, 22);
-            this.TB_photo_import.TabIndex = 22;
-            this.TB_photo_import.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TB_photo_import_KeyPress);
+            this.BT_zip_import.Location = new System.Drawing.Point(333, 65);
+            this.BT_zip_import.Margin = new System.Windows.Forms.Padding(4);
+            this.BT_zip_import.Name = "BT_zip_import";
+            this.BT_zip_import.Size = new System.Drawing.Size(100, 28);
+            this.BT_zip_import.TabIndex = 20;
+            this.BT_zip_import.Text = "Open";
+            this.BT_zip_import.UseVisualStyleBackColor = true;
+            this.BT_zip_import.Click += new System.EventHandler(this.BT_database_import_Click);
             // 
-            // BT_database_import
+            // TB_source
             // 
-            this.BT_database_import.Location = new System.Drawing.Point(333, 37);
-            this.BT_database_import.Margin = new System.Windows.Forms.Padding(4);
-            this.BT_database_import.Name = "BT_database_import";
-            this.BT_database_import.Size = new System.Drawing.Size(100, 28);
-            this.BT_database_import.TabIndex = 20;
-            this.BT_database_import.Text = "Open";
-            this.BT_database_import.UseVisualStyleBackColor = true;
-            this.BT_database_import.Click += new System.EventHandler(this.BT_database_import_Click);
-            // 
-            // TB_database_import
-            // 
-            this.TB_database_import.Location = new System.Drawing.Point(34, 40);
-            this.TB_database_import.Name = "TB_database_import";
-            this.TB_database_import.Size = new System.Drawing.Size(292, 22);
-            this.TB_database_import.TabIndex = 13;
-            this.TB_database_import.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TB_database_import_KeyPress);
-            // 
-            // BT_photo_import
-            // 
-            this.BT_photo_import.Location = new System.Drawing.Point(333, 100);
-            this.BT_photo_import.Margin = new System.Windows.Forms.Padding(4);
-            this.BT_photo_import.Name = "BT_photo_import";
-            this.BT_photo_import.Size = new System.Drawing.Size(100, 28);
-            this.BT_photo_import.TabIndex = 11;
-            this.BT_photo_import.Text = "Open";
-            this.BT_photo_import.UseVisualStyleBackColor = true;
-            this.BT_photo_import.Click += new System.EventHandler(this.BT_photo_import_Click);
+            this.TB_source.Location = new System.Drawing.Point(34, 68);
+            this.TB_source.Name = "TB_source";
+            this.TB_source.Size = new System.Drawing.Size(292, 22);
+            this.TB_source.TabIndex = 13;
+            this.TB_source.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TB_database_import_KeyPress);
             // 
             // BT_import
             // 
-            this.BT_import.Location = new System.Drawing.Point(183, 146);
+            this.BT_import.Location = new System.Drawing.Point(169, 117);
             this.BT_import.Margin = new System.Windows.Forms.Padding(4);
             this.BT_import.Name = "BT_import";
             this.BT_import.Size = new System.Drawing.Size(100, 28);
@@ -150,7 +115,6 @@
             this.TP_export.Controls.Add(this.TB_dest);
             this.TP_export.Controls.Add(this.label5);
             this.TP_export.Controls.Add(this.BT_dest);
-            this.TP_export.Controls.Add(this.CB_zip);
             this.TP_export.Controls.Add(this.TB_photo_export);
             this.TP_export.Controls.Add(this.label3);
             this.TP_export.Controls.Add(this.BT_photo_export);
@@ -190,16 +154,6 @@
             this.BT_dest.Text = "Open";
             this.BT_dest.UseVisualStyleBackColor = true;
             this.BT_dest.Click += new System.EventHandler(this.BT_dest_Click);
-            // 
-            // CB_zip
-            // 
-            this.CB_zip.AutoSize = true;
-            this.CB_zip.Location = new System.Drawing.Point(255, 151);
-            this.CB_zip.Name = "CB_zip";
-            this.CB_zip.Size = new System.Drawing.Size(71, 21);
-            this.CB_zip.TabIndex = 20;
-            this.CB_zip.Text = "As ZIP";
-            this.CB_zip.UseVisualStyleBackColor = true;
             // 
             // TB_photo_export
             // 
@@ -266,15 +220,11 @@
         private System.Windows.Forms.TabPage TP_export;
         private System.Windows.Forms.Button BT_import;
         private System.Windows.Forms.Button BT_export;
-        private System.Windows.Forms.TextBox TB_database_import;
-        private System.Windows.Forms.Button BT_photo_import;
+        private System.Windows.Forms.TextBox TB_source;
         private System.Windows.Forms.TextBox TB_photo_export;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button BT_photo_export;
-        private System.Windows.Forms.CheckBox CB_zip;
-        private System.Windows.Forms.TextBox TB_photo_import;
-        private System.Windows.Forms.Button BT_database_import;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button BT_zip_import;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TB_dest;
         private System.Windows.Forms.Label label5;
