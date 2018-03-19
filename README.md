@@ -3,7 +3,7 @@
 
 ## Project objectives and specifications
 
-<p align="justify">Studding and try [API Vision](https://azure.microsoft.com/en-us/services/cognitive-services/directory/vision/) of Microsoft, then program an application in C#, which is going to classify photo as mentioned in the point below:</p>
+<p align="justify">Studding and try <a href="https://azure.microsoft.com/en-us/services/cognitive-services/directory/vision/">API Vision</a> of Microsoft, then program an application in C#, which is going to classify photo as mentioned in the point below:</p>
 
 1.	Get one or more photo of well-known people and try to associate the bunch of photo to that people.
 2.	Get a list of photos which contain or not the people associate before.
