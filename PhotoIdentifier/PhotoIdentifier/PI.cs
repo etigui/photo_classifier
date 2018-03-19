@@ -410,9 +410,9 @@ namespace PhotoIdentifier {
         /// <returns></returns>
         private bool check_file_size(string file) {
             if (File.Exists(file)) {
-
-                // Get file size (Image file size: Less than 4 MB)
-                if (new FileInfo(file).Length >= 4000000) {
+                long size = new FileInfo(file).Length;
+                // Get file size (Image file size: Less than 4 MB or Greater than 1Kb)
+                if (size >= 4000000 || size <= 1000) {
                     return false;
                 }
             }
