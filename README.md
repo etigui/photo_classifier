@@ -31,3 +31,6 @@ The Computer Vision API provides state-of-the-art algorithms to process images a
 - Supported input method: raw image binary or image URL 
 - Image dimension: must be at least 50x50 pixels
 - Image file size: must be less than 4MB
+
+
+<h1><img src="http://i.stack.imgur.com/7f1Lm.png">American Title</h1>
