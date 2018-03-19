@@ -125,13 +125,14 @@ namespace PhotosFinder {
 
                 // Move person photo
                 bw.ReportProgress(3);
-                if (File.Exists(Path.Combine(extract_path, "__person"))) {
+                string temp_person = Path.Combine(extract_path, "__person");
+                if (Directory.Exists(temp_person)) {
                     if (LB_status_up.InvokeRequired) { Invoke((MethodInvoker)(() => LB_status_up.Text = "Move person photos")); }
                     if (Lb_status_down.InvokeRequired) { Invoke((MethodInvoker)(() => Lb_status_down.Text = $"Process directory: {Path.Combine(extract_path, "__person")}")); }
                     if (Directory.Exists(person_path)) {
                         Directory.Delete(person_path, true);
                     }
-                    Directory.Move(Path.Combine(extract_path, "__person"), person_path);
+                    Directory.Move(temp_person, person_path);
                 }
 
                 // Move photo directory to SpecialFolder => MyPictures
