@@ -359,7 +359,7 @@ namespace PhotosFinder {
 
                             // Copy the files from the ILV to the selected directory
                             if (File.Exists(item.FileName)) {
-                                File.Copy(item.FileName, $"{dir}\\{Path.GetFileName(item.FileName)}");
+                                File.Copy(item.FileName, $"{dir}\\{Path.GetFileName(item.FileName)}",true);
                             }
                         }
                         MessageBox.Show("Files saved", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
