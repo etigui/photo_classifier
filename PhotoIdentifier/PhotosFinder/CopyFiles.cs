@@ -186,7 +186,7 @@ namespace PhotosFinder {
                     // Copy conf file
                     string conf_path = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "app_conf.xml");
                     if (File.Exists(conf_path)) {
-                        File.Copy(db_path, Path.Combine(dest, "__app_conf.xml"));
+                        File.Copy(conf_path, Path.Combine(dest, "__app_conf.xml"));
                     }
 
                     // Copy PhotoIdentifier.exe.config file
