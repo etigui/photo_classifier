@@ -28,3 +28,7 @@
 - Supported input method: raw image binary or image URL 
 - Image dimension: must be at least 50x50 pixels
 - Image file size: must be less than 4MB
+
+
+## Raport
+[More informations](/doc/guignard_projet_semestre_cognitive_services.pdf)
